@@ -6,6 +6,10 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 
 
+class User(Base):
+    id = Column(Integer, primary_key=True)
+
+
 class Gladiator(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(80))
