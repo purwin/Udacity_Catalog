@@ -7,10 +7,12 @@ Base = declarative_base()
 
 
 class User(Base):
+    __tablename__ = "user"
     id = Column(Integer, primary_key=True)
 
 
 class Gladiator(Base):
+    __tablename__ = "gladiator"
     id = Column(Integer, primary_key=True)
     name = Column(String(80))
     img = Column(String)
