@@ -24,3 +24,40 @@ hairdos = ["spiked", "mullet", "ponytail", "man bun", "mohawk", "bald", "flattop
 events = ["Pyramid", "Hang Tough", "Assault", "Joust", "Whiplash", "Gauntlet", "Tug O War", "Snapback", "Powerball", "Swingshot", "Breakthrough and Conquer", "Skytrack", "The Wall"]
 
 accessories = ["headband", "gold chain", "sunglasses", "wristbands", "bubblegum", "shark-tooth necklace", "high socks", "brace", "cross earring", "hair mousse", "suspenders", "elbow pads", "knee pads"]
+
+
+def randomizer(list):
+    pass
+
+def create_gladiator(person):
+    gladiator = Gladiator(name=person, gender=randomizer(genders), hairdo=randomizer(hairdos), main_event=randomizer(events), secondary_event=randomizer(events), accessory=randomizer(accessories))
+
+    if gladiator.gender == "female":
+        gladiator.img = randomizer(female_photos)
+    else:
+        gladiator.img = randomizer(male_photos)
+
+    while gladiator.secondary_event == gladiator.main_event:
+        gladiator.secondary_event = randomizer(events)
+
+    session.add(gladiator)
+    session.commit()
+
+all_gladiators = real_gladiators + fake_gladiators
+
+for gladiator in all_gladiators:
+    create_gladiator(gladiator)
+
+print "Added gladiators!"
+
+
+class Gladiator(Base):
+    __tablename__ = "gladiator"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(80))
+    img = Column(String)
+    gender = Column(String(12))
+    hairdo = Column(String(20))
+    main_event = Column(String(40))
+    secondary_event = Column(String(40))
+    accessory = Column(String(20))
