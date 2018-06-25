@@ -27,7 +27,8 @@ def catalog_category(category):
 
 @app.route('/catalog/<int:id>')
 def catalog_item(id):
-    return render_template('item.html')
+    gladiator = session.query(Gladiator).filter_by(id = id).one()
+    return render_template('item.html', gladiator = gladiator)
 
 
 @app.route('/catalog/<int:id>/new', methods=['GET', 'POST'])
@@ -47,4 +48,4 @@ def delete_item(id):
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0', port=5000, threaded = False)
+    app.run(host='0.0.0.0', port=8000, threaded = False)
