@@ -58,9 +58,8 @@ female_photos = ["https://static.businessinsider.com/image/515ba38becad043510000
                  "http://i.ytimg.com/vi/Pa8P25fe2as/hqdefault.jpg",
                  "https://cdn-s3.si.com/s3fs-public/2016/07/01/american-gladiators-rings.jpg",
                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnzNKgWe66JA47ECjx0sd8QyKng2Rx6zEza7q8flmnGvUH8JJH",
-                 "https://static1.squarespace.com/static/54f1f625e4b0d74e3cb35660/54f20172e4b043172cd75d5b/54f20173e4b043172cd76435/1205732134217/1000w/beattie05.jpg",
                  "http://www.getbig.com/news/2007/12/amglad/stealth002.jpg",
-                 "http://3.bp.blogspot.com/_2-7AdSkZA7I/SaQW89gdzWI/AAAAAAAAUtE/cTnKtq9ZP0M/s400/Erin+Toughill-mma.jpg", ]
+                 "http://3.bp.blogspot.com/_2-7AdSkZA7I/SaQW89gdzWI/AAAAAAAAUtE/cTnKtq9ZP0M/s400/Erin+Toughill-mma.jpg"]
 
 genders = ["female", "male"]
 
@@ -89,8 +88,10 @@ def create_gladiator(person):
 
     if gladiator.gender == "female":
         gladiator.img = randomizer(female_photos)
+        female_photos.pop(female_photos.index(gladiator.img))
     else:
         gladiator.img = randomizer(male_photos)
+        male_photos.pop(male_photos.index(gladiator.img))
 
     while gladiator.secondary_event == gladiator.main_event:
         gladiator.secondary_event = randomizer(events)
