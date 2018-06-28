@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{{ gladiator.name }} -- Edit</title>
+</head>
+<body>
+	<h1>{{ gladiator.name }}</h1>
+	<p><span class="edit"><a href="/{{ gladiator.id }}/edit">EDIT</a></span> <span class="delete"><a href="/{{ gladiator.id }}/delete">DELETE</a></span></p>
+	<div>
+		<img src="{{ gladiator.img }}" alt="" />
+	</div>
+	<div>
+		<ul>
+			<li>Gender: {{ gladiator.gender|capitalize }}</li>
+			<li>Hairdo: {{ gladiator.hairdo|capitalize }}</li>
+			<li>Accessory of Choice: {{ gladiator.accessory|capitalize }}</li>
+			<li>Main Event: {{ gladiator.main_event|capitalize }}</li>
+			<li>Secondary Event: {{gladiator.secondary_event|capitalize }}</li>
+		</ul>
+	</div>
+</body>
+</html>
