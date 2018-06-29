@@ -36,7 +36,6 @@ class Genre(Base):
     __tablename__ = "genre"
     id = Column(Integer, primary_key=True)
     type = Column(String(80))
-    # books = relationship('Book', secondary='book_genre')
 
 
 Table('book_author', Base.metadata,
