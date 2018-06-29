@@ -1,4 +1,4 @@
-from sqlalchemy import Column,Integer,String
+from sqlalchemy import Column,Integer,String,Table,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
@@ -29,7 +29,6 @@ class Author(Base):
     last_name = Column(String(80))
     first_name = Column(String(80))
     # full_name
-    books = relationship('Book', secondary='book_author')
     bio = Column(String)
 
 
@@ -37,7 +36,7 @@ class Genre(Base):
     __tablename__ = "genre"
     id = Column(Integer, primary_key=True)
     type = Column(String(80))
-    books = relationship('Book', secondary='book_genre')
+    # books = relationship('Book', secondary='book_genre')
 
 
 Table('book_author', Base.metadata,
