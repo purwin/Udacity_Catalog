@@ -6,27 +6,35 @@
 </head>
 <body>
 	<h1>{{ book.title }}</h1>
-	<p><span class="edit"><a href="/catalog/{{ book.id }}/edit">EDIT</a></span> <span class="delete"><a href="/catalog/{{ book.id }}/delete">DELETE</a></span></p>
+	<p><span class="edit"><a href="/catalog/book/{{ book.id }}/edit">EDIT</a></span> <span class="delete"><a href="/catalog/book/{{ book.id }}/delete">DELETE</a></span></p>
 	<div>
-		{{ if book.cover }}
+		{% if book.cover %}
 		<img src="{{ book.cover }}" alt="" />
-		{{ endif }}
+		{% endif %}
 	</div>
 	<div>
 		<ul>
 			<li>Author(s):
 				<ul>
-					{{ for author in book.authors }}
-					<li>{{ author.full_name }}</li>
-					{{ endfor }}
+					{% if book.authors %}
+						{% for author in book.authors %}
+						<li>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</li>
+						{% endfor %}
+					{% else %}
+						<li><i>This book has no current authors</i></li>
+					{% endif %}
 				</ul>
 			</li>
 			<li>Description: {{ book.description }}</li>
 			<li>Genres:
 				<ul>
-					{{ for genre in book.genres }}
-					<li>{{ genre.type }}</li>
-					{{ endfor }}
+					{% if book.genres %}
+						{% for genre in book.genres %}
+						<li>{{ genre.type }}</li>
+						{% endfor %}
+					{% else %}
+						<li>This book has no current genres</li>
+					{% endif %}
 				</ul>
 			</li>
 		</ul>
