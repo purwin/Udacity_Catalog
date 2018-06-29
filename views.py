@@ -38,34 +38,35 @@ def catalog():
 
 
 # route: category results
-@app.route('/catalog/<category>')
+@app.route('/catalog/category/<category>')
 def catalog_category(category):
-    return render_template('category.html')
+    genre = session.query(Genre).filter_by(type = category).one()
+    return render_template('category.html', genre = genre)
 
 
 # route: item (book)
-@app.route('/catalog/<int:id>')
+@app.route('/catalog/book/<int:id>')
 def catalog_item(id):
     book = session.query(Book).filter_by(id = id).one()
-    return render_template('item.html', book = book)
+    return render_template('book.html', book = book)
 
 
 # route: create item (book)
-@app.route('/catalog/<int:id>/new', methods=['GET', 'POST'])
+@app.route('/catalog/book/<int:id>/new', methods=['GET', 'POST'])
 def new_item(id):
-    return render_template('item_new.html')
+    return render_template('book_new.html')
 
 
 # route: edit item (book)
-@app.route('/catalog/<int:id>/edit', methods=['GET', 'POST'])
+@app.route('/catalog/book/<int:id>/edit', methods=['GET', 'POST'])
 def edit_item(id):
-    return render_template('item_edit.html')
+    return render_template('book_edit.html')
 
 
 # route: delete item (book)
-@app.route('/catalog/<int:id>/delete', methods=['GET', 'POST'])
+@app.route('/catalog/book/<int:id>/delete', methods=['GET', 'POST'])
 def delete_item(id):
-    return render_template('item_delete.html')
+    return render_template('book_delete.html')
 
 
 if __name__ == '__main__':
