@@ -52,21 +52,23 @@ def catalog_item(id):
 
 
 # route: create item (book)
-@app.route('/catalog/book/<int:id>/new', methods=['GET', 'POST'])
-def new_item(id):
+@app.route('/catalog/book/new', methods=['GET', 'POST'])
+def new_item():
     return render_template('book_new.html')
 
 
 # route: edit item (book)
 @app.route('/catalog/book/<int:id>/edit', methods=['GET', 'POST'])
 def edit_item(id):
-    return render_template('book_edit.html')
+    book = session.query(Book).filter_by(id = id).one()
+    return render_template('book_edit.html', book = book)
 
 
 # route: delete item (book)
 @app.route('/catalog/book/<int:id>/delete', methods=['GET', 'POST'])
 def delete_item(id):
-    return render_template('book_delete.html')
+    book = session.query(Book).filter_by(id = id).one()
+    return render_template('book_delete.html', book = book)
 
 
 if __name__ == '__main__':
