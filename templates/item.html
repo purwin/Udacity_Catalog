@@ -2,21 +2,38 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>{{ gladiator.name }}</title>
+	<title>{{ book.title }}</title>
 </head>
 <body>
-	<h1>{{ gladiator.name }}</h1>
+	<h1>{{ book.title }}</h1>
+	<p><span class="edit"><a href="/catalog/{{ book.id }}/edit">EDIT</a></span> <span class="delete"><a href="/catalog/{{ book.id }}/delete">DELETE</a></span></p>
 	<div>
-		<img src="{{ gladiator.img }}" alt="" />
+		{{ if book.cover }}
+		<img src="{{ book.cover }}" alt="" />
+		{{ endif }}
 	</div>
 	<div>
 		<ul>
-			<li>Gender: {{ gladiator.gender }}</li>
-			<li>Hairdo: {{ gladiator.hairdo }}</li>
-			<li>Accessory of Choice: {{ gladiator.accessory }}</li>
-			<li>Main Event: {{ gladiator.main_event }}</li>
-			<li>Secondary Event: {{gladiator.secondary_event }}</li>
+			<li>Author(s):
+				<ul>
+					{{ for author in book.authors }}
+					<li>{{ author.full_name }}</li>
+					{{ endfor }}
+				</ul>
+			</li>
+			<li>Description: {{ book.description }}</li>
+			<li>Genres:
+				<ul>
+					{{ for genre in book.genres }}
+					<li>{{ genre.type }}</li>
+					{{ endfor }}
+				</ul>
+			</li>
 		</ul>
+	</div>
+	<div>
+		<p>Add to Library</p>
+		<p>Add to Wishlist</p>
 	</div>
 </body>
 </html>
