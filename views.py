@@ -190,10 +190,14 @@ def new_author():
   if request.method == "POST":
     new_author = Author(first_name=request.form['first_name'], last_name=request.form['last_name'], bio=request.form['bio'])
     session.add(new_author)
+    for book_id in request.form.getlist('book'):
+      append_book = session.query(Book).filter_by(id=book_id).one()
+      new_author.books.append(append_book)
     session.commit()
     return redirect(url_for('catalog_authors'))
   else:
-    return render_template('author_create.html')
+    books = session.query(Book).all()
+    return render_template('author_create.html', books = books)
 
 
 # route: edit item (author)
