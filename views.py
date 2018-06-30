@@ -79,8 +79,8 @@ def catalog_book(id):
 
 
 # route: create item (book)
-@app.route('/catalog/book/new', methods=['GET', 'POST'])
-def new_book():
+@app.route('/catalog/book/create', methods=['GET', 'POST'])
+def create_book():
   if request.method == "POST":
     new_book = Book(title=request.form['title'], cover=request.form['cover'], description=request.form['description'])
     session.add(new_book)
@@ -136,8 +136,8 @@ def catalog_genre(id):
 
 
 # route: create item (genre)
-@app.route('/catalog/genre/new', methods=['GET', 'POST'])
-def new_genre():
+@app.route('/catalog/genre/create', methods=['GET', 'POST'])
+def create_genre():
   if request.method == "POST":
     new_genre = Genre(type=request.form['type'])
     session.add(new_genre)
@@ -185,8 +185,8 @@ def catalog_author(id):
 
 
 # route: create item (author)
-@app.route('/catalog/author/new', methods=['GET', 'POST'])
-def new_author():
+@app.route('/catalog/author/create', methods=['GET', 'POST'])
+def create_author():
   if request.method == "POST":
     new_author = Author(first_name=request.form['first_name'], last_name=request.form['last_name'], bio=request.form['bio'])
     session.add(new_author)
