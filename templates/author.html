@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Author - {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</title>
+</head>
+<body>
+	<h1>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
+	<p><span class="edit"><a href="{{ url_for('author_edit', id = author.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('author_delete', id = author.id) }}">DELETE</a></span></p>
+	<div>
+		<ul>
+			<li>Book(s):
+				<ul>
+					{% if author.books %}
+						{% for book in author.books %}
+							<li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
+						{% endfor %}
+					{% else %}
+						<li><i>This author has no current books in the database.</i></li>
+					{% endif %}
+				</ul>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

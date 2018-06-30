@@ -165,6 +165,13 @@ def delete_genre(id):
     return render_template('genre_delete.html', genre = genre)
 
 
+# route: item (author)
+@app.route('/catalog/author/<int:id>')
+def catalog_author(id):
+  author = session.query(Author).filter_by(id = id).one()
+  return render_template('author.html', author = author)
+
+
 
 if __name__ == '__main__':
   app.debug = True
