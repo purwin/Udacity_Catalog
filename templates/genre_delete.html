@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{{ genre.type }} -- Delete</title>
+</head>
+<body>
+	<h1>DELETE {{ genre.type }}</h1>
+	<form action="" method="POST">
+		<p>Are you sure you want to delete {{ genre.type }} from the catalog?</p>
+		<button><a href="{{ url_for('catalog_genre', id = genre.id)}}">Cancel</a></button>
+		<input type="submit" value="Delete">
+	</form>
+</body>
+</html>
