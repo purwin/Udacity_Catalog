@@ -122,7 +122,7 @@ def catalog_genre(id):
 # route: create item (genre)
 @app.route('/catalog/genre/new', methods=['GET', 'POST'])
 def new_genre():
-  pass
+  return render_template('genre_create.html')
 
 
 # route: edit item (genre)
