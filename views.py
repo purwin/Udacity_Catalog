@@ -16,8 +16,9 @@ app = Flask(__name__)
 
 # route: homepage
 @app.route('/')
-@app.route('/index')
 @app.route('/home')
+@app.route('/index')
+@app.route('/catalog')
 def index():
   books = session.query(Book).all()
   genres = session.query(Genre).all()
@@ -33,11 +34,6 @@ def login():
 # route: logout
 def logout():
   pass
-
-# route: category list
-@app.route('/catalog')
-def catalog():
-  return "Catalog!"
 
 
 # route: category results
