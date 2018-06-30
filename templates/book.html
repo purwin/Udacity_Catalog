@@ -4,7 +4,7 @@
 
 {% block content %}
 	<h1>{{ book.title }}</h1>
-	<p><span class="edit"><a href="/catalog/book/{{ book.id }}/edit">EDIT</a></span> <span class="delete"><a href="/catalog/book/{{ book.id }}/delete">DELETE</a></span></p>
+	<p><span class="edit"><a href="{{ url_for('edit_book', id = book.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('delete_book', id = book.id) }}">DELETE</a></span></p>
 	<div>
 		{% if book.cover %}
 		<img src="{{ book.cover }}" alt="" />
@@ -28,7 +28,7 @@
 				<ul>
 					{% if book.genres %}
 						{% for genre in book.genres %}
-						<li>{{ genre.type }}</li>
+						<li><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
 						{% endfor %}
 					{% else %}
 						<li>This book has no current genres</li>
