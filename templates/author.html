@@ -9,6 +9,7 @@
 	<p><span class="edit"><a href="{{ url_for('author_edit', id = author.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('author_delete', id = author.id) }}">DELETE</a></span></p>
 	<div>
 		<ul>
+			<li>Bio: {{ author.bio }}</li>
 			<li>Book(s):
 				<ul>
 					{% if author.books %}
