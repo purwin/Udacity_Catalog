@@ -54,13 +54,13 @@ def catalog_item(id):
 # route: create item (book)
 @app.route('/catalog/book/new', methods=['GET', 'POST'])
 def new_item():
-  if request.method = "POST":
+  if request.method == "POST":
     new_book = Book(title=request.form['title'], cover=request.form['cover'], description=request.form['description'])
     session.add(new_book)
     session.commit()
     return redirect(url_for('catalog'))
   else:
-    return render_template('book_new.html')
+    return render_template('book_create.html')
 
 
 # route: edit item (book)
