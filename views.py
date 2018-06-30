@@ -118,7 +118,8 @@ def edit_genre(id):
 # route: delete item (genre)
 @app.route('/catalog/genre/<int:id>/delete', methods=['GET', 'POST'])
 def delete_genre(id):
-  pass
+  genre = session.query(Genre).filter_by(id = id).one()
+  return render_template('genre_delete.html', genre = genre)
 
 
 
