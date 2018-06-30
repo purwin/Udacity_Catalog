@@ -19,7 +19,10 @@ app = Flask(__name__)
 @app.route('/index')
 @app.route('/home')
 def index():
-  return render_template('index.html')
+  books = session.query(Book).all()
+  genres = session.query(Genre).all()
+  authors = session.query(Author).all()
+  return render_template('index.html', books = books, genres = genres, authors = authors)
 
 
 # route: login
