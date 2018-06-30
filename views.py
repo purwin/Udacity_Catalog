@@ -87,11 +87,15 @@ def new_book():
     for author_id in request.form.getlist('author'):
       append_author = session.query(Author).filter_by(id=author_id).one()
       new_book.authors.append(append_author)
+    for genre_id in request.form.getlist('genre'):
+      append_genre = session.query(Genre).filter_by(id=genre_id).one()
+      new_book.genres.append(append_genre)
     session.commit()
     return redirect(url_for('catalog_books'))
   else:
     authors = session.query(Author).all()
-    return render_template('book_create.html', authors = authors)
+    genres = session.query(Genre).all()
+    return render_template('book_create.html', authors = authors, genres = genres)
 
 
 # route: edit item (book)
