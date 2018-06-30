@@ -8,13 +8,16 @@
 		<ul>
 			<li><label for="type">Name</label>: <input type="text" name="type" placeholder="Genre Type"></li>
 		</ul>
-		<h3>Titles</h3>
+		<h3>Books</h3>
 		<ul>
-			<li>
-				<select name="books" id="">
+			<li class="genre_book">
+				<select name="book" id="">
 				<option value="">Select a book</option>
-		</select>
-			</li>
+				{% for book in books %}
+					<option value="{{ book.id }}">{{ book.title }}</option>
+				{% endfor %}
+				</select>
+			</li>		
 		</ul>
 		<button><a href="{{ url_for('catalog_genres') }}">Cancel</a></button>
 		<input type="submit" value="Create">
