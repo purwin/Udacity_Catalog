@@ -119,7 +119,12 @@ def edit_genre(id):
 @app.route('/catalog/genre/<int:id>/delete', methods=['GET', 'POST'])
 def delete_genre(id):
   genre = session.query(Genre).filter_by(id = id).one()
-  return render_template('genre_delete.html', genre = genre)
+  if request.method == 'POST':
+    session.delete(genre)
+    session.commit()
+    return redirect(url_for('catalog_genre'), id = id)
+  else:
+    return render_template('genre_delete.html', genre = genre)
 
 
 
