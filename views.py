@@ -55,6 +55,13 @@ def catalog_books():
   return render_template('catalog_books.html', books = books)
 
 
+  # route: category (books)
+  @app.route('/catalog/genre/')
+  def catalog_genre():
+    genres = session.query(Genre).all()
+    return render_template('catalog_genre.html', genres = genres)
+
+
 # route: item (book)
 @app.route('/catalog/book/<int:id>')
 def catalog_book(id):
@@ -86,6 +93,31 @@ def edit_book(id):
 def delete_book(id):
   book = session.query(Book).filter_by(id = id).one()
   return render_template('book_delete.html', book = book)
+
+
+# route: item (genre)
+@app.route('/catalog/genre/<int:id>')
+def catalog_genre(id):
+  pass
+
+
+# route: create item (genre)
+@app.route('/catalog/genre/new', methods=['GET', 'POST'])
+def new_genre():
+  pass
+
+
+# route: edit item (genre)
+@app.route('/catalog/genre/<int:id>/edit', methods=['GET', 'POST'])
+def edit_genre(id):
+  pass
+
+
+# route: delete item (genre)
+@app.route('/catalog/genre/<int:id>/delete', methods=['GET', 'POST'])
+def delete_genre(id):
+  pass
+
 
 
 if __name__ == '__main__':
