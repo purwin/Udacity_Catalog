@@ -1,10 +1,8 @@
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>{{ book.title }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
 	<h1>{{ book.title }}</h1>
 	<p><span class="edit"><a href="/catalog/book/{{ book.id }}/edit">EDIT</a></span> <span class="delete"><a href="/catalog/book/{{ book.id }}/delete">DELETE</a></span></p>
 	<div>
@@ -43,5 +41,5 @@
 		<p>Add to Library</p>
 		<p>Add to Wishlist</p>
 	</div>
-</body>
-</html>
+
+{% endblock %}
