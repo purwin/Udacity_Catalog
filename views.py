@@ -44,6 +44,14 @@ def catalog_category(category):
   return render_template('category.html', genre = genre)
 
 
+# route: category books
+@app.route('/catalog/books/')
+@app.route('/catalog/book/')
+def catalog_book():
+  books = session.query(Book).all()
+  return render_template('catalog_books.html', books = books)
+
+
 # route: item (book)
 @app.route('/catalog/book/<int:id>')
 def catalog_item(id):
