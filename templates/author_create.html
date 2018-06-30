@@ -12,13 +12,15 @@
 		</ul>
 		<h3>Books</h3>
 		<ul>
-			<li>
-				<select name="books" id="">
+			<li class="author_book">
+				<select name="book" id="">
 				<option value="">Select a book</option>
-		</select>
+				{% for book in books %}
+					<option value="{{ book.id }}">{{ book.title }}</option>
+				{% endfor %}
+				</select>
 			</li>
 		</ul>
-		<h3>Genres</h3>
 		<button><a href="{{ url_for('catalog_authors') }}">Cancel</a></button>
 		<input type="submit" value="Create">
 	</form>
