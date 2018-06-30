@@ -18,7 +18,7 @@
 				<ul>
 					{% if book.authors %}
 						{% for author in book.authors %}
-						<li>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</li>
+						<li><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
 						{% endfor %}
 					{% else %}
 						<li><i>This book has no current authors</i></li>
