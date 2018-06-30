@@ -5,10 +5,10 @@
 	<title>{{ book.title }} -- Delete</title>
 </head>
 <body>
-	<h1>DELETE</h1>
-	<form action="/" method="POST">
+	<h1>DELETE {{ book.title }}</h1>
+	<form action="" method="POST">
 		<p>Are you sure you want to delete {{ book.title }} from the catalog?</p>
-		<button><a href="/catalog/book/{{ book.id }}">Cancel</a></button>
+		<button><a href="{{ url_for('catalog_book', id = book.id) }}/catalog/book/{{ book.id }}">Cancel</a></button>
 		<input type="submit" value="Delete">
 	</form>
 </body>
