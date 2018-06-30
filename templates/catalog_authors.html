@@ -1,10 +1,8 @@
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Catalog -- Authors</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Catalog -- Authors{% endblock %}
+
+{% block content %}
 	<h1>AUTHORS</h1>
 	<p><a href="{{ url_for('new_author') }}">ADD AN AUTHOR</a></p>
 	{% if authors %}
@@ -14,5 +12,4 @@
 	{% else %}
 		<p><i>There are no authors in the catalog at this time.</i></p>
 	{% endif %}
-</body>
-</html>
+{% endblock %}

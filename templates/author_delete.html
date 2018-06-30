@@ -1,15 +1,12 @@
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} -- Delete</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} -- Delete{% endblock %}
+
+{% block content %}
 	<h1>DELETE {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
 	<form action="" method="POST">
 		<p>Are you sure you want to delete <b>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</b> from the catalog?</p>
 		<button><a href="{{ url_for('catalog_author', id = author.id) }}">Cancel</a></button>
 		<input type="submit" value="Delete">
 	</form>
-</body>
-</html>
+{% endblock %}

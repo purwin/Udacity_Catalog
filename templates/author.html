@@ -1,10 +1,8 @@
-<!doctype html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Author - {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Author -- {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}{% endblock %}
+
+{% block content %}
 	<h1>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
 	<p><span class="edit"><a href="{{ url_for('edit_author', id = author.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('delete_author', id = author.id) }}">DELETE</a></span></p>
 	<div>
@@ -23,5 +21,4 @@
 			</li>
 		</ul>
 	</div>
-</body>
-</html>
+{% endblock %}
