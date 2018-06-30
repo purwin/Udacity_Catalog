@@ -4,7 +4,7 @@
 
 {% block content %}
 	<h1>AUTHORS</h1>
-	<p><a href="{{ url_for('new_author') }}">ADD AN AUTHOR</a></p>
+	<p><a href="{{ url_for('create_author') }}">ADD AN AUTHOR</a></p>
 	{% if authors %}
 		{% for author in authors %}
 			<p><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></p>
