@@ -93,7 +93,12 @@ def edit_book(id):
 @app.route('/catalog/book/<int:id>/delete', methods=['GET', 'POST'])
 def delete_book(id):
   book = session.query(Book).filter_by(id = id).one()
-  return render_template('book_delete.html', book = book)
+  if request.method == 'POST':
+    session.delete(book)
+    session.commit()
+    return redirect(url_for('catalog_book'), id = id)
+  else:
+    return render_template('book_delete.html', book = book)
 
 
 # route: item (genre)
