@@ -190,6 +190,18 @@ def edit_author(id):
     return render_template('author_edit.html', author = author)
 
 
+# route: delete item (author)
+@app.route('/catalog/author/<int:id>/delete', methods=['GET', 'POST'])
+def delete_author(id):
+  author = session.query(Author).filter_by(id = id).one()
+  if request.method == 'POST':
+    session.delete(author)
+    session.commit()
+    return redirect(url_for('catalog_authors'))
+  else:
+    return render_template('author_delete.html', author = author)
+
+
 
 if __name__ == '__main__':
   app.debug = True
