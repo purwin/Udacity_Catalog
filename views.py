@@ -107,7 +107,7 @@ def delete_book(id):
   if request.method == 'POST':
     session.delete(book)
     session.commit()
-    return redirect(url_for('catalog_book'), id = book.id)
+    return redirect(url_for('catalog_books'))
   else:
     return render_template('book_delete.html', book = book)
 
@@ -122,7 +122,13 @@ def catalog_genre(id):
 # route: create item (genre)
 @app.route('/catalog/genre/new', methods=['GET', 'POST'])
 def new_genre():
-  return render_template('genre_create.html')
+  if request.method == "POST":
+    new_genre = Genre(type=request.form['type'])
+    session.add(new_genre)
+    session.commit()
+    return redirect(url_for('catalog_genres'))
+  else:
+    return render_template('genre_create.html')
 
 
 # route: edit item (genre)
@@ -138,7 +144,7 @@ def delete_genre(id):
   if request.method == 'POST':
     session.delete(genre)
     session.commit()
-    return redirect(url_for('catalog_genre'), id = id)
+    return redirect(url_for('catalog_genres'))
   else:
     return render_template('genre_delete.html', genre = genre)
 
