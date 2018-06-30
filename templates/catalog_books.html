@@ -6,10 +6,10 @@
 </head>
 <body>
 	<h1>BOOKS</h1>
-	<p><a href="/catalog/book/new">ADD A BOOK</a></p>
+	<p><a href="{{ url_for('create_book') }}">ADD A BOOK</a></p>
 	{% if books %}
 		{% for book in books %}
-			<p><a href="/catalog/book/{{ book.id }}">{{ book.title }}</a>	<span>ADD TO LIBRARY</span>	<span>ADD TO WISHLIST</span></p>
+			<p><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a>	<span>ADD TO LIBRARY</span>	<span>ADD TO WISHLIST</span></p>
 		{% endfor %}
 	{% else %}
 		<p><i>There are no books in the catalog at this time.</i></p>
