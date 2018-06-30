@@ -63,6 +63,14 @@ def catalog_genres():
   return render_template('catalog_genre.html', genres = genres)
 
 
+# route: category (authors)
+@app.route('/catalog/authors/')
+@app.route('/catalog/author/')
+def catalog_authors():
+  authors = session.query(Author).all()
+  return render_template('catalog_authors.html', authors = authors)
+
+
 # route: item (book)
 @app.route('/catalog/book/<int:id>')
 def catalog_book(id):
