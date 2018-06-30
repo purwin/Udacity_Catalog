@@ -172,6 +172,18 @@ def catalog_author(id):
   return render_template('author.html', author = author)
 
 
+# route: create item (author)
+@app.route('/catalog/author/new', methods=['GET', 'POST'])
+def new_author():
+  if request.method == "POST":
+    new_author = Author(first_name=request.form['first_name'], last_name=request.form['last_name'], bio=request.form['bio'])
+    session.add(new_author)
+    session.commit()
+    return redirect(url_for('catalog_authors'))
+  else:
+    return render_template('author_create.html')
+
+
 # route: edit item (author)
 @app.route('/catalog/author/<int:id>/edit', methods=['GET', 'POST'])
 def edit_author(id):
