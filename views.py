@@ -86,7 +86,18 @@ def new_book():
 @app.route('/catalog/book/<int:id>/edit', methods=['GET', 'POST'])
 def edit_book(id):
   book = session.query(Book).filter_by(id = id).one()
-  return render_template('book_edit.html', book = book)
+  if request.method == 'POST':
+    if request.form['title']:
+      book.title = request.form['title']
+    if request.form['cover']:
+      book.cover = request.form['cover']
+    if request.form['description']:
+      book.description = request.form['description']
+    session.add(book)
+    session.commit()
+    return redirect(url_for('catalog_book', id = book.id))
+  else:
+    return render_template('book_edit.html', book = book)
 
 
 # route: delete item (book)
@@ -96,7 +107,7 @@ def delete_book(id):
   if request.method == 'POST':
     session.delete(book)
     session.commit()
-    return redirect(url_for('catalog_book'), id = id)
+    return redirect(url_for('catalog_book'), id = book.id)
   else:
     return render_template('book_delete.html', book = book)
 
