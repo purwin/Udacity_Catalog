@@ -141,10 +141,14 @@ def new_genre():
   if request.method == "POST":
     new_genre = Genre(type=request.form['type'])
     session.add(new_genre)
+    for book_id in request.form.getlist('book'):
+      append_book = session.query(Book).filter_by(id=book_id).one()
+      new_genre.books.append(append_book)
     session.commit()
     return redirect(url_for('catalog_genres'))
   else:
-    return render_template('genre_create.html')
+    books = session.query(Book).all()
+    return render_template('genre_create.html', books = books)
 
 
 # route: edit item (genre)
