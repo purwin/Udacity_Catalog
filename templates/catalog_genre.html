@@ -5,8 +5,8 @@
 	<title>Catalog -- Genre</title>
 </head>
 <body>
-	<h1>GENRES</h1>
-	<p><a href="/catalog/genre/new">ADD A GENRE</a></p>
+	<h1>LITERARY GENRES</h1>
+	<p><a href="/catalog/genre/new">CREATE A GENRE</a></p>
 	{% if genres %}
 		{% for genre in genres %}
 			<p><a href="/catalog/genre/{{ genre.id }}">{{ genre.type }}</a></p>
