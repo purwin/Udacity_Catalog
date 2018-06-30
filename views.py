@@ -44,43 +44,43 @@ def catalog_category(category):
   return render_template('category.html', genre = genre)
 
 
-# route: category books
+# route: category (books)
 @app.route('/catalog/books/')
 @app.route('/catalog/book/')
-def catalog_book():
+def catalog_books():
   books = session.query(Book).all()
   return render_template('catalog_books.html', books = books)
 
 
 # route: item (book)
 @app.route('/catalog/book/<int:id>')
-def catalog_item(id):
+def catalog_book(id):
   book = session.query(Book).filter_by(id = id).one()
   return render_template('book.html', book = book)
 
 
 # route: create item (book)
 @app.route('/catalog/book/new', methods=['GET', 'POST'])
-def new_item():
+def new_book():
   if request.method == "POST":
     new_book = Book(title=request.form['title'], cover=request.form['cover'], description=request.form['description'])
     session.add(new_book)
     session.commit()
-    return redirect(url_for('catalog'))
+    return redirect(url_for('catalog_books'))
   else:
     return render_template('book_create.html')
 
 
 # route: edit item (book)
 @app.route('/catalog/book/<int:id>/edit', methods=['GET', 'POST'])
-def edit_item(id):
+def edit_book(id):
   book = session.query(Book).filter_by(id = id).one()
   return render_template('book_edit.html', book = book)
 
 
 # route: delete item (book)
 @app.route('/catalog/book/<int:id>/delete', methods=['GET', 'POST'])
-def delete_item(id):
+def delete_book(id):
   book = session.query(Book).filter_by(id = id).one()
   return render_template('book_delete.html', book = book)
 
