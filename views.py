@@ -60,7 +60,7 @@ def catalog_books():
 @app.route('/catalog/genre/')
 def catalog_genres():
   genres = session.query(Genre).all()
-  return render_template('catalog_genre.html', genres = genres)
+  return render_template('catalog_genres.html', genres = genres)
 
 
 # route: category (authors)
