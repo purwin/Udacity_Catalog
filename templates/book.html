@@ -11,31 +11,36 @@
 		{% endif %}
 	</div>
 	<div>
+		<h3>Description</h3>
+		{% if book.description %}
+			<p>{{ book.description }}</p>
+		{% else %}
+			<p><i>This book has no current description.</i></p>
+		{% endif %}
+	</div>
+	<div>
+		<h3>Authors</h3>
 		<ul>
-			<li>Author(s):
-				<ul>
-					{% if book.authors %}
-						{% for author in book.authors %}
-						<li><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
-						{% endfor %}
-					{% else %}
-						<li><i>This book has no current authors</i></li>
-					{% endif %}
-				</ul>
-			</li>
-			<li>Description: {{ book.description }}</li>
-			<li>Genres:
-				<ul>
-					{% if book.genres %}
-						{% for genre in book.genres %}
-						<li><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
-						{% endfor %}
-					{% else %}
-						<li>This book has no current genres</li>
-					{% endif %}
-				</ul>
-			</li>
+			{% if book.authors %}
+				{% for author in book.authors %}
+					<li><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
+				{% endfor %}
+			{% else %}
+				<li><i>This book has no current authors.</i></li>
+			{% endif %}
 		</ul>
+	</div>
+	<div>
+		<h3>Genres</h3>
+			<ul>
+				{% if book.genres %}
+					{% for genre in book.genres %}
+					<li><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
+					{% endfor %}
+				{% else %}
+					<li>This book has no current genres</li>
+				{% endif %}
+			</ul>
 	</div>
 	<div>
 		<p>Add to Library</p>
