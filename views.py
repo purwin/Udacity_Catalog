@@ -208,6 +208,8 @@ def catalog_book(id):
 # route: create item (book)
 @app.route('/catalog/book/create', methods=['GET', 'POST'])
 def create_book():
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   if request.method == "POST":
     new_book = Book(title=request.form['title'], cover=request.form['cover'], description=request.form['description'])
     session.add(new_book)
@@ -228,6 +230,8 @@ def create_book():
 # route: edit item (book)
 @app.route('/catalog/book/<int:id>/edit', methods=['GET', 'POST'])
 def edit_book(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   book = session.query(Book).filter_by(id = id).one()
   if request.method == 'POST':
     if request.form['title']:
@@ -246,6 +250,8 @@ def edit_book(id):
 # route: delete item (book)
 @app.route('/catalog/book/<int:id>/delete', methods=['GET', 'POST'])
 def delete_book(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   book = session.query(Book).filter_by(id = id).one()
   if request.method == 'POST':
     session.delete(book)
@@ -265,6 +271,8 @@ def catalog_genre(id):
 # route: create item (genre)
 @app.route('/catalog/genre/create', methods=['GET', 'POST'])
 def create_genre():
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   if request.method == "POST":
     new_genre = Genre(type=request.form['type'])
     session.add(new_genre)
@@ -281,6 +289,8 @@ def create_genre():
 # route: edit item (genre)
 @app.route('/catalog/genre/<int:id>/edit', methods=['GET', 'POST'])
 def edit_genre(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   genre = session.query(Genre).filter_by(id = id).one()
   if request.method == 'POST':
     if request.form['type']:
@@ -295,6 +305,8 @@ def edit_genre(id):
 # route: delete item (genre)
 @app.route('/catalog/genre/<int:id>/delete', methods=['GET', 'POST'])
 def delete_genre(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   genre = session.query(Genre).filter_by(id = id).one()
   if request.method == 'POST':
     session.delete(genre)
@@ -314,6 +326,8 @@ def catalog_author(id):
 # route: create item (author)
 @app.route('/catalog/author/create', methods=['GET', 'POST'])
 def create_author():
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   if request.method == "POST":
     new_author = Author(first_name=request.form['first_name'], last_name=request.form['last_name'], bio=request.form['bio'])
     session.add(new_author)
@@ -330,6 +344,8 @@ def create_author():
 # route: edit item (author)
 @app.route('/catalog/author/<int:id>/edit', methods=['GET', 'POST'])
 def edit_author(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   author = session.query(Author).filter_by(id = id).one()
   if request.method == 'POST':
     if request.form['first_name']:
@@ -348,6 +364,8 @@ def edit_author(id):
 # route: delete item (author)
 @app.route('/catalog/author/<int:id>/delete', methods=['GET', 'POST'])
 def delete_author(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
   author = session.query(Author).filter_by(id = id).one()
   if request.method == 'POST':
     session.delete(author)
