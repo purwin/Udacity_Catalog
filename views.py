@@ -1,14 +1,17 @@
 from models import *
-from flask import Flask, jsonify, request, url_for, render_template, redirect
+from flask import Flask, jsonify, request, url_for, render_template, redirect, make_response
+from flask import session as login_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
 
+import json
+import random
+import string
+
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import httplib2
-import json
-from flask import make_response
 import requests
 
 app = Flask(__name__)
@@ -37,9 +40,12 @@ def index():
 
 
 # route: login
-@app.route('/login')
+@app.route('/login/')
 def login():
-  pass
+  state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+  login_session['state'] = state
+  return "The current session state is %s" % login_session['state']
+  # return render_template('login.html', STATE = state)
 
 # route: logout
 def logout():
@@ -238,5 +244,6 @@ def delete_author(id):
 
 
 if __name__ == '__main__':
+  app.secret_key = 'aoiwejfmoaijmcosijr'
   app.debug = True
   app.run(host='0.0.0.0', port=8000, threaded = False)
