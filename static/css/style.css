@@ -1,0 +1,25 @@
+/*
+ *
+ * Global
+ *
+ */
+
+
+
+
+/*
+ *
+ * Nav
+ *
+ */
+
+nav ul {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+nav ul li{
+  list-style-type: none;
+}
