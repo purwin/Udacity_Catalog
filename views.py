@@ -11,18 +11,17 @@ import json
 from flask import make_response
 import requests
 
-
+app = Flask(__name__)
 
 
 CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = 'UD Catalog Project'
 
 engine = create_engine('sqlite:///books.db')
-
 Base.metadata.bind = engine
+
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-app = Flask(__name__)
 
 
 # route: homepage
