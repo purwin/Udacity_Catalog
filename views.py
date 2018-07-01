@@ -4,7 +4,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
 
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
+import httplib2
 import json
+from flask import make_response
+import requests
+
+
+
+
+CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
+APPLICATION_NAME = 'UD Catalog Project'
 
 engine = create_engine('sqlite:///books.db')
 
