@@ -204,11 +204,6 @@ def user_account():
     return render_template('user_account.html', user = user)
 
 
-# route: logout
-def logout():
-  pass
-
-
 # route: category results
 @app.route('/catalog/category/<category>')
 def catalog_category(category):
