@@ -7,38 +7,38 @@ Base = declarative_base()
 
 
 class User(Base):
-    __tablename__ = "user"
-    id = Column(Integer, primary_key=True)
-    name  = Column(String(250), nullable=False)
-    email = Column(String(250), nullable=False)
-    picture = Column(String(250))
-    library = relationship('Book', secondary='library', backref='user_library', lazy='dynamic')
-    wishlist = relationship('Book', secondary='library', backref='user_wishlist', lazy='dynamic')
+  __tablename__ = "user"
+  id = Column(Integer, primary_key=True)
+  name = Column(String(250), nullable=False)
+  email = Column(String(250), nullable=False)
+  picture = Column(String(250))
+  library = relationship('Book', secondary='library', backref='user_library', lazy='dynamic')
+  wishlist = relationship('Book', secondary='library', backref='user_wishlist', lazy='dynamic')
 
 
 class Book(Base):
-    __tablename__ = "book"
-    id = Column(Integer, primary_key=True)
-    title = Column(String(80))
-    cover = Column(String)
-    description = Column(String)
-    authors = relationship('Author', secondary='book_author', backref='books', lazy='dynamic')
-    genres = relationship('Genre', secondary='book_genre', backref='books', lazy='dynamic')
+  __tablename__ = "book"
+  id = Column(Integer, primary_key=True)
+  title = Column(String(80))
+  cover = Column(String)
+  description = Column(String)
+  authors = relationship('Author', secondary='book_author', backref='books', lazy='dynamic')
+  genres = relationship('Genre', secondary='book_genre', backref='books', lazy='dynamic')
 
 
 class Author(Base):
-    __tablename__ = "author"
-    id = Column(Integer, primary_key=True)
-    last_name = Column(String(80))
-    first_name = Column(String(80))
-    # full_name
-    bio = Column(String)
+  __tablename__ = "author"
+  id = Column(Integer, primary_key=True)
+  last_name = Column(String(80))
+  first_name = Column(String(80))
+  # full_name
+  bio = Column(String)
 
 
 class Genre(Base):
-    __tablename__ = "genre"
-    id = Column(Integer, primary_key=True)
-    type = Column(String(80))
+  __tablename__ = "genre"
+  id = Column(Integer, primary_key=True)
+  type = Column(String(80))
 
 
 Table('book_author', Base.metadata,
@@ -64,6 +64,6 @@ Table('wishlist', Base.metadata,
      )
 
 
-engine = create_engine('sqlite:///books.db')
+engine = create_engine('sqlite:///books-01.db')
 
 Base.metadata.create_all(engine)
