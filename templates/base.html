@@ -16,6 +16,9 @@
       <li><a href="{{ url_for('catalog_books') }}">Books</a></li>
       <li><a href="{{ url_for('catalog_authors') }}">Authors</a></li>
       <li><a href="{{ url_for('catalog_genres') }}">Genres</a></li>
+      {%if 'username' in session %}
+        <li><a href="{{ url_for('user_account') }}">My Account</a></li>
+      {% endif %}
     </ul>
   </nav>
   {% block content %}{% endblock %}
