@@ -20,7 +20,7 @@ app = Flask(__name__)
 CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = 'UD Catalog Project'
 
-engine = create_engine('sqlite:///books.db')
+engine = create_engine('sqlite:///books-01.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -120,7 +120,7 @@ def gconnect():
   login_session['picture'] = data['picture']
   login_session['email'] = data['email']
 
-  user_id = getUserInfo(login_session['email'])
+  user_id = getUserID(login_session['email'])
   if not user_id:
     user_id = createUser(login_session)
   login_session['user_id'] = user_id
@@ -132,7 +132,7 @@ def gconnect():
   output += '<img src="'
   output += login_session['picture']
   output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
-  flash("you are now logged in as {}".format(login_session['username']))
+  flash("You are now logged in as {}".format(login_session['username']))
   print "done!"
   return output
 
@@ -140,8 +140,8 @@ def gconnect():
 # User Helper Functions
 # Adapted from https://github.com/udacity/ud330
 def createUser(login_session):
-  newUser = User(name = login_session['username'], email = login_session['email'], picture = login_session['picture'])
-  session.add(newUser)
+  new_user = User(name = login_session['username'], email = login_session['email'], picture = login_session['picture'])
+  session.add(new_user)
   session.commit()
   user = session.query(User).filter_by(email = login_session['email']).one()
   return user.id
@@ -170,6 +170,7 @@ def gdisconnect():
     response = make_response(json.dumps('Current user not connected.'), 401)
     response.headers['Content-Type'] = 'application/json'
     return response
+  print "Access! {}".format(access_token)
   print 'In gdisconnect access token is {}'.format(access_token)
   print 'User name is: {}'.format(login_session['username'])
   url = 'https://accounts.google.com/o/oauth2/revoke?token={}'.format(login_session['access_token'])
@@ -182,9 +183,11 @@ def gdisconnect():
     del login_session['username']
     del login_session['email']
     del login_session['picture']
-    response = make_response(json.dumps('Successfully disconnected.'), 200)
-    response.headers['Content-Type'] = 'application/json'
-    return response
+    # response = make_response(json.dumps('Successfully disconnected.'), 200)
+    # response.headers['Content-Type'] = 'application/json'
+    # return response
+    flash("You are now logged out")
+    return redirect(url_for('index'))
   else:
     response = make_response(json.dumps('Failed to revoke token for given user.', 400))
     response.headers['Content-Type'] = 'application/json'
@@ -405,6 +408,6 @@ def delete_author(id):
 
 
 if __name__ == '__main__':
-  app.secret_key = 'aoiwejfmoaijmcosijr'
+  app.secret_key = 'oaiwejfo;aijvfowejm'
   app.debug = True
   app.run(host='0.0.0.0', port=8000, threaded = False)
