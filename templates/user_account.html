@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}User Account{% endblock %}
+
+{% block content %}
+  <h1>{{ user.name }}</h1>
+  <div>
+    <img src="{{ user.picture }}" alt="">
+  </div>
+  <p>Email address: {{ user.email }}</p>
+  <div class="library">
+    <h3>Library</h3>
+    <ul>
+      {% if library %}
+        {% for book in user.library %}
+          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
+        {% endfor %}
+      {% else %}
+        <li><i>You don't have any books in your library at this time.</i></li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="wishlist">
+    <h3>Wishlist</h3>
+    <ul>
+      {% if wishlist %}
+        {% for book in user.wishlist %}
+          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
+        {% endfor %}
+      {% else %}
+        <li><i>You don't have any books in your wishlist at this time.</i></li>
+      {% endif %}
+    </ul>
+  </div>
+{% endblock %}
