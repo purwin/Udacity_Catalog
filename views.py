@@ -193,6 +193,17 @@ def gdisconnect():
     response.headers['Content-Type'] = 'application/json'
     return response
 
+@app.route('/account/')
+def user_account():
+  creator = getUserInfo(restaurant.user_id)
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  else:
+    user_id = getUserID(login_session['email'])
+    user = getUserInfo(user_id)
+    return render_template('user_account.html', user = user)
+
+
 # route: logout
 def logout():
   pass
