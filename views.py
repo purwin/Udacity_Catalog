@@ -202,6 +202,16 @@ def user_account():
     user = getUserInfo(user_id)
     return render_template('user_account.html', user = user)
 
+@app.route('/catalog/book/<int:id>/library/add', methods=['GET', 'POST'])
+def add_library(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  else:
+    book = session.query(Book).filter_by(id = id).one()
+    user_id = getUserID(login_session['email'])
+    user = getUserInfo(user_id)
+    return render_template('add_library.html', book = book, user = user)
+
 
 # route: category results
 @app.route('/catalog/category/<category>')
