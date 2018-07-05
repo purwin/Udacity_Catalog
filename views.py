@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 import json
 import random
 import string
+import sys
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -172,7 +173,6 @@ def gdisconnect():
     return response
   print "Access! {}".format(access_token)
   print 'In gdisconnect access token is {}'.format(access_token)
-  print 'User name is: {}'.format(login_session['username'])
   url = 'https://accounts.google.com/o/oauth2/revoke?token={}'.format(login_session['access_token'])
   h = httplib2.Http()
   result = h.request(url, 'GET')[0]
@@ -207,7 +207,12 @@ def user_account():
 @app.route('/catalog/category/<category>')
 def catalog_category(category):
   genre = session.query(Genre).filter_by(type = category).one()
-  return render_template('category.html', genre = genre)
+  if 'username' in login_session:
+    user_id = getUserID(login_session['email'])
+    user = getUserInfo(user_id)
+  else:
+    user = None
+  return render_template('category.html', genre = genre, user = user)
 
 
 # route: category (books)
@@ -249,12 +254,16 @@ def create_book():
   if request.method == "POST":
     new_book = Book(title=request.form['title'], cover=request.form['cover'], description=request.form['description'])
     session.add(new_book)
-    for author_id in request.form.getlist('author'):
-      append_author = session.query(Author).filter_by(id=author_id).one()
-      new_book.authors.append(append_author)
-    for genre_id in request.form.getlist('genre'):
-      append_genre = session.query(Genre).filter_by(id=genre_id).one()
-      new_book.genres.append(append_genre)
+    try:
+      for author_id in request.form.getlist('author'):
+        append_author = session.query(Author).filter_by(id=author_id).one()
+        new_book.authors.append(append_author)
+      for genre_id in request.form.getlist('genre'):
+        append_genre = session.query(Genre).filter_by(id=genre_id).one()
+        new_book.genres.append(append_genre)
+    except:
+      e = sys.exc_info()[0]
+      print "error: {}".format(e)
     session.commit()
     return redirect(url_for('catalog_books'))
   else:
@@ -312,9 +321,13 @@ def create_genre():
   if request.method == "POST":
     new_genre = Genre(type=request.form['type'])
     session.add(new_genre)
-    for book_id in request.form.getlist('book'):
-      append_book = session.query(Book).filter_by(id=book_id).one()
-      new_genre.books.append(append_book)
+    try:
+      for book_id in request.form.getlist('book'):
+        append_book = session.query(Book).filter_by(id=book_id).one()
+        new_genre.books.append(append_book)
+    except:
+      e = sys.exc_info()[0]
+      print "error: {}".format(e)
     session.commit()
     return redirect(url_for('catalog_genres'))
   else:
@@ -367,9 +380,13 @@ def create_author():
   if request.method == "POST":
     new_author = Author(first_name=request.form['first_name'], last_name=request.form['last_name'], bio=request.form['bio'])
     session.add(new_author)
-    for book_id in request.form.getlist('book'):
-      append_book = session.query(Book).filter_by(id=book_id).one()
-      new_author.books.append(append_book)
+    try:
+      for book_id in request.form.getlist('book'):
+        append_book = session.query(Book).filter_by(id=book_id).one()
+        new_author.books.append(append_book)
+    except:
+      e = sys.exc_info()[0]
+      print "error: {}".format(e)
     session.commit()
     return redirect(url_for('catalog_authors'))
   else:
