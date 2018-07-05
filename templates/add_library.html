@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Library -- Add{% endblock %}
+
+{% block content %}
+<h1>ADD TO LIBRARY</h1>
+<form action="" method="POST">
+<p>Are you sure you want to add {{ book.title }} to your library, {{ user.name }}?</p>
+<button><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
+<input type="submit" value="Add">
+</form>
+{% endblock %}
