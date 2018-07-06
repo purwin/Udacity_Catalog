@@ -42,9 +42,11 @@
 				{% endif %}
 			</ul>
 	</div>
-	<div>
-		<p>Add to Library</p>
-		<p>Add to Wishlist</p>
-	</div>
+	{% if user %}
+		<div>
+			<p><a href="{{ url_for('add_library', id = book.id, user = user) }}">ADD TO LIBRARY</a></p>
+			<p><a href="{{ url_for('add_library', id = book.id, user = user) }}">ADD TO WISHLIST</a></p>
+		</div>
+	{% endif %}
 
 {% endblock %}
