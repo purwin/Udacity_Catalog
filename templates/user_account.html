@@ -11,9 +11,9 @@
   <div class="library">
     <h3>Library</h3>
     <ul>
-      {% if library %}
+      {% if user.library %}
         {% for book in user.library %}
-          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
+          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a href="#">REMOVE FROM LIBRARY</a></span></li>
         {% endfor %}
       {% else %}
         <li><i>You don't have any books in your library at this time.</i></li>
@@ -23,9 +23,9 @@
   <div class="wishlist">
     <h3>Wishlist</h3>
     <ul>
-      {% if wishlist %}
+      {% if user.wishlist %}
         {% for book in user.wishlist %}
-          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
+          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a href="#">REMOVE FROM WISHLIST</a></span></li>
         {% endfor %}
       {% else %}
         <li><i>You don't have any books in your wishlist at this time.</i></li>
