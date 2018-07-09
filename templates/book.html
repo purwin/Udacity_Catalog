@@ -44,8 +44,16 @@
 	</div>
 	{% if user %}
 		<div>
-			<p><a href="{{ url_for('add_library', id = book.id, user = user) }}">ADD TO LIBRARY</a></p>
-			<p><a href="{{ url_for('add_library', id = book.id, user = user) }}">ADD TO WISHLIST</a></p>
+			{% if book in user.library %}
+				<p><a href="#">REMOVE FROM LIBRARY</a></p>
+			{% else %}
+				<p><a href="{{ url_for('add_library', id = book.id, user = user) }}">ADD TO LIBRARY</a></p>
+			{% endif %}
+			{% if book in user.wishlist %}
+				<p><a href="#">REMOVE FROM WISHLIST</a></p>
+			{% else %}
+				<p><a href="#">ADD TO WISHLIST</a></p>
+			{% endif %}
 		</div>
 	{% endif %}
 
