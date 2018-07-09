@@ -202,14 +202,18 @@ def user_account():
     user = getUserInfo(user_id)
     return render_template('user_account.html', user = user)
 
-@app.route('/catalog/book/<int:id>/library/add', methods=['GET', 'POST'])
+@app.route('/catalog/book/<int:id>/library/add/', methods=['GET', 'POST'])
 def add_library(id):
   if 'username' not in login_session:
     return redirect(url_for('login'))
+  book = session.query(Book).filter_by(id = id).one()
+  user_id = getUserID(login_session['email'])
+  user = getUserInfo(user_id)
+  if request.method == 'POST':
+    user.library.append(book)
+    session.commit()
+    return redirect(url_for('catalog_books'))
   else:
-    book = session.query(Book).filter_by(id = id).one()
-    user_id = getUserID(login_session['email'])
-    user = getUserInfo(user_id)
     return render_template('add_library.html', book = book, user = user)
 
 
@@ -253,7 +257,12 @@ def catalog_authors():
 @app.route('/catalog/book/<int:id>')
 def catalog_book(id):
   book = session.query(Book).filter_by(id = id).one()
-  return render_template('book.html', book = book)
+  if 'username' in login_session:
+    user_id = getUserID(login_session['email'])
+    user = getUserInfo(user_id)
+  else:
+    user = None
+  return render_template('book.html', book = book, user = user)
 
 
 # route: create item (book)
