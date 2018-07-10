@@ -202,6 +202,8 @@ def user_account():
     user = getUserInfo(user_id)
     return render_template('user_account.html', user = user)
 
+
+# route: add to library
 @app.route('/catalog/book/<int:id>/library/add/', methods=['GET', 'POST'])
 def add_library(id):
   if 'username' not in login_session:
@@ -216,6 +218,8 @@ def add_library(id):
   else:
     return render_template('add_library.html', book = book, user = user)
 
+
+# route: remove from library
 @app.route('/catalog/book/<int:id>/library/delete/', methods=['GET', 'POST'])
 def delete_library(id):
   if 'username' not in login_session:
@@ -229,6 +233,22 @@ def delete_library(id):
     return redirect(url_for('catalog_books'))
   else:
     return render_template('delete_library.html', book = book, user = user)
+
+
+# route: add to wishlist
+@app.route('/catalog/book/<int:id>/wishlist/add/', methods=['GET', 'POST'])
+def add_wishlist(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  book = session.query(Book).filter_by(id = id).one()
+  user_id = getUserID(login_session['email'])
+  user = getUserInfo(user_id)
+  if request.method == 'POST':
+    user.wishlist.append(book)
+    session.commit()
+    return redirect(url_for('catalog_books'))
+  else:
+    return render_template('wishlist_add.html', book = book, user = user)
 
 
 # route: category results
