@@ -216,7 +216,7 @@ def add_library(id):
     session.commit()
     return redirect(url_for('catalog_books'))
   else:
-    return render_template('add_library.html', book = book, user = user)
+    return render_template('library_add.html', book = book, user = user)
 
 
 # route: remove from library
