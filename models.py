@@ -25,6 +25,15 @@ class Book(Base):
   authors = relationship('Author', secondary='book_author', backref='books', lazy='dynamic')
   genres = relationship('Genre', secondary='book_genre', backref='books', lazy='dynamic')
 
+  @property
+  def serialize(self):
+    return {
+      'id': self.id,
+      'title': self.title,
+      'cover': self.cover,
+      'description': self.description
+    }
+
 
 class Author(Base):
   __tablename__ = "author"
