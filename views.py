@@ -303,6 +303,13 @@ def catalog_authors():
   return render_template('catalog_authors.html', authors = authors)
 
 
+# route: authors JSON
+@app.route('/catalog/author/JSON')
+def authors_JSON():
+  authors = session.query(Author).all()
+  return jsonify(Authors=[a.serialize for a in authors])
+
+
 # route: item (book)
 @app.route('/catalog/book/<int:id>')
 def catalog_book(id):
@@ -440,7 +447,7 @@ def catalog_author(id):
   author = session.query(Author).filter_by(id = id).one()
   return render_template('author.html', author = author)
 
-
+# route: author JSON
 @app.route('/catalog/author/<int:id>/JSON')
 def author_JSON(id):
   author = session.query(Author).filter_by(id=id).one()
