@@ -13,7 +13,7 @@
     <ul>
       {% if user.library %}
         {% for book in user.library %}
-          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a href="#">REMOVE FROM LIBRARY</a></span></li>
+          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></span></li>
         {% endfor %}
       {% else %}
         <li><i>You don't have any books in your library at this time.</i></li>
