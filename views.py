@@ -441,6 +441,12 @@ def catalog_author(id):
   return render_template('author.html', author = author)
 
 
+@app.route('/catalog/author/<int:id>/JSON')
+def author_JSON(id):
+  author = session.query(Author).filter_by(id=id).one()
+  return jsonify(Author=author.serialize)
+
+
 # route: create item (author)
 @app.route('/catalog/author/create', methods=['GET', 'POST'])
 def create_author():
