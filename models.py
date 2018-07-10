@@ -49,6 +49,13 @@ class Genre(Base):
   id = Column(Integer, primary_key=True)
   type = Column(String(80))
 
+  @property
+  def serialize(self):
+    return {
+      'id': self.id,
+      'type': self.type
+    }
+
 
 Table('book_author', Base.metadata,
       Column('book_id', Integer, ForeignKey('book.id')),
