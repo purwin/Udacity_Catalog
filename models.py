@@ -12,8 +12,8 @@ class User(Base):
   name = Column(String(250), nullable=False)
   email = Column(String(250), nullable=False)
   picture = Column(String(250))
-  library = relationship('Book', secondary='library', backref='user_library', lazy='dynamic')
-  wishlist = relationship('Book', secondary='library', backref='user_wishlist', lazy='dynamic')
+  library = relationship('Book', secondary='library', backref='user_library')
+  wishlist = relationship('Book', secondary='wishlist', backref='user_wishlist')
 
 
 class Book(Base):
@@ -53,17 +53,17 @@ Table('book_genre', Base.metadata,
      )
 
 
-Table('library', Base.metadata,
+library = Table('library', Base.metadata,
       Column('user_id', Integer, ForeignKey('user.id')),
       Column('book_id', Integer, ForeignKey('book.id'))
      )
 
-Table('wishlist', Base.metadata,
+wishlist = Table('wishlist', Base.metadata,
       Column('user_id', Integer, ForeignKey('user.id')),
       Column('book_id', Integer, ForeignKey('book.id'))
      )
 
 
-engine = create_engine('sqlite:///books-01.db')
+engine = create_engine('sqlite:///books-02.db')
 
 Base.metadata.create_all(engine)
