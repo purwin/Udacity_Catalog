@@ -299,7 +299,7 @@ def catalog_genres():
 @app.route('/catalog/genre/JSON')
 def genres_JSON():
   genres = session.query(Genre).all()
-  return jsonify(Genres=[a.serialize for a in genres])
+  return jsonify(Genres=[g.serialize for g in genres])
 
 
 # route: category (authors)
@@ -394,6 +394,13 @@ def delete_book(id):
 def catalog_genre(id):
   genre = session.query(Genre).filter_by(id = id).one()
   return render_template('genre.html', genre = genre)
+
+
+# route: genre JSON
+@app.route('/catalog/genre/<int:id>/JSON')
+def genre_JSON(id):
+  genre = session.query(Genre).filter_by(id=id).one()
+  return jsonify(Genre=genre.serialize)
 
 
 # route: create item (genre)
