@@ -287,6 +287,13 @@ def catalog_books():
   return render_template('catalog_books.html', books = books)
 
 
+# route: books JSON
+@app.route('/catalog/book/JSON')
+def books_JSON():
+  books = session.query(Book).all()
+  return jsonify(Books=[b.serialize for b in books])
+
+
 # route: category (genres)
 @app.route('/catalog/genres/')
 @app.route('/catalog/genre/')
@@ -327,6 +334,13 @@ def catalog_book(id):
   else:
     user = None
   return render_template('book.html', book = book, user = user)
+
+
+# route: book JSON
+@app.route('/catalog/book/<int:id>/JSON')
+def book_JSON(id):
+  book = session.query(Book).filter_by(id=id).one()
+  return jsonify(Book=book.serialize)
 
 
 # route: create item (book)
