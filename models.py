@@ -34,6 +34,15 @@ class Author(Base):
   # full_name
   bio = Column(String)
 
+  @property
+  def serialize(self):
+    return {
+      'id': self.id,
+      'last_name': self.last_name,
+      'first_name': self.first_name,
+      'bio': self.bio
+    }
+
 
 class Genre(Base):
   __tablename__ = "genre"
