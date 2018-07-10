@@ -21,7 +21,7 @@ app = Flask(__name__)
 CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = 'UD Catalog Project'
 
-engine = create_engine('sqlite:///books-01.db')
+engine = create_engine('sqlite:///books-02.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -215,6 +215,20 @@ def add_library(id):
     return redirect(url_for('catalog_books'))
   else:
     return render_template('add_library.html', book = book, user = user)
+
+@app.route('/catalog/book/<int:id>/library/delete/', methods=['GET', 'POST'])
+def delete_library(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  book = session.query(Book).filter_by(id = id).one()
+  user_id = getUserID(login_session['email'])
+  user = getUserInfo(user_id)
+  if request.method == 'POST':
+    user.library.remove(book)
+    session.commit()
+    return redirect(url_for('catalog_books'))
+  else:
+    return render_template('delete_library.html', book = book, user = user)
 
 
 # route: category results
@@ -449,6 +463,6 @@ def delete_author(id):
 
 
 if __name__ == '__main__':
-  app.secret_key = 'oaiwejfo;aijvfowejm'
+  app.secret_key = 'aiowejfo;iwjefow'
   app.debug = True
   app.run(host='0.0.0.0', port=8000, threaded = False)
