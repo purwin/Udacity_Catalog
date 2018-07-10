@@ -232,7 +232,7 @@ def delete_library(id):
     session.commit()
     return redirect(url_for('catalog_books'))
   else:
-    return render_template('delete_library.html', book = book, user = user)
+    return render_template('library_delete.html', book = book, user = user)
 
 
 # route: add to wishlist
@@ -249,6 +249,22 @@ def add_wishlist(id):
     return redirect(url_for('catalog_books'))
   else:
     return render_template('wishlist_add.html', book = book, user = user)
+
+
+# route: remove from wishlist
+@app.route('/catalog/book/<int:id>/wishlist/delete/', methods=['GET', 'POST'])
+def delete_wishlist(id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  book = session.query(Book).filter_by(id = id).one()
+  user_id = getUserID(login_session['email'])
+  user = getUserInfo(user_id)
+  if request.method == 'POST':
+    user.wishlist.remove(book)
+    session.commit()
+    return redirect(url_for('catalog_books'))
+  else:
+    return render_template('wishlist_delete.html', book = book, user = user)
 
 
 # route: category results
