@@ -295,6 +295,13 @@ def catalog_genres():
   return render_template('catalog_genres.html', genres = genres)
 
 
+# route: genres JSON
+@app.route('/catalog/genre/JSON')
+def genres_JSON():
+  genres = session.query(Genre).all()
+  return jsonify(Genres=[a.serialize for a in genres])
+
+
 # route: category (authors)
 @app.route('/catalog/authors/')
 @app.route('/catalog/author/')
