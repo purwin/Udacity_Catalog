@@ -284,7 +284,12 @@ def catalog_category(category):
 @app.route('/catalog/book/')
 def catalog_books():
   books = session.query(Book).all()
-  return render_template('catalog_books.html', books = books)
+  if 'username' in login_session:
+    user_id = getUserID(login_session['email'])
+    user = getUserInfo(user_id)
+  else:
+    user = None
+  return render_template('catalog_books.html', books = books, user = user)
 
 
 # route: books JSON
