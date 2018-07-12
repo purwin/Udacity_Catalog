@@ -540,6 +540,6 @@ def delete_author(id):
 
 
 if __name__ == '__main__':
-  app.secret_key = 'aiowejfo;iwjefow'
+  app.secret_key = 'eopurqoiewuprqoweu'
   app.debug = True
   app.run(host='0.0.0.0', port=8000, threaded = False)
