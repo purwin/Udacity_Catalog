@@ -9,6 +9,7 @@
 			<li><label for="type">Name</label>: <input type="text" name="type" placeholder="Genre Type"></li>
 		</ul>
 		<h3>Books</h3>
+		<span class="add" id="add_book">ADD</span>
 		<ul>
 			<li class="genre_book">
 				<select name="book" id="">
@@ -22,4 +23,25 @@
 		<button><a href="{{ url_for('catalog_genres') }}">Cancel</a></button>
 		<input type="submit" value="Create">
 	</form>
+	<script>
+		let genre_book = document.querySelector(".genre_book");
+		let add_book = document.querySelector("#add_book");
+
+		add_book.addEventListener("click", function(){
+			addLI(genre_book)
+		});
+
+		function addLI(el) {
+			let newLi = el.cloneNode(true);
+			newLi.innerHTML += '<span class="delete">X</span>'
+			el.parentElement.appendChild(newLi);
+		}
+
+		document.addEventListener("click", function(e){
+			if (event.target.classList.contains('delete')) {
+				e.target.parentElement.parentElement.removeChild(e.target.parentElement);
+			}
+		});
+	</script>
+
 {% endblock %}
