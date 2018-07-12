@@ -10,11 +10,15 @@
 			<p><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a>
         {% if user %}
           {% if book in user.library %}
-            <a href="#"><span>REMOVE FROM LIBRARY</span></a>
+            <a href="{{ url_for('delete_library', id = book.id) }}"><span>REMOVE FROM LIBRARY</span></a>
           {% else %}
-            <a href="{{ url_for('add_library', id = book.id, user = user) }}"><span>ADD TO LIBRARY</span></a>
+            <a href="{{ url_for('add_library', id = book.id) }}"><span>ADD TO LIBRARY</span></a>
           {% endif %}
-          <a href="{{ url_for('add_library', id = book.id, user = user) }}"><span>ADD TO WISHLIST</span></a>
+          {% if book in user.wishlist %}
+            <a href="{{ url_for('delete_wishlist', id = book.id) }}"><span>REMOVE FROM WISHLIST</span></a>
+          {% else %}
+            <a href="{{ url_for('add_wishlist', id = book.id) }}"><span>ADD TO WISHLIST</span></a>
+          {% endif %}
         {% endif %}
       </p>
 		{% endfor %}
