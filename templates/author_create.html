@@ -11,7 +11,8 @@
 			<li><label for="bio">Bio</label>: <input type="text" name="bio" placeholder=""></li>
 		</ul>
 		<h3>Books</h3>
-		<ul>
+		<span class="add" id="add_book">ADD</span>
+		<ul class="ul_book">
 			<li class="author_book">
 				<select name="book" id="">
 				<option value="">Select a book</option>
@@ -24,5 +25,24 @@
 		<button><a href="{{ url_for('catalog_authors') }}">Cancel</a></button>
 		<input type="submit" value="Create">
 	</form>
+	<script>
+		let author_book = document.querySelector(".author_book");
+		let add_book = document.querySelector("#add_book");
 
+		add_book.addEventListener("click", function(){
+			addLI(author_book)
+		});
+
+		function addLI(el) {
+			let newLi = el.cloneNode(true);
+			newLi.innerHTML += '<span class="delete">X</span>'
+			el.parentElement.appendChild(newLi);
+		}
+
+		document.addEventListener("click", function(e){
+			if (event.target.classList.contains('delete')) {
+				e.target.parentElement.parentElement.removeChild(e.target.parentElement);
+			}
+		});
+	</script>
 {% endblock %}
