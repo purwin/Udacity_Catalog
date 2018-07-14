@@ -9,6 +9,7 @@ import json
 import random
 import string
 import sys
+import os
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -552,6 +553,6 @@ def delete_author(id):
 
 
 if __name__ == '__main__':
-  app.secret_key = 'eopurqoiewuprqoweu'
+  app.secret_key = ''.join(os.urandom(15))
   app.debug = True
   app.run(host='0.0.0.0', port=8000, threaded = False)
