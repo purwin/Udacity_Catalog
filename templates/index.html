@@ -3,13 +3,7 @@
 {% block title %}Udacity Catalog Project - Index{% endblock %}
 
 {% block content %}
-{%if 'username' not in session %}
-  <a href="{{ url_for('login') }}">Login </a>
-{% else %}
-  <h3>Hello, {{ session['username'] }}</h3>
-  <a href="{{ url_for('gdisconnect') }}">Logout </a>
-{% endif %}
-
+{% include "includes/flash.html" %}
   <h1>Home!</h1>
   <div id="genres">
     <h1><a href="{{ url_for('catalog_genres') }}">Categories / Genres</a></h1>
