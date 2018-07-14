@@ -16,11 +16,19 @@
       <li><a href="{{ url_for('catalog_books') }}">Books</a></li>
       <li><a href="{{ url_for('catalog_authors') }}">Authors</a></li>
       <li><a href="{{ url_for('catalog_genres') }}">Genres</a></li>
-      {%if 'username' in session %}
+      {% if 'username' in session %}
         <li><a href="{{ url_for('user_account') }}">My Account</a></li>
       {% endif %}
     </ul>
   </nav>
+  <div class="login">
+    {% if 'username' in session %}
+    <h3>Hello, {{ session['username'] }}</h3>
+    <a href="{{ url_for('gdisconnect') }}">Logout </a>
+    {% else %}
+    <a href="{{ url_for('login') }}">Login </a>
+    {% endif %}
+  </div>
   {% block content %}{% endblock %}
 </body>
 </html>
