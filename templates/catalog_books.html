@@ -3,6 +3,7 @@
 {% block title %}Catalog -- Books{% endblock %}
 
 {% block content %}
+{% include "includes/flash.html" %}
 	<h1>BOOKS</h1>
 	<p><a href="{{ url_for('create_book') }}">ADD A BOOK</a></p>
 	{% if books %}
