@@ -3,6 +3,7 @@
 {% block title %}Genre -- {{ genre.type }}{% endblock %}
 
 {% block content %}
+	{% include "includes/flash.html" %}
 	<h1>Genre – {{ genre.type }}</h1>
 	<p><span class="edit"><a href="{{ url_for('edit_genre', id = genre.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('delete_genre', id = genre.id) }}">DELETE</a></span></p>
 	<div>
