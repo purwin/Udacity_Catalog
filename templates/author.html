@@ -3,6 +3,7 @@
 {% block title %}Author -- {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}{% endblock %}
 
 {% block content %}
+	{% include "includes/flash.html" %}
 	<h1>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
 	<p><span class="edit"><a href="{{ url_for('edit_author', id = author.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('delete_author', id = author.id) }}">DELETE</a></span></p>
 	<div>

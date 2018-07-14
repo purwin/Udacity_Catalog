@@ -3,13 +3,14 @@
 {% block title %}Catalog -- Authors{% endblock %}
 
 {% block content %}
-	<h1>AUTHORS</h1>
-	<p><a href="{{ url_for('create_author') }}">ADD AN AUTHOR</a></p>
-	{% if authors %}
-		{% for author in authors %}
-			<p><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></p>
-		{% endfor %}
-	{% else %}
-		<p><i>There are no authors in the catalog at this time.</i></p>
-	{% endif %}
+  {% include "includes/flash.html" %}
+  <h1>AUTHORS</h1>
+  <p><a href="{{ url_for('create_author') }}">ADD AN AUTHOR</a></p>
+  {% if authors %}
+    {% for author in authors %}
+      <p><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></p>
+    {% endfor %}
+  {% else %}
+    <p><i>There are no authors in the catalog at this time.</i></p>
+  {% endif %}
 {% endblock %}
