@@ -214,6 +214,7 @@ def add_library(id):
   if request.method == 'POST':
     user.library.append(book)
     session.commit()
+    flash("{} is now in your library!".format(book.title))
     return redirect(url_for('catalog_books'))
   else:
     return render_template('library_add.html', book = book, user = user)
@@ -230,6 +231,7 @@ def delete_library(id):
   if request.method == 'POST':
     user.library.remove(book)
     session.commit()
+    flash("{} has been removed from your library".format(book.title))
     return redirect(url_for('catalog_books'))
   else:
     return render_template('library_delete.html', book = book, user = user)
@@ -246,6 +248,7 @@ def add_wishlist(id):
   if request.method == 'POST':
     user.wishlist.append(book)
     session.commit()
+    flash("{} is now in your wishlist!".format(book.title))
     return redirect(url_for('catalog_books'))
   else:
     return render_template('wishlist_add.html', book = book, user = user)
@@ -262,6 +265,7 @@ def delete_wishlist(id):
   if request.method == 'POST':
     user.wishlist.remove(book)
     session.commit()
+    flash("{} has been removed from your wishlist".format(book.title))
     return redirect(url_for('catalog_books'))
   else:
     return render_template('wishlist_delete.html', book = book, user = user)
@@ -367,6 +371,7 @@ def create_book():
       e = sys.exc_info()[0]
       print "error: {}".format(e)
     session.commit()
+    flash("{} has been created!".format(new_book.title))
     return redirect(url_for('catalog_books'))
   else:
     authors = session.query(Author).all()
@@ -389,6 +394,7 @@ def edit_book(id):
       book.description = request.form['description']
     session.add(book)
     session.commit()
+    flash("{} has been updated!".format(book.title))
     return redirect(url_for('catalog_book', id = book.id))
   else:
     return render_template('book_edit.html', book = book)
@@ -403,6 +409,7 @@ def delete_book(id):
   if request.method == 'POST':
     session.delete(book)
     session.commit()
+    flash("{} has been removed from the catalog".format(book.title))
     return redirect(url_for('catalog_books'))
   else:
     return render_template('book_delete.html', book = book)
