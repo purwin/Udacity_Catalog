@@ -10,6 +10,8 @@ import random
 import string
 import sys
 import os
+import urllib
+
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -18,15 +20,14 @@ import requests
 
 app = Flask(__name__)
 
-
-CLIENT_ID = json.loads(open('client_secret.json', 'r').read())['web']['client_id']
-APPLICATION_NAME = 'UD Catalog Project'
-
 engine = create_engine('sqlite:///books-02.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+g_client_id = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
+g_application_name = 'UD Catalog Project'
 
 
 # route: homepage
@@ -46,7 +47,22 @@ def index():
 def login():
   state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
   login_session['state'] = state
-  return render_template('login.html', STATE = state)
+  gh_params = {
+               "scope": "user",
+               "client_id": json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_id'],
+               "state": state
+  }
+  gh_url = 'https://github.com/login/oauth/authorize?{}'.format(urllib.urlencode(gh_params))
+  return render_template('login.html', STATE = state, g_client_id = g_client_id, gh_url = gh_url)
+  # gh_url = 'https://github.com/login/oauth/authorize?scope=user:email&client_id={}' + urllib.urlencode(gh_params)
+
+  # client_id = json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_id']
+  # client_secret = json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_secret']
+  # redirect_uri = json.loads(open('gh_client_secrets.json', 'r').read())['web']['redirect_uri']
+  # url = 'https://github.com/login/oauth/authorize?scope=user:email&client_id={}'.format(client_id)
+  # h = httplib2.Http()
+  # result = h.request(url, 'GET')[1]
+  # print result
 
 
 #route: gconnect
@@ -63,7 +79,7 @@ def gconnect():
 
   try:
     # Upgrade the authorization code into a credentials object
-    oauth_flow = flow_from_clientsecrets('client_secret.json', scope='')
+    oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
     oauth_flow.redirect_uri = 'postmessage'
     credentials = oauth_flow.step2_exchange(code)
   except FlowExchangeError:
@@ -92,7 +108,7 @@ def gconnect():
     return response
 
   # Verify that the access token is valid for this app.
-  if result['issued_to'] != CLIENT_ID:
+  if result['issued_to'] != g_client_id:
     response = make_response(
         json.dumps("Token's client ID does not match app's."), 401)
     print "Token's client ID does not match app's."
@@ -137,6 +153,95 @@ def gconnect():
   flash("You are now logged in as {}".format(login_session['username']))
   print "done!"
   return output
+
+# route: ghconnect
+@app.route('/ghconnect', methods=['GET','POST'])
+def ghconnect():
+  if request.args.get('state') != login_session['state']:
+    response = make_response(json.dumps('Invalid state parameter.'), 401)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+  # Receive code from GitHub
+  code = request.args.get('code')
+  print "GitHub code received: {}".format(code)
+  state = request.args.get('state')
+  print "state: {}".format(state)
+
+  # Request access_token from GitHub with received code
+  gh_url = 'https://github.com/login/oauth/access_token'
+  gh_params = {
+               "client_id": json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_id'],
+               "client_secret": json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_secret'],
+               "code": code,
+               # "redirect_uri": 'http://localhost:8000/ghredirect',
+               "state": state
+  }
+  gh_headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}
+
+  # POST to GitHub
+  h = httplib2.Http()
+  result, content = h.request(gh_url, 'POST', headers=gh_headers, body=urllib.urlencode(gh_params))
+  print "RESULT STATUS: {}".format(result['status'])
+
+  # Display error if no Success status
+  if not result['status'] == '200':
+    response = make_response(
+        json.dumps('Code exchange failed with GitHub'), 401)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+  print "RESULT: {}".format(result)
+  print "CONTENT: {}".format(content)
+
+  # Store access token
+  access_token = json.loads(content)['access_token']
+  login_session['access_token'] = access_token
+  print "CONTENT TOKEN: {}".format(access_token)
+
+  # Get user data
+  user_url = 'https://api.github.com/user'
+  email_url = 'https://api.github.com/user/emails'
+  header = {'Authorization': 'token {}'.format(access_token), 'Accept': 'application/json'}
+
+  # Get user name
+  h = httplib2.Http()
+  result = h.request(user_url, 'GET', headers=header)[1]
+  user_data = json.loads(result)
+  login_session['provider'] = 'github'
+  login_session['username'] = user_data['name']
+  login_session['picture'] = user_data['avatar_url']
+
+  # Get user email
+  h = httplib2.Http()
+  result = h.request(email_url, 'GET', headers=header)[1]
+  email_data = json.loads(result)
+  login_session['email'] = email_data[0]['email']
+
+  # See if user exists, if it doesn't make a new one
+  user_id = getUserID(login_session['email'])
+  if not user_id:
+      user_id = createUser(login_session)
+  login_session['user_id'] = user_id
+
+  output = ''
+  output += '<h1>Welcome, '
+  output += login_session['username']
+  output += '!</h1>'
+  output += '<img src="'
+  output += login_session['picture']
+  output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+  flash("you are now logged in as %s" % login_session['username'])
+  return output
+
+
+@app.route('/ghredirect', methods=['GET', 'POST'])
+def ghredirect():
+  if request.args.get('state') != login_session['state']:
+    response = make_response(json.dumps('Invalid state parameter.'), 401)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+  access_token = request.args.get('access_token')
+  print "ACCESS TOKEN: {}".format(access_token)
 
 
 # User Helper Functions
