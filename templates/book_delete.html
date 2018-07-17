@@ -3,11 +3,12 @@
 {% block title %}{{ book.title }} -- Delete{% endblock %}
 
 {% block content %}
-	<h1>DELETE {{ book.title }}</h1>
-	<form action="" method="POST">
-		<p>Are you sure you want to delete {{ book.title }} from the catalog?</p>
-		<button><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
-		<input type="submit" value="Delete">
-	</form>
-
+<div class="book-delete">
+  <h1 class="book-delete__h1">DELETE {{ book.title }}</h1>
+  <form action="" method="POST">
+    <p class="book-delete__p">Are you sure you want to delete <b>{{ book.title }}</b> from the catalog?</p>
+    <button class="button button--cancel"><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
+    <input class="button button--send" type="submit" value="Delete">
+  </form>
+</div>
 {% endblock %}
