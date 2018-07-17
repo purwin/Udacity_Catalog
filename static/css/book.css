@@ -1,0 +1,91 @@
+/*
+ *
+ * Book.html
+ *
+ */
+
+.book {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: row;
+}
+
+.book-title {
+  width: 50%;
+  padding: 1rem;
+}
+
+
+.book-title__h1 {
+  font-weight: bold;
+}
+
+.book__p {
+
+}
+
+.book-user {
+  width: 50%;
+  padding: 1rem;
+}
+
+.book-user--edit {
+
+}
+
+.book-user--delete {
+  
+}
+
+.book-user--library {
+  
+}
+
+.book-user--wishlist {
+  
+}
+
+.book-bio {
+  width: 50%;
+  padding: 1rem;
+}
+
+.book-bio--description {
+
+}
+
+.book-bio--authors {
+
+}
+
+.book-bio--genres {
+
+}
+
+.book-bio__h3 {
+
+}
+
+.book-bio__p {
+
+}
+
+.book-bio__ul {
+
+}
+
+.book-bio__ul__li {
+  list-style-type: square;
+}
+
+.book-cover {
+  width: 33%;
+  padding: 1rem;
+  order: 4;
+}
+
+.book-cover__img {
+  width: 100%;
+}
