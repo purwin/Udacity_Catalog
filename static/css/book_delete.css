@@ -1,0 +1,23 @@
+/*
+ *
+ * Book_delete.html
+ *
+ */
+
+.book-delete {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 1rem;
+  width: 50%;
+}
+
+.book-delete__h1 {
+
+}
+
+.book-delete__p {
+  
+}
