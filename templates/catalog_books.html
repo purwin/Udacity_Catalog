@@ -1,29 +1,48 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/catalog_category.css') }}">
+{% endblock %}
+
 {% block title %}Catalog -- Books{% endblock %}
 
 {% block content %}
 {% include "includes/flash.html" %}
-	<h1>BOOKS</h1>
-	<p><a href="{{ url_for('create_book') }}">ADD A BOOK</a></p>
-	{% if books %}
-		{% for book in books %}
-			<p><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a>
-        {% if user %}
-          {% if book in user.library %}
-            <a href="{{ url_for('delete_library', id = book.id) }}"><span>REMOVE FROM LIBRARY</span></a>
-          {% else %}
-            <a href="{{ url_for('add_library', id = book.id) }}"><span>ADD TO LIBRARY</span></a>
-          {% endif %}
-          {% if book in user.wishlist %}
-            <a href="{{ url_for('delete_wishlist', id = book.id) }}"><span>REMOVE FROM WISHLIST</span></a>
-          {% else %}
-            <a href="{{ url_for('add_wishlist', id = book.id) }}"><span>ADD TO WISHLIST</span></a>
-          {% endif %}
-        {% endif %}
-      </p>
-		{% endfor %}
-	{% else %}
-		<p><i>There are no books in the catalog at this time.</i></p>
-	{% endif %}
+	<div class="c">
+    <div class="c-title">
+      <h1 class="c__h1">BOOKS</h1>
+    </div>
+    <div class="c-add">
+      <button class="button button--add"><a class="c-add__a" href="{{ url_for('create_book') }}">ADD A BOOK</a></button>
+    </div>
+    <div class="c-cat">
+      <ul class="c-cat__ul">
+      {% if books %}
+        {% for book in books %}
+          <li class="c-cat__ul__li">
+            <div class="c-cat--name"><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></div>
+            {% if user %}
+              <div class="c-cat--library">
+                {% if book in user.library %}
+                  <button class="button button--delete"><a href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></button>
+                {% else %}
+                  <button class="button button--add"><a href="{{ url_for('add_library', id = book.id) }}">ADD TO LIBRARY</a></button>
+                {% endif %}
+              </div>
+              <div class="c-cat--wishlist">
+                {% if book in user.wishlist %}
+                  <button class="button button--delete"><a href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a></button>
+                {% else %}
+                  <button class="button button--add"><a href="{{ url_for('add_wishlist', id = book.id) }}">ADD TO WISHLIST</a></button>
+                {% endif %}
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="c-cat__ul__li"><i>There are no books in the catalog at this time.</i></li>
+      {% endif %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}
