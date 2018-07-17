@@ -1,0 +1,49 @@
+/*
+ *
+ * Book_edit.html
+ *
+ */
+
+.book-edit {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 1rem;
+  width: 50%;
+}
+
+.book-edit__h1 {
+
+}
+
+.book-edit__ul {
+  padding: 0;
+}
+
+.book-edit__ul__li {
+  list-style-type: none;
+  padding: 1rem;
+}
+
+.book-edit__label {
+
+}
+
+.book-edit__input {
+  width: 100%;
+  margin-top: .5rem;
+  padding: .5rem;
+}
+
+.book-edit__textarea {
+  width: 100%;
+  height: 7rem;
+  margin-top: .5rem;
+  padding: .5rem;
+}
+
+.book-edit__select {
+  width: 50%;
+}
