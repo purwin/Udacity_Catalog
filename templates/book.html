@@ -1,61 +1,73 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
+{% endblock %}
+
 {% block title %}{{ book.title }}{% endblock %}
 
 {% block content %}
 	{% include "includes/flash.html" %}
-	<h1>{{ book.title }}</h1>
-	<p><span class="edit"><a href="{{ url_for('edit_book', id = book.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('delete_book', id = book.id) }}">DELETE</a></span></p>
-	<div>
-		{% if book.cover %}
-		<img src="{{ book.cover }}" alt="" />
-		{% endif %}
-	</div>
-	<div>
-		<h3>Description</h3>
-		{% if book.description %}
-			<p>{{ book.description }}</p>
-		{% else %}
-			<p><i>This book has no current description.</i></p>
-		{% endif %}
-	</div>
-	<div>
-		<h3>Authors</h3>
-		<ul>
-			{% if book.authors %}
-				{% for author in book.authors %}
-					<li><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
-				{% endfor %}
-			{% else %}
-				<li><i>This book has no current authors.</i></li>
-			{% endif %}
-		</ul>
-	</div>
-	<div>
-		<h3>Genres</h3>
-			<ul>
-				{% if book.genres %}
-					{% for genre in book.genres %}
-					<li><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
-					{% endfor %}
-				{% else %}
-					<li>This book has no current genres</li>
-				{% endif %}
-			</ul>
-	</div>
-	{% if user %}
-		<div>
-			{% if book in user.library %}
-				<p><a href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></p>
-			{% else %}
-				<p><a href="{{ url_for('add_library', id = book.id) }}">ADD TO LIBRARY</a></p>
-			{% endif %}
-			{% if book in user.wishlist %}
-				<p><a href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a></p>
-			{% else %}
-				<p><a href="{{ url_for('add_wishlist', id = book.id) }}">ADD TO WISHLIST</a></p>
+	<div class="book">
+		<div class="book-title">
+			<h1 class="book-title__h1">{{ book.title }}</h1>
+		</div>
+		<div class="book-user">
+			<div class="book-user--edit sans"><span class="edit"><a href="{{ url_for('edit_book', id = book.id) }}">EDIT</a></span></div>
+			<div class="book-user--delete sans"><span class="delete"><a href="{{ url_for('delete_book', id = book.id) }}">DELETE</a></span></div>
+			{% if user %}
+				<div class="book-user--library sans">
+					{% if book in user.library %}
+						<a href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a>
+					{% else %}
+						<a href="{{ url_for('add_library', id = book.id) }}">ADD TO LIBRARY</a>
+					{% endif %}
+				</div>
+				<div class="book-user--wishlist sans">
+					{% if book in user.wishlist %}
+						<a href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a>
+					{% else %}
+						<a href="{{ url_for('add_wishlist', id = book.id) }}">ADD TO WISHLIST</a>
+					{% endif %}
+				</div>
 			{% endif %}
 		</div>
-	{% endif %}
-
+		<div class="book-cover">
+			<img class="book-cover__img" src="{% if book.cover %}{{ book.cover }}{% else %}#{% endif %}" alt="" />
+		</div>
+		<div class="book-bio">
+			<div class="book-bio--description">
+					<h3 class="book-bio__h3">Description</h3>
+					{% if book.description %}
+						<p class="book-bio__p">{{ book.description }}</p>
+					{% else %}
+						<p class="book-bio__p"><i>This book has no current description.</i></p>
+					{% endif %}
+				</div>
+				<div class="book-bio--authors">
+					<h3 class="book-bio__h3">Authors</h3>
+					<ul class="book-bio__ul">
+						{% if book.authors %}
+							{% for author in book.authors %}
+								<li class="book-bio__ul__li"><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
+							{% endfor %}
+						{% else %}
+							<li class="book-bio__ul__li"><i>This book has no current authors.</i></li>
+						{% endif %}
+					</ul>
+				</div>
+				<div class="book-bio--genres">
+					<h3 class="book-bio__h3">Genres</h3>
+						<ul class="book-bio__ul">
+							{% if book.genres %}
+								{% for genre in book.genres %}
+								<li class="book-bio__ul__li"><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
+								{% endfor %}
+							{% else %}
+								<li class="book-bio__ul__li">This book has no current genres</li>
+							{% endif %}
+						</ul>
+				</div>
+			</div>
+	</div>
 {% endblock %}
