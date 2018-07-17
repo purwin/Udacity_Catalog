@@ -137,6 +137,7 @@ input {
   border-style: none;
   background-color: #ecf0f1;
   font-family: 'Open Sans', sans-serif;
+  font-size: .9rem;
 }
 
 textarea {
@@ -144,6 +145,7 @@ textarea {
   border-style: none;
   background-color: #ecf0f1;
   font-family: 'Open Sans', sans-serif;
+  font-size: .9rem;
 }
 
 select {
@@ -153,6 +155,7 @@ select {
   background-color: #ecf0f1;
   padding: .25rem;
   font-family: 'Open Sans', sans-serif;
+  font-size: .9rem;
 }
 
 select:after {
@@ -167,6 +170,7 @@ select:after {
   padding: .5rem 1rem;
   cursor: pointer;
   border-style: none;
+  font-size: .9rem;
 }
 
 .button a {
@@ -185,6 +189,10 @@ select:after {
 }
 
 .button--cancel a {
+  color: #ecf0f1;
+}
+
+.button--cancel a:hover {
   color: #ecf0f1;
 }
 
