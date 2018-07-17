@@ -5,7 +5,200 @@
  */
 
 
+body {
+  font-size: 16px;
+  font-family: 'Noto Serif', serif;
+  color: #2c3e50;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+  color: #2980b9;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 0;
+  color: #3498db;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #1abc9c;
+}
+
+p {
+
+}
+
+.serif {
+  font-family: 'Noto Serif', serif;
+}
+
+.sans {
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  color: #7f8c8d;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #2c3e50;
+}
+
+/*
+ *
+ * Fonts
+ *
+ */
+
+
+/*
+ *
+ * Colors
+ *
+ */
+
+/* colors from https://www.materialui.co/flatuicolors */
+.turq--l {
+  color: #1abc9c;
+}
+
+.turq--d {
+  color: #16a085;
+}
+
+.green--l {
+  color: #2ecc71;
+}
+
+.green-d {
+  color: #27ae60;
+}
+
+.blue--l {
+  color: #3498db;
+}
+
+.blue--d {
+  color: #2980b9;
+}
+
+.white {
+  color: #ecf0f1;
+}
+
+.gray--l {
+  color: #bdc3c7;
+  /* color: #95a5a6; */
+}
+
+.gray--d {
+  color: #7f8c8d;
+}
+
+.blk {
+  color: #2c3e50;
+}
+
+
+/*
+ *
+ * Forms
+ *
+ */
+
+
+label {
+
+}
+
+input {
+  border-radius: 1px;
+  border-style: none;
+  background-color: #ecf0f1;
+  font-family: 'Open Sans', sans-serif;
+}
+
+textarea {
+  border-radius: 1px;
+  border-style: none;
+  background-color: #ecf0f1;
+  font-family: 'Open Sans', sans-serif;
+}
+
+select {
+  -webkit-appearance: button;
+  border-radius: 1px;
+  border-style: none;
+  background-color: #ecf0f1;
+  padding: .25rem;
+  font-family: 'Open Sans', sans-serif;
+}
+
+select:after {
+  content: "FUN";
+}
+
+
+.button {
+  border-radius: 1px;
+  background-color: #ecf0f1;
+  font-family: 'Open Sans', sans-serif;
+  padding: .5rem 1rem;
+  cursor: pointer;
+  border-style: none;
+}
+
+.button a {
+  color: #7f8c8d;
+  text-decoration: none;
+}
+
+.button a:hover {
+  color: #2980b9;
+  text-decoration: none;
+}
+
+.button--cancel {
+  background-color: #7f8c8d;
+  color: #ecf0f1;
+}
+
+.button--cancel a {
+  color: #ecf0f1;
+}
+
+.button--send {
+  background-color: #1abc9c;
+}
+
+.button--add {
+
+}
+
+.button--delete {
+
+}
 
 /*
  *
@@ -13,13 +206,39 @@
  *
  */
 
-nav ul {
+.nav__ul {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-around;
 }
 
-nav ul li{
+.nav__ul__li {
   list-style-type: none;
+}
+
+
+/*
+ *
+ * Flash template
+ *
+ */
+
+
+/*
+ *
+ * Login template
+ *
+ */
+
+.login {
+
+}
+
+.login__h3 {
+
+}
+
+.login__a {
+
 }
