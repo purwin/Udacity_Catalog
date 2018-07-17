@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/book_edit.css') }}">
+<link rel="stylesheet" href="../static/css/book_edit.css">
+{% endblock %}
+
 {% block title %}{{ book.title }} -- Edit{% endblock %}
 
 {% block content %}
-	<form action="" method="POST">
-		<h1>Edit {{ book.title }}</h1>
-		<div>
-			<ul>
-				<li><label for="title">Title</label>: <input type="text" name="title" placeholder="{{ book.title }}"></li>
-				<li><label for="cover">Cover</label>:  <input type="text" name="cover" placeholder="{{ book.cover }}"></li>
-				<li><label for="description">Description</label>:  <input type="text" name="description" placeholder="{{ book.description }}"></li>
-				<li>Author(s)</li>
-				<li>Genre(s)</li>
-			</ul>
-		</div>
-		<button><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
-		<input type="submit" value="Submit">
-	</form>
-
+{% include "includes/flash.html" %}
+	<div class="book-edit">
+		<form action="" method="POST">
+			<h1 class="book-edit__h1">Edit {{ book.title }}</h1>
+			<div>
+				<ul class="book-edit__ul">
+					<li class="book-edit__ul__li"><label for="title">Title</label>: <input type="text" class="book-edit__input" name="title" placeholder="{{ book.title }}"></li>
+					<li class="book-edit__ul__li"><label for="cover">Cover</label>:  <input type="text" class="book-edit__input" name="cover" placeholder="{{ book.cover }}"></li>
+					<li class="book-edit__ul__li"><label for="description">Description</label>:  <textarea class="book-edit__textarea" name="description" placeholder="{{ book.description }}"></textarea></li>
+					<li class="book-edit__ul__li">Author(s)</li>
+					<li class="book-edit__ul__li">Genre(s)</li>
+				</ul>
+			</div>
+			<button class="button button--cancel"><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
+			<input class="button button--send" type="submit" value="Submit">
+		</form>
+	</div>
 {% endblock %}
