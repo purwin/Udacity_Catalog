@@ -2,6 +2,7 @@
 
 {% block head_extras %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/book_edit.css') }}">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block title %}{{ book.title }} -- Edit{% endblock %}
@@ -10,31 +11,45 @@
 {% include "includes/flash.html" %}
 	<div class="book-edit">
 		<form action="" method="POST">
-			<h1 class="book-edit__h1">Edit {{ book.title }}</h1>
+			<h1 class="book-edit__h1">Edit <br/>{{ book.title }}</h1>
 			<div class="book-description">
-				<ul class="book-edit__ul">
-					<li class="book-edit__ul__li"><label for="title">Title</label>: <input type="text" class="book-edit__input" name="title" placeholder="{{ book.title }}"></li>
-					<li class="book-edit__ul__li"><label for="cover">Cover</label>:  <input type="text" class="book-edit__input" name="cover" placeholder="{{ book.cover }}"></li>
-					<li class="book-edit__ul__li"><label for="description">Description</label>:  <textarea class="book-edit__textarea" name="description" placeholder="{{ book.description }}"></textarea></li>
+				<ul class="book-description__ul">
+					<li class="book-description__ul__li"><label for="title">Title</label>: <input type="text" class="book-edit__input" name="title" placeholder="{{ book.title }}"></li>
+					<li class="book-description__ul__li"><label for="cover">Cover</label>:  <input type="text" class="book-edit__input" name="cover" placeholder="{{ book.cover }}"></li>
+					<li class="book-description__ul__li"><label for="description">Description</label>:  <textarea class="book-edit__textarea" name="description" placeholder="{{ book.description }}"></textarea></li>
 				</ul>
 			</div>
 			<div class="book-authors">
 				<h3 class="book-authors__h3">Authors</h3>
 				<button class="button button--add" id="add_author">ADD</button>
-				<ul class="book-authors__ul ul_author">
-					<li></li>
+				<ul class="book-authors__ul" id="ul_author">
+					<li class="book-authors__ul__li hidden" id="select_author">
+						<select name="author" class="book-authors__select">
+						<option value="">Select an author</option>
+						{% for author in authors %}
+							<option value="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</option>
+						{% endfor %}
+						</select>
+					</li>
 					{% for author in book.authors %}
-						<li class="book-authors__ul__li">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}<button class="button button--delete">X</button></li>
+						<li class="book-authors__ul__li">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} <button class="button button--delete">X</button></li>
 					{% endfor %}
 				</ul>
 			</div>
 			<div class="book-genres">
 				<h3 class="book-genres__h3">Genres</h3>
 				<button class="button button--add" id="add_genre">ADD</button>
-				<ul class="book-genres__ul ul_genre">
-					<li></li>
+				<ul class="book-genres__ul" id="ul_genre">
+					<li class="book-genres__ul__li hidden" id="select_genre">
+						<select name="genre" class="book-genres__select">
+						<option value="">Select a genre</option>
+						{% for genre in genres %}
+							<option value="{{ genre.id }}">{{ genre.type }}</option>
+						{% endfor %}
+						</select>
+					</li>
 					{% for genre in book.genres %}
-						<li class="book-genres__ul__li">{{ genre.type }}<button class="button button--delete">X</button></li>
+						<li class="book-genres__ul__li">{{ genre.type }} <button class="button button--delete">X</button></li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -43,6 +58,22 @@
 		</form>
 	</div>
 	<script>
-		
+		let ul_author = document.querySelector("#ul_author");
+		let add_author = document.querySelector("#add_author");
+		let select_author = document.querySelector("#select_author");
+		let new_author = select_author.cloneNode(true);
+		new_author.classList.toggle('hidden');
+
+		let ul_genre = document.querySelector("#ul_genre");
+		let add_genre = document.querySelector("#add_genre");
+
+		add_genre.addEventListener("click", function(e){
+			e.preventDefault();
+			let select_genre = document.querySelector("#select_genre");
+			let new_genre = select_genre.cloneNode(true);
+			new_genre.classList.toggle('hidden');
+			ul_genre.appendChild(new_genre);
+		});
+
 	</script>
 {% endblock %}
