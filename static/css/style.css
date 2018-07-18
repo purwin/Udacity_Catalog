@@ -71,13 +71,6 @@ a:active {
 
 /*
  *
- * Fonts
- *
- */
-
-
-/*
- *
  * Colors
  *
  */
@@ -122,6 +115,16 @@ a:active {
 
 .blk {
   color: #2c3e50;
+}
+
+/*
+ *
+ * Misc. Classes
+ *
+ */
+
+.hidden {
+  display: none;
 }
 
 
@@ -174,7 +177,6 @@ select:after {
   padding: .5rem 1rem;
   cursor: pointer;
   border-style: none;
-  font-size: .9rem;
 }
 
 .button a {
@@ -190,6 +192,7 @@ select:after {
 .button--cancel {
   background-color: #7f8c8d;
   color: #ecf0f1;
+  font-size: .9rem;
 }
 
 .button--cancel a {
