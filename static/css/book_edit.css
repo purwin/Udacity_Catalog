@@ -18,11 +18,11 @@
 
 }
 
-.book-edit__ul {
+.book-description__ul {
   padding: 0;
 }
 
-.book-edit__ul__li {
+.book-description__ul__li {
   list-style-type: none;
   padding: 1rem;
 }
@@ -46,4 +46,8 @@
 
 .book-edit__select {
   width: 50%;
+}
+
+.book-authors__select {
+  width: 75%;
 }
