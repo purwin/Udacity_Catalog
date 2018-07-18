@@ -503,7 +503,9 @@ def edit_book(id):
     flash("{} has been updated!".format(book.title))
     return redirect(url_for('catalog_book', id = book.id))
   else:
-    return render_template('book_edit.html', book = book)
+    authors = session.query(Author).all()
+    genres = session.query(Genre).all()
+    return render_template('book_edit.html', book = book, authors = authors, genres = genres)
 
 
 # route: delete item (book)
@@ -655,6 +657,14 @@ def delete_author(id):
   else:
     return render_template('author_delete.html', author = author)
 
+@app.route('/catalog/book/<int:book_id>/delete/<int:author_id>', methods=['POST'])
+def remove_author(book_id, author_id):
+  book = session.query(Book).filter_by(id = book_id)
+  author = session.query(Author).filter_by(id = author_id)
+  if author in book.authors:
+    book.authors.remove(author)
+    session.commit()
+    return '{} removed as author'.format(author.last_name)
 
 
 if __name__ == '__main__':
