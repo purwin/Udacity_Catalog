@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lists.css') }}">
+{% endblock %}
+
 {% block title %}Wishlist -- Add{% endblock %}
 
 {% block content %}
-<h1>ADD TO WISHLIST</h1>
-<form action="" method="POST">
-<p>Are you sure you want to add {{ book.title }} to your wishlist, {{ user.name }}?</p>
-<button><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
-<input type="submit" value="Add">
-</form>
+  <div class="list-add">
+    <h1 class="list-add__h1">ADD TO WISHLIST</h1>
+    <form action="" method="POST">
+    <div class="list-add__description">
+      <p class="list-add__p">Are you sure you want to add {{ book.title }} to your wishlist, {{ user.name }}?</p>
+    </div>
+    <div class="list-add__buttons">
+      <button class="button button--cancel"><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
+      <input  class="button button--send" type="submit" value="Add">
+    </div>
+    </form>
+  </div>
 {% endblock %}
