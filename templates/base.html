@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     {% block head_extras %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
   {% endblock %}
@@ -25,17 +26,34 @@
         </ul>
       </nav>
     </section>
-    <section class="section--login">
-      <div class="login">
-        {% if 'username' in session %}
-          <p class="login__p">Hello, {{ session['username'] }}</p>
-          <a href="{{ url_for('gdisconnect') }}" class="login__a">Logout </a>
-        {% else %}
-          <a href="{{ url_for('login') }}" class="login__a">Login </a>
-        {% endif %}
+    <section class="section--session">
+      <div class="session">
+        <div class="session__status">
+          {% if 'username' in session %}
+            <h4 class="session__h4">Hi, {{ session['username'] }}!</h4>
+          {% endif %}
+        </div>
+        <div class="session__user">
+          <div class="session__login">
+            {% if 'username' in session %}
+              <a class="session__a" href="{{ url_for('gdisconnect') }}">Logout</a> |
+            {% else %}
+              <a class="session__a" href="{{ url_for('login') }}">Login </a> |
+            {% endif %}
+          </div>
+          <div class="session__picture">
+            {% if session['picture'] %}
+              <img class="session__img" src="{{ session['picture'] }}" alt="" />
+            {% endif %}
+          </div>
+        </div>
       </div>
     </section>
   </header>
-  {% block content %}{% endblock %}
+  <section class="section--main">
+    <div class="main">
+      {% block content %}{% endblock %}
+    </div>
+  </section>
 </body>
 </html>
