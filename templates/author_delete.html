@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/item_delete.css') }}">
+{% endblock %}
+
 {% block title %}{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} -- Delete{% endblock %}
 
 {% block content %}
-	<h1>DELETE {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
-	<form action="" method="POST">
-		<p>Are you sure you want to delete <b>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</b> from the catalog?</p>
-		<button><a href="{{ url_for('catalog_author', id = author.id) }}">Cancel</a></button>
-		<input type="submit" value="Delete">
-	</form>
+  <div class="item-delete">
+    <h1 class="item-delete__h1">DELETE <br/>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
+    <form action="" method="POST">
+      <p class="item-delete__p">Are you sure you want to delete <b>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</b> from the catalog?</p>
+      <button class="button button--cancel"><a href="{{ url_for('catalog_author', id = author.id) }}">Cancel</a></button>
+      <input class="button button--send" type="submit" value="Delete">
+    </form></div>
 {% endblock %}
