@@ -9,6 +9,14 @@
 {% block content %}
 <h1>LOGIN</h1>
 <!-- GOOGLE PLUS SIGN IN-->
+
+{% if login_session %}
+  {% if  login_session['provider'] == 'github'%}
+    <h1>OUTPUT!</h1>
+  {% else %}
+    <h1>NOOOOOOO!</h1>
+  {% endif %}
+{% endif %}
 <div id="signinButton">
   <span class="g-signin"
     data-scope="openid email"
