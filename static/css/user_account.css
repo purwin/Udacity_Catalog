@@ -1,0 +1,28 @@
+/*
+ *
+ * User_account.html
+ *
+ */
+
+.user {}
+.user__h1 {}
+.user__h3 {}
+.user__p {}
+.user__ul {}
+.user__ul__li {}
+.user__img {}
+.user__a {}
+
+.user__picture {}
+.user__description {}
+
+.user__child {}
+
+.user__child--library {}
+.user__child--wishlist {}
+
+@media screen and (min-width: 768px) {
+
+
+
+}
