@@ -225,10 +225,10 @@ def ghconnect():
 
   output = ''
   output += '<h1>Welcome, {}!</h1>'.format(login_session['username'])
-  output += '<img src="{}'.format(login_session['picture'])
-  output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+  output += '<img src="{}" style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;">'.format(login_session['picture'])
+  flash(output)
   flash("you are now logged in as %s" % login_session['username'])
-  return redirect(url_for('login'), output = output)
+  return redirect(url_for('login'))
 
 
 @app.route('/ghredirect', methods=['GET', 'POST'])
