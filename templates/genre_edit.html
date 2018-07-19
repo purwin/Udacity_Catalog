@@ -1,17 +1,30 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/item_edit.css') }}">
+{% endblock %}
+
 {% block title %}{{ genre.type }} -- Edit{% endblock %}
 
 {% block content %}
-	<form action="" method="post">
-		<h1>Edit {{ genre.type }}</h1>
-		<div>
-			<ul>
-				<li><label for="type">Name</label>: <input type="text" name="type" placeholder="{{ genre.type }}"></li>
-				<li>Book(s)</li>
-			</ul>
-		</div>
-		<button><a href="{{ url_for('catalog_genre', id = genre.id) }}">Cancel</a></button>
-		<input type="submit" value="Submit">
-	</form>
+	<div class="item-edit item-edit--genre">
+		<form action="" method="post">
+			<div class="item-edit__description">
+				<h1 class="item-edit__h1">Edit <br/>{{ genre.type }}</h1>
+				<ul class="item-edit__ul">
+					<li class="item-edit__ul__li"><label class="item-edit__label" for="type">Name</label>: <input class="item-edit__input" type="text" name="type" placeholder="{{ genre.type }}"></li>
+				</ul>
+			</div>
+			<div class="item-edit__books">
+				<h3 class="item-edit__h3">Books</h3>
+				<ul class="item-edit__ul">
+					<li class="item-edit__ul__li">something</li>
+				</ul>
+			</div>
+			<div class="item-edit__buttons">
+				<button class="button button--cancel"><a href="{{ url_for('catalog_genre', id = genre.id) }}">Cancel</a></button>
+				<input class="button button--send" type="submit" value="Submit">
+			</div>
+		</form>
+	</div>
 {% endblock %}

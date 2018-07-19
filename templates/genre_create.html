@@ -1,33 +1,41 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/item_create.css') }}">
+{% endblock %}
+
 {% block title %}Genre -- Create{% endblock %}
 
 {% block content %}
-	<h1>CREATE A GENRE</h1>
-	<form action="" method="POST">
-		<ul>
-			<li><label for="type">Name</label>: <input type="text" name="type" placeholder="Genre Type"></li>
-		</ul>
-		<h3>Books</h3>
-		<span class="add" id="add_book">ADD</span>
-		<ul>
-			<li class="genre_book">
-				<select name="book" id="">
-				<option value="">Select a book</option>
-				{% for book in books %}
-					<option value="{{ book.id }}">{{ book.title }}</option>
-				{% endfor %}
-				</select>
-			</li>		
-		</ul>
-		<button><a href="{{ url_for('catalog_genres') }}">Cancel</a></button>
-		<input type="submit" value="Create">
-	</form>
+	<div class="create create--genre">
+		<h1 class="create__h1">CREATE A GENRE</h1>
+		<form action="" method="POST">
+			<ul class="create__ul">
+				<li class="create__ul__li"><label class="create__label" for="type">Name</label>: <input class="create__input" type="text" name="type" placeholder="Genre Type"></li>
+			</ul>
+			<div class="create__books">
+				<h3 class="create__h3">Books</h3>
+				<button class="button button--add" id="add_book">ADD</span>
+				<ul class="create__ul">
+					<li class="create__ul__li" id="genre_book">
+						<select class="create__select" name="book" id="">
+						<option class="create__option" value="">Select a book</option>
+						{% for book in books %}
+							<option class="create__option" value="{{ book.id }}">{{ book.title }}</option>
+						{% endfor %}
+						</select>
+					</li>
+				</ul>
+			</div>
+			<button class="button button--cancel"><a href="{{ url_for('catalog_genres') }}">Cancel</a></button>
+			<input  class="button button--send" type="submit" value="Create">
+		</form></div>
 	<script>
-		let genre_book = document.querySelector(".genre_book");
+		let genre_book = document.querySelector("#genre_book");
 		let add_book = document.querySelector("#add_book");
 
 		add_book.addEventListener("click", function(){
+			e.preventDefault();
 			addLI(genre_book)
 		});
 
