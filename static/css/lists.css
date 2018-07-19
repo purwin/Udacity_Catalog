@@ -1,0 +1,72 @@
+/* CSS file for following templates: wishlist_add.html, library_add.html */
+
+/*
+ *
+ * [Wishlist/Library]_add.html
+ *
+ */
+
+.list-add {
+	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	align-items: stretch;
+	flex-direction: column;
+	padding: 1rem;
+	width: 50%;
+}
+
+.list-add__h1 {
+
+}
+
+.list-add__p {
+  
+}
+
+.list-add__description {
+
+}
+
+.list-add__buttons {
+
+}
+
+
+/*
+ *
+ * [Wishlist/Library]_delete.html
+ *
+ */
+
+.list-delete {
+	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	align-items: stretch;
+	flex-direction: column;
+	padding: 1rem;
+	width: 50%;
+}
+
+.list-delete__h1 {
+
+}
+
+.list-delete__p {
+  
+}
+
+.list-delete__description {
+
+}
+
+.list-delete__buttons {
+
+}
+
+@media screen and (min-width: 768px) {
+
+
+
+}
