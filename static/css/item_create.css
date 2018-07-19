@@ -1,0 +1,148 @@
+ /* CSS file for following templates: book_create.html, author_create.html, genre_create.html */
+
+
+.create {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 1rem;
+  width: 50%;
+}
+
+.create--author {}
+.create--book {}
+.create--genre {}
+
+.create__books {}
+.create__authors {}
+.create__genres {}
+
+.create__h1 {}
+.create__h3 {}
+.create__p {}
+
+.create__ul {
+  padding: 0;
+}
+
+.create__ul__li {
+  list-style-type: none;
+  padding: 1rem;
+}
+
+.create__label {
+  
+}
+
+.create__input {
+  width: 100%;
+  margin-top: .5rem;
+  padding: .5rem;
+}
+
+.create__textarea {
+  width: 100%;
+}
+
+.create__select {
+  width: 50%;
+}
+
+
+ /* CSS file for following templates: book_create.html, author_create.html, genre_create.html */
+
+.book-create, .author-create, .genre-create {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 1rem;
+  width: 50%;
+}
+
+.book-create__authors {
+
+}
+
+.book-create__authors {
+
+}
+
+.book-create__genres {
+
+}
+
+.book-create__h1, .author-create__h1, .genre-create__h1 {
+
+}
+
+.book-create__h3, .author-create__h3, .genre-create__h3 {
+
+}
+
+.book-create__ul, .author-create__ul, .genre-create__ul {
+  padding: 0;
+}
+
+.book-create__ul__li, .author-create__ul__li, .genre-create__ul__li {
+  list-style-type: none;
+  padding: 1rem;
+}
+
+.book-create__authors .book-create__ul__li {
+  padding: .5rem 1rem;
+}
+
+.book-create__genres .book-create__ul__li {
+  padding: .5rem 1rem;
+}
+
+.book-create__label, .author-create__label, .genre-create__label {
+
+}
+
+.book-create__input, .author-create__input, .genre-create__input {
+  width: 100%;
+  margin-top: .5rem;
+  padding: .5rem;
+}
+
+.book-create__textarea, .author-create__textarea, .genre-create__textarea {
+  width: 100%;
+  margin-top: .5rem;
+  padding: .5rem;
+}
+
+.book-create__select, .author-create__select, .genre-create__select {
+  width: 50%;
+}
+
+/*
+ *
+ * Book_create.html
+ *
+ */
+
+
+/*
+ *
+ * Author_create.html
+ *
+ */
+
+
+/*
+ *
+ * Genre_create.html
+ *
+ */
+
+
+@media screen and (min-width: 768px) {
+
+
+
+}
