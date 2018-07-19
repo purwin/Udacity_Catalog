@@ -1,35 +1,43 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_account.css') }}">
+{% endblock %}
+
 {% block title %}User Account{% endblock %}
 
 {% block content %}
-  <h1>{{ user.name }}</h1>
-  <div>
-    <img src="{{ user.picture }}" alt="">
-  </div>
-  <p>Email address: {{ user.email }}</p>
-  <div class="library">
-    <h3>Library</h3>
-    <ul>
-      {% if user.library %}
-        {% for book in user.library %}
-          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></span></li>
-        {% endfor %}
-      {% else %}
-        <li><i>You don't have any books in your library at this time.</i></li>
-      {% endif %}
-    </ul>
-  </div>
-  <div class="wishlist">
-    <h3>Wishlist</h3>
-    <ul>
-      {% if user.wishlist %}
-        {% for book in user.wishlist %}
-          <li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a></span></li>
-        {% endfor %}
-      {% else %}
-        <li><i>You don't have any books in your wishlist at this time.</i></li>
-      {% endif %}
-    </ul>
+  <div class="user">
+    <div class="user__description">
+      <h1 class="user__h1">{{ user.name }}</h1>
+      <div class="user__picture">
+        <img class="user__img" src="{{ user.picture }}" alt="">
+      </div>
+      <p class="user__p">Email address: {{ user.email }}</p>
+    </div>
+    <div class="user__child user__child--library">
+      <h3 class="user__h3">Library</h3>
+      <ul class="user__ul">
+        {% if user.library %}
+          {% for book in user.library %}
+            <li class="user__ul__li"><a class="user__a" href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a class="user__a" href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></span></li>
+          {% endfor %}
+        {% else %}
+          <li class="user__ul__li"><i>You don't have any books in your library at this time.</i></li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="user__child user__child--wishlist">
+      <h3 class="user__h3">Wishlist</h3>
+      <ul class="user__ul">
+        {% if user.wishlist %}
+          {% for book in user.wishlist %}
+            <li class="user__ul__li"><a class="user__a" href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a class="user__a" href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a></span></li>
+          {% endfor %}
+        {% else %}
+          <li class="user__ul__li"><i>You don't have any books in your wishlist at this time.</i></li>
+        {% endif %}
+      </ul>
+    </div>
   </div>
 {% endblock %}
