@@ -29,16 +29,18 @@
     <section class="section--session">
       <div class="session">
         <div class="session__status">
-          {% if 'username' in session %}
-            <h4 class="session__h4">Hi, {{ session['username'] }}!</h4>
-          {% endif %}
-        </div>
-        <div class="session__user">
           <div class="session__login">
             {% if 'username' in session %}
-              <a class="session__a" href="{{ url_for('gdisconnect') }}">Logout</a> |
+              <a class="session__a" href="{{ url_for('gdisconnect') }}">Logout</a>
             {% else %}
-              <a class="session__a" href="{{ url_for('login') }}">Login </a> |
+              <a class="session__a" href="{{ url_for('login') }}">Login </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="session__user">
+          <div class="session__name">
+            {% if 'username' in session %}
+              <h4 class="session__h4">Hi, {{ session['username'] }}!</h4>
             {% endif %}
           </div>
           <div class="session__picture">
