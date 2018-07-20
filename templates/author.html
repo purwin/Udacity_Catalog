@@ -1,25 +1,39 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
+{% endblock %}
+
 {% block title %}Author -- {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}{% endblock %}
 
 {% block content %}
 	{% include "includes/flash.html" %}
-	<h1>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
-	<p><span class="edit"><a href="{{ url_for('edit_author', id = author.id) }}">EDIT</a></span> <span class="delete"><a href="{{ url_for('delete_author', id = author.id) }}">DELETE</a></span></p>
-	<div>
-		<h3>Biography</h3>
-		<p>{{ author.bio }}</p>
-	</div>
-	<div>
-		<h3>Books</h3>
-		<ul>
-			{% if author.books %}
-				{% for book in author.books %}
-					<li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
-				{% endfor %}
-			{% else %}
-				<li><i>This author has no current books in the database.</i></li>
-			{% endif %}
-		</ul>
+	<div class="item item--author">
+		<div class="item__head">
+			<h1 class="item__h1">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
+			<div class="item__edit">
+				<button class="button button--edit"><a href="{{ url_for('edit_author', id = author.id) }}">EDIT</a></button>
+				<button class="button button--delete"><a href="{{ url_for('delete_author', id = author.id) }}">DELETE</a></button>
+			</div>
+		<div>
+			<div class="item__description">
+				<h3 class="item__h3">Biography</h3>
+				<p class="item__p">{{ author.bio }}</p>
+			</div>
+		</div>
+		<div class="item__profile">
+			<div class="item__description">
+				<h3 class="item__h3">Books</h3>
+				<ul class="item__ul">
+					{% if author.books %}
+						{% for book in author.books %}
+							<li class="item__ul__li"><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
+						{% endfor %}
+					{% else %}
+						<li class="item__ul__li"><i>This author has no current books in the database.</i></li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
 	</div>
 {% endblock %}
