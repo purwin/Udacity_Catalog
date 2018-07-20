@@ -1,0 +1,39 @@
+/*
+ *
+ * Index.html
+ *
+ */
+
+.index {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+}
+
+.index__head {}
+.index__h1 {}
+.index__h2 {}
+.index__h3 {}
+.index__a {}
+.index__ul {}
+.index__ul__li {}
+
+.index__categories {}
+.index__category {}
+.index__category--books {}
+.index__category--authors {}
+.index__category--genres {}
+
+/*
+ *
+ * Media Queries
+ *
+ */
+
+@media screen and (min-width: 768px) {
+
+}
