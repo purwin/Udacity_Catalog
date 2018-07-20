@@ -40,8 +40,15 @@ class Author(Base):
   id = Column(Integer, primary_key=True)
   last_name = Column(String(80))
   first_name = Column(String(80))
-  # full_name
+  # full_name = column_property(first_name + " " + last_name)
   bio = Column(String)
+
+  # @hybrid_property
+  #   def full_name(self):
+  #     if self.first_name is not None:
+  #       return self.first_name + " " + self.last_name
+  #     else:
+  #       return self.last_name
 
   @property
   def serialize(self):
