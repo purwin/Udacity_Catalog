@@ -230,6 +230,7 @@ select {
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-around;
+  padding: 0;
 }
 
 .nav__ul__li {
@@ -273,6 +274,7 @@ select {
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-around;
+  padding: 1rem;
 }
 
 .session__h4 {
@@ -300,8 +302,11 @@ select {
 }
 
 .session__login {
+
+}
+
+.session__name {
   width: 50%;
-  text-align: right;
 }
 
 .session__picture {
