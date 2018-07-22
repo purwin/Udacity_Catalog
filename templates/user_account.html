@@ -20,7 +20,7 @@
       <ul class="user__ul">
         {% if user.library %}
           {% for book in user.library %}
-            <li class="user__ul__li"><a class="user__a" href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a class="user__a" href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></span></li>
+            <li class="user__ul__li"><a class="user__a" href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <button class="button button--delete"><a class="user__a" href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></button></li>
           {% endfor %}
         {% else %}
           <li class="user__ul__li"><i>You don't have any books in your library at this time.</i></li>
@@ -32,7 +32,7 @@
       <ul class="user__ul">
         {% if user.wishlist %}
           {% for book in user.wishlist %}
-            <li class="user__ul__li"><a class="user__a" href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <span><a class="user__a" href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a></span></li>
+            <li class="user__ul__li"><a class="user__a" href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a> <button class="button button--delete"><a class="user__a" href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a></button></li>
           {% endfor %}
         {% else %}
           <li class="user__ul__li"><i>You don't have any books in your wishlist at this time.</i></li>
