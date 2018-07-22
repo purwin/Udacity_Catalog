@@ -14,36 +14,40 @@ html {
 
 body {
   font-size: 16px;
-  line-height: 1.5rem;
+  line-height: 1.25rem;
   font-family: 'Noto Serif', serif;
   color: #2c3e50;
 }
 
 h1 {
   font-size: 3rem;
-  line-height: 3rem;
+  line-height: 1.25em;
   margin: 0;
   color: #2980b9;
+  padding: 0 0 0.5em;
 }
 
 h2 {
   font-size: 2rem;
-  line-height: 2rem;
+  line-height: 1.25em;
   margin: 0;
   color: #1abc9c;
+  padding: 0 0 0.5em;
 }
 
 h3 {
   font-size: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 1.25em;
   margin: 0;
   color: #1abc9c;
+    padding: 0 0 0.5em;
 }
 
 h4 {
   font-size: 1rem;
-  line-height: 1rem;
+  line-height: 1.25em;
   margin: 0;
+  padding: 0 0 0.5em;
 }
 
 p {
@@ -70,6 +74,10 @@ a:hover {
 
 a:active {
   color: #2c3e50;
+}
+
+img {
+  max-width: 100%;
 }
 
 /*
@@ -101,6 +109,14 @@ a:active {
 
 .blue--d {
   color: #2980b9;
+}
+
+.red--l {
+  color:  #e74c3c;
+}
+
+.red--d {
+  color:  #c0392b;
 }
 
 .white {
@@ -174,6 +190,12 @@ select {
   font-size: .9rem;
 }
 
+/*
+ *
+ * Buttons
+ *
+ */
+
 .button {
   border-radius: 1px;
   background-color: #ecf0f1;
@@ -212,11 +234,55 @@ select {
 }
 
 .button--add {
+  background-color:  #2980b9;
+  color: #ecf0f1;
+}
 
+.button--add:hover {
+  background-color: #3498db;
+}
+
+.button--add a {
+  color: #ecf0f1;
+}
+
+.button--add a:hover {
+  color: #ecf0f1;
+}
+
+.button--edit {
+  background-color:  #16a085;
+  color: #ecf0f1;
+}
+
+.button--edit:hover {
+  background-color: #1abc9c;
+}
+
+.button--edit a {
+  color: #ecf0f1;
+}
+
+.button--edit a:hover {
+  color: #ecf0f1;
 }
 
 .button--delete {
+  background-color:  #c0392b;
+  color: #ecf0f1;
+  /* font-size: .9rem; */
+}
 
+.button--delete:hover {
+  background-color: #e74c3c;
+}
+
+.button--delete a {
+  color: #ecf0f1;
+}
+
+.button--delete a:hover {
+  color: #ecf0f1;
 }
 
 /*
@@ -298,7 +364,7 @@ select {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
 }
 
 .session__login {
@@ -306,11 +372,11 @@ select {
 }
 
 .session__name {
-  width: 50%;
+  padding-right: 1rem;
 }
 
 .session__picture {
-  width: 50%;
+  /* width: 10%; */
 }
 
 
