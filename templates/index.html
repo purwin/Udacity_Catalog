@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
 {% block title %}Udacity Catalog Project - Index{% endblock %}
 
 {% block content %}
