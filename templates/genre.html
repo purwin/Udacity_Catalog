@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head_extras %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/item.css') }}">
 {% endblock %}
 
 {% block title %}Genre -- {{ genre.type }}{% endblock %}
@@ -10,7 +10,7 @@
 	{% include "includes/flash.html" %}
 	<div class="item item--genre">
 		<div class="item__head">
-			<h1 class="item__h1">Genre – {{ genre.type }}</h1>
+			<h1 class="item__h1">{{ genre.type }}</h1>
 			<div class="item__edit">
 				<button class="button button--edit"><a href="{{ url_for('edit_genre', id = genre.id) }}">EDIT</a></button>
 				<button class="button button--delete"><a href="{{ url_for('delete_genre', id = genre.id) }}">DELETE</a></button>
@@ -18,13 +18,14 @@
 		</div>
 		<div class="item__profile">
 			<div class="item__books">
-				<ul>
+				<h3 class="item__h3">Books</h3>
+				<ul class="item__ul">
 					{% if genre.books %}
 						{% for book in genre.books %}
-							<li><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
+							<li class="item__ul__li"><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
 						{% endfor %}
 					{% else %}
-						<li><i>This genre has no books available in the database.</i></li>
+						<li class="item__ul__li"><i>This genre has no books available in the database.</i></li>
 					{% endif %}
 				</ul>
 			</div>
