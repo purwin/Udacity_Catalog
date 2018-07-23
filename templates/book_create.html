@@ -1,47 +1,48 @@
 {% extends "base.html" %}
 
 {% block head_extras %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/book_create.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/item_create.css') }}">
 {% endblock %}
 
 {% block title %}Book -- Create{% endblock %}
 
 {% block content %}
 {% include "includes/flash.html" %}
-	<div class="book-create">
-		<h1 class="book-create__h1">CREATE A BOOK</h1>
+	<div class="create create--book">
+		<h1 class="create__h1">CREATE A BOOK</h1>
 		<form action="" method="POST">
-			<div class="book-create__bio">
-				<h3 class="book-create__h3">Bio</h3>
-					<ul class="book-create__ul">
-						<li class="book-create__ul__li"><label for="title">Title</label>: <input type="text" name="title" class="book-create__input" placeholder="Book Title"></li>
-						<li class="book-create__ul__li"><label for="cover">Cover</label>: <input type="text" name="cover" class="book-create__input" placeholder="Cover Image URL"></li>
-						<li class="book-create__ul__li"><label for="description">Description</label>: <textarea name="description" id="" class="book-create__textarea" rows="5" placeholder="Book Description"></textarea></li>
-					</ul>
+			<div class="create__description">
+				<h3 class="create__h3">Bio</h3>
+				<ul class="create__ul">
+					<li class="create__ul__li"><label for="title">Title</label>: <input type="text" name="title" class="create__input" placeholder="Book Title"></li>
+					<li class="create__ul__li"><label for="cover">Cover</label>: <input type="text" name="cover" class="create__input" placeholder="Cover Image URL"></li>
+					<li class="create__ul__li"><label for="description">Description</label>: <textarea name="description" id="" class="create__textarea" rows="5" placeholder="Book Description"></textarea>
+					</li>
+				</ul>
 			</div>
-			<div class="book-create__authors">
-				<h3 class="book-create__h3">Authors</h3>
-				<button class="book-create__button book-create__button--add" id="add_author">ADD</button>
-				<ul class="book-create__ul ul_author">
-					<li id="book_author" class="book-create__ul__li">
-						<select name="author" id="" class="book-create__select">
-						<option value="">Select an author</option>
+			<div class="create__authors">
+				<h3 class="create__h3">Authors</h3>
+				<button class="button button--add" id="add_author">ADD</button>
+				<ul class="create__ul" id="ul_author">
+					<li class="create__ul__li" id="book_author">
+						<select class="create__select" name="author" id="">
+						<option class="create__option" value="">Select an author</option>
 						{% for author in authors %}
-							<option value="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</option>
+							<option class="create__option" value="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</option>
 						{% endfor %}
 						</select>
 					</li>
 				</ul>
 			</div>
-			<div class="book-create__genres">
-				<h3 class="book-create__h3">Genres</h3>
-				<button class="book-create__button book-create__button--add" id="add_genre">ADD</button>
-				<ul class="book-create__ul ul_genre">
-					<li id="book_genre" class="book-create__ul__li">
-						<select name="genre" id="" class="book-create__select">
-						<option value="">Select a genre</option>
+			<div class="create__genres">
+				<h3 class="create__h3">Genres</h3>
+				<button class="button button--add" id="add_genre">ADD</button>
+				<ul class="create__ul" id="ul_genre">
+					<li class="create__ul__li" id="book_genre">
+						<select class="create__select" name="genre" id="">
+						<option class="create__option" value="">Select a genre</option>
 						{% for genre in genres %}
-							<option value="{{ genre.id }}">{{ genre.type }}</option>
+							<option class="create__option" value="{{ genre.id }}">{{ genre.type }}</option>
 						{% endfor %}
 						</select>
 					</li>
@@ -70,14 +71,14 @@
 
 		function addLI(el) {
 			let newLi = el.cloneNode(true);
-			newLi.innerHTML += '<button class="book-create__button book-create__button--delete">X</button>'
+			newLi.innerHTML += '<button class="button button--delete">X</button>'
 			el.parentElement.appendChild(newLi);
 		}
 
 		document.addEventListener("click", function(e){
-			if (event.target.classList.contains('book-create__button--delete')) {
+			if (event.target.classList.contains('button--delete')) {
+				e.preventDefault();
 				e.target.parentElement.parentElement.removeChild(e.target.parentElement);
-				console.log("REMOVED " + e.target);
 			}
 		});
 	</script>
