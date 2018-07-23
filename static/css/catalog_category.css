@@ -11,6 +11,7 @@
   flex-wrap: wrap;
   align-items: stretch;
   flex-direction: column;
+  padding: 1rem;
 }
 
 .c-title {
@@ -22,7 +23,7 @@
 }
 
 .c-add {
-
+  margin-bottom: 1rem;
 }
 
 .c-add__a {
@@ -46,11 +47,12 @@
 }
 
 .c-cat__ul {
-
+padding: 0;
 }
 
 .c-cat__ul__li {
   list-style-type: none;
   display: flex;
   flex-direction: row;
+  padding-bottom: .5rem;
 }
