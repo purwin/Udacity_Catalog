@@ -15,7 +15,7 @@
 			</ul>
 			<div class="create__books">
 				<h3 class="create__h3">Books</h3>
-				<button class="button button--add" id="add_book">ADD</span>
+				<button class="button button--add" id="add_book">ADD</button>
 				<ul class="create__ul">
 					<li class="create__ul__li" id="genre_book">
 						<select class="create__select" name="book" id="">
@@ -34,19 +34,20 @@
 		let genre_book = document.querySelector("#genre_book");
 		let add_book = document.querySelector("#add_book");
 
-		add_book.addEventListener("click", function(){
+		add_book.addEventListener("click", function(e){
 			e.preventDefault();
 			addLI(genre_book)
 		});
 
 		function addLI(el) {
 			let newLi = el.cloneNode(true);
-			newLi.innerHTML += '<span class="delete">X</span>'
+			newLi.innerHTML += '<button class="button button--delete">X</button>'
 			el.parentElement.appendChild(newLi);
 		}
 
 		document.addEventListener("click", function(e){
-			if (event.target.classList.contains('delete')) {
+			if (event.target.classList.contains('button--delete')) {
+				e.preventDefault()
 				e.target.parentElement.parentElement.removeChild(e.target.parentElement);
 			}
 		});
