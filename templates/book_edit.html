@@ -10,7 +10,7 @@
 {% block content %}
 {% include "includes/flash.html" %}
 	<div class="item-edit item-edit--book">
-		<form action="" method="POST">
+		<form action="" method="POST" name="book_edit">
 			<h1 class="item-edit__h1">Edit <br/>{{ book.title }}</h1>
 			<div class="item-edit__description">
 				<ul class="item-edit__ul">
@@ -32,9 +32,10 @@
 						</select>
 					</li>
 					{% for author in book.authors %}
-						<li class="item-edit__ul__li">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} <button class="button button--delete">X</button></li>
+						<li class="item-edit__ul__li" id="author_{{ author.id }}" data-id="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} <button class="button button--delete remove_author">X</button></li>
 					{% endfor %}
 				</ul>
+				<p class="item-edit__p" id="response_authors"></p>
 			</div>
 			<div class="item-edit__genres">
 				<h3 class="item-edit__h3">Genres</h3>
@@ -49,26 +50,33 @@
 						</select>
 					</li>
 					{% for genre in book.genres %}
-						<li class="item-edit__ul__li">{{ genre.type }} <button class="button button--delete">X</button></li>
+						<li class="item-edit__ul__li" id="genre_{{ genre.id }}" data-id="{{ genre.id }}">{{ genre.type }} <button class="button button--delete remove_genre">X</button></li>
 					{% endfor %}
 				</ul>
 			</div>
 			<div class="item-edit__buttons">
 				<button class="button button--cancel"><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
-				<input class="button button--send" type="submit" value="Submit">
+				<input class="button button--send" name="sendo" type="Submit" value="Submit" id="submit_edit">
 			</div>
 		</form>
 	</div>
 	<script>
 		let ul_author = document.querySelector("#ul_author");
 		let add_author = document.querySelector("#add_author");
-		let select_author = document.querySelector("#select_author");
-		let new_author = select_author.cloneNode(true);
-		new_author.classList.toggle('hidden');
+
+		// Click event to add author select option
+		add_author.addEventListener("click", function(e){
+			e.preventDefault();
+			let select_author = document.querySelector("#select_author");
+			let new_author = select_author.cloneNode(true);
+			new_author.classList.toggle('hidden');
+			ul_author.appendChild(new_author);
+		});
 
 		let ul_genre = document.querySelector("#ul_genre");
 		let add_genre = document.querySelector("#add_genre");
 
+		// Click event to add genre select option
 		add_genre.addEventListener("click", function(e){
 			e.preventDefault();
 			let select_genre = document.querySelector("#select_genre");
@@ -76,6 +84,106 @@
 			new_genre.classList.toggle('hidden');
 			ul_genre.appendChild(new_genre);
 		});
+
+		let author_remove_list = []
+
+		// Click event to remove current authors from book.authors list
+		let remove_authors = document.querySelectorAll(".remove_author");
+		remove_authors.forEach(function(elem){
+			elem.addEventListener("click", function(e){
+				e.preventDefault()
+
+				// get list-item of author to be removed
+				let parent_li = e.target.parentNode;
+				let auth_id = this.parentNode.dataset.id;
+
+				// add author id to author_remove_list array
+				author_remove_list.push(auth_id)
+				console.log("Authors to remove: " + author_remove_list)
+
+				// remove author li from book.authors ul
+				parent_li.parentNode.removeChild(parent_li);
+			})
+		});
+
+		let genre_remove_list = []
+
+		// Click event to remove current genres from book.genres list
+		let remove_genres = document.querySelectorAll(".remove_genre");
+		remove_genres.forEach(function(elem){
+			elem.addEventListener("click", function(e){
+				e.preventDefault()
+
+				// get list-item of genre to be removed
+				let parent_li = e.target.parentNode;
+				let auth_id = this.parentNode.dataset.id;
+
+				// add genre id to genre_remove_list array
+				genre_remove_list.push(auth_id)
+				console.log("Genres to remove: " + genre_remove_list)
+
+				// remove genre li from book.authors ul
+				parent_li.parentNode.removeChild(parent_li);
+			})
+		});
+
+		// JavaScript-enable form submit
+		let submit_button = document.querySelector('#submit_edit');
+		submit_button.addEventListener("click", function(e){
+			e.preventDefault()
+
+			// AJAX POST request to remove authors from book.authors list
+			let x = 0;
+			while (x < author_remove_list.length) {
+				console.log("Removing author #" + author_remove_list[x] + " from book list");
+				$.ajax({
+					type: 'POST',
+					url: '/catalog/book/{{ book.id }}/author/' + author_remove_list[x] + '/remove',
+					processData: false,
+					data: '',
+					contentType: 'application/octet-stream; charset=utf-8',
+					success: function(result) {
+						if (result) {
+							console.log("Removed author #" + author_remove_list[x] + " from book list");
+						} else if (authResult['error']) {
+							console.log('There was an error: ' + authResult['error']);
+						} else {
+							console.log('Failed to make a server-side call. Check your configuration and console.');
+						}
+					}
+
+				});
+
+				x += 1;
+			}
+
+			// AJAX POST request to remove genres from book.genres list
+			x = 0;
+			while (x < genre_remove_list.length) {
+				console.log("Removing genre #" + genre_remove_list[x] + " from book list");
+				$.ajax({
+					type: 'POST',
+					url: '/catalog/book/{{ book.id }}/genre/' + genre_remove_list[x] + '/remove',
+					processData: false,
+					data: '',
+					contentType: 'application/octet-stream; charset=utf-8',
+					success: function(result) {
+						if (result) {
+							console.log("Removed genre #" + genre_remove_list[x] + " from book list");
+						} else if (authResult['error']) {
+							console.log('There was an error: ' + authResult['error']);
+						} else {
+							console.log('Failed to make a server-side call. Check your configuration and console.');
+						}
+					}
+
+				});
+
+				x += 1;
+			}
+
+			document.forms['book_edit'].submit()
+		})
 
 	</script>
 {% endblock %}
