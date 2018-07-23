@@ -144,12 +144,8 @@ def gconnect():
   login_session['user_id'] = user_id
 
   output = ''
-  output += '<h1>Welcome, '
-  output += login_session['username']
-  output += '!</h1>'
-  output += '<img src="'
-  output += login_session['picture']
-  output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+  output += '<h3>Welcome, {}!</h3>'.format(login_session['username'])
+  output += '<img class="login__img" src="{}" />'.format(login_session['picture'])
   flash("You are now logged in as {}".format(login_session['username']))
   print "done!"
   return output
@@ -222,11 +218,6 @@ def ghconnect():
   if not user_id:
       user_id = createUser(login_session)
   login_session['user_id'] = user_id
-
-  output = ''
-  output += '<h1>Welcome, {}!</h1>'.format(login_session['username'])
-  output += '<img src="{}" style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;">'.format(login_session['picture'])
-  flash(output)
   flash("you are now logged in as %s" % login_session['username'])
   return redirect(url_for('login'))
 
@@ -495,6 +486,20 @@ def edit_book(id):
       book.cover = request.form['cover']
     if request.form['description']:
       book.description = request.form['description']
+    try:
+      for author_id in request.form.getlist('author'):
+        if author_id:
+          print "Edit Author ID: {}".format(author_id)
+          append_author = session.query(Author).filter_by(id=author_id).one()
+          book.authors.append(append_author)
+      for genre_id in request.form.getlist('genre'):
+        if genre_id:
+          print "Edit Genre ID: {}".format(genre_id)
+          append_genre = session.query(Genre).filter_by(id=genre_id).one()
+          book.genres.append(append_genre)
+    except:
+      e = sys.exc_info()[0]
+      print "error: {}".format(e)
     session.add(book)
     session.commit()
     flash("{} has been updated!".format(book.title))
@@ -569,7 +574,8 @@ def edit_genre(id):
     session.commit()
     return redirect(url_for('catalog_genre', id = genre.id))
   else:
-    return render_template('genre_edit.html', genre = genre)
+    books = session.query(Book).all()
+    return render_template('genre_edit.html', genre = genre, books = books)
 
 
 # route: delete item (genre)
@@ -638,7 +644,8 @@ def edit_author(id):
     session.commit()
     return redirect(url_for('catalog_author', id = author.id))
   else:
-    return render_template('author_edit.html', author = author)
+    books = session.query(Book).all()
+    return render_template('author_edit.html', author = author, books = books)
 
 
 # route: delete item (author)
@@ -654,14 +661,43 @@ def delete_author(id):
   else:
     return render_template('author_delete.html', author = author)
 
-@app.route('/catalog/book/<int:book_id>/delete/<int:author_id>', methods=['POST'])
+
+# Route: Remove author from book.authors via AJAX
+@app.route('/catalog/book/<int:book_id>/author/<int:author_id>/remove', methods=['POST'])
 def remove_author(book_id, author_id):
-  book = session.query(Book).filter_by(id = book_id)
-  author = session.query(Author).filter_by(id = author_id)
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  book = session.query(Book).filter_by(id = book_id).one()
+  author = session.query(Author).filter_by(id = author_id).one()
   if author in book.authors:
-    book.authors.remove(author)
-    session.commit()
-    return '{} removed as author'.format(author.last_name)
+    try:
+      print 'Removing {} from {}!'.format(author.last_name, book.title)
+      book.authors.remove(author)
+      session.commit()
+      print 'Success!'
+      return '{} removed as author'.format(author.last_name)
+    except Exception as e:
+      print 'Error! {}'.format(e)
+      return 'Error! {}'.format(e)
+
+
+# Route: Remove genre from book.genres via AJAX
+@app.route('/catalog/book/<int:book_id>/genre/<int:genre_id>/remove', methods=['POST'])
+def remove_genre(book_id, genre_id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  book = session.query(Book).filter_by(id = book_id).one()
+  genre = session.query(Genre).filter_by(id = genre_id).one()
+  if genre in book.genres:
+    try:
+      print 'Removing {} from {}!'.format(genre.type, book.title)
+      book.genres.remove(genre)
+      session.commit()
+      print 'Success!'
+      return '{} removed as genre'.format(genre.type)
+    except Exception as e:
+      print 'Error! {}'.format(e)
+      return 'Error! {}'.format(e)
 
 
 if __name__ == '__main__':
