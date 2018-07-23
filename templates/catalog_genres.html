@@ -1,16 +1,30 @@
 {% extends "base.html" %}
 
+{% block head_extras %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/catalog_category.css') }}">
+{% endblock %}
+
 {% block title %}Catalog -- Genre{% endblock %}
 
 {% block content %}
   {% include "includes/flash.html" %}
-  <h1>LITERARY GENRES</h1>
-  <p><a href="{{ url_for('create_genre') }}">CREATE A GENRE</a></p>
-  {% if genres %}
-    {% for genre in genres %}
-      <p><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></p>
-    {% endfor %}
-  {% else %}
-    <p><i>There are no genres in the catalog at this time.</i></p>
-  {% endif %}
+  <div class="c">
+    <div class="c-title">
+      <h1 class="c__h1">LITERARY GENRES</h1>
+    </div>
+    <div class="c-add">
+      <button class="button button--add"><a class="c-add__a" href="{{ url_for('create_genre') }}">CREATE A GENRE</a></button>
+    </div>
+    <div class="c-cat">
+      <ul class="c-cat__ul">
+        {% if genres %}
+          {% for genre in genres %}
+            <li class="c-cat__ul__li"><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
+          {% endfor %}
+        {% else %}
+          <li class="c-cat__ul__li"><i>There are no books in the catalog at this time.</i></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}
