@@ -16,6 +16,12 @@
 
 .index__head {}
 .index__h1 {}
+
+.index__h1--head {
+  text-align: center;
+  padding: 2em;
+}
+
 .index__h2 {}
 .index__h3 {}
 .index__a {}
