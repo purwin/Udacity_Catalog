@@ -17,6 +17,13 @@
 
 .login__h1 {}
 
+.login__img {
+  width: 50%;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
 .login__oauths {}
 
 .login__google {}
@@ -27,7 +34,9 @@
 
 #button_github {}
 
-.login__result {}
+.login__result {
+  text-align: center;
+}
 
 /*
  *
@@ -36,5 +45,7 @@
  */
 
 @media screen and (min-width: 768px) {
-
+  .login__img {
+    width: 25%;
+  }
 }
