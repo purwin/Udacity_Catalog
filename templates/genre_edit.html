@@ -17,8 +17,19 @@
 			</div>
 			<div class="item-edit__books">
 				<h3 class="item-edit__h3">Books</h3>
-				<ul class="item-edit__ul">
-					<li class="item-edit__ul__li">something</li>
+				<button class="button button--add" id="add_book">ADD</button>
+				<ul class="item-edit__ul" id="ul_book">
+					<li class="create__ul__li hidden" id="select_book">
+						<select class="create__select" name="book" id="">
+						<option class="create__option" value="">Select a book</option>
+						{% for book in books %}
+							<option class="create__option" value="{{ book.id }}">{{ book.title }}</option>
+						{% endfor %}
+						</select>
+					</li>
+					{% for book in genre.books %}
+						<li class="item-edit__ul__li">{{ book.title }} <button class="button button--delete">X</button></li>
+					{% endfor %}
 				</ul>
 			</div>
 			<div class="item-edit__buttons">
@@ -27,4 +38,16 @@
 			</div>
 		</form>
 	</div>
+	<script>
+		let ul_book = document.querySelector("#ul_book");
+		let add_book = document.querySelector("#add_book");
+
+		add_book.addEventListener("click", function(e){
+			e.preventDefault();
+			let select_book = document.querySelector("#select_book");
+			let new_book = select_book.cloneNode(true);
+			new_book.classList.toggle('hidden');
+			ul_book.appendChild(new_book);
+		});
+	</script>
 {% endblock %}
