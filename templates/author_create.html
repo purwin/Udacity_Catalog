@@ -37,19 +37,20 @@
 		let author_book = document.querySelector("#author_book");
 		let add_book = document.querySelector("#add_book");
 
-		add_book.addEventListener("click", function(){
+		add_book.addEventListener("click", function(e){
 			e.preventDefault();
 			addLI(author_book)
 		});
 
 		function addLI(el) {
 			let newLi = el.cloneNode(true);
-			newLi.innerHTML += '<span class="delete">X</span>'
+			newLi.innerHTML += '<button class="button button--delete">X</button>'
 			el.parentElement.appendChild(newLi);
 		}
 
 		document.addEventListener("click", function(e){
-			if (event.target.classList.contains('delete')) {
+			if (event.target.classList.contains('button--delete')) {
+				e.preventDefault();
 				e.target.parentElement.parentElement.removeChild(e.target.parentElement);
 			}
 		});
