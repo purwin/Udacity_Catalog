@@ -2,13 +2,14 @@
 
 {% block head_extras %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/item_edit.css') }}">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block title %}{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} -- Edit{% endblock %}
 
 {% block content %}
 	<div class="item-edit item-edit--author">
-		<form action="" method="post">
+		<form action="" method="post" name="author_edit">
 			<div class="item-edit__description">
 				<h1 class="item-edit__h1">Edit <br/>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
 				<ul class="item-edit__ul">
@@ -30,26 +31,86 @@
 						</select>
 					</li>
 					{% for book in author.books %}
-						<li class="item-edit__ul__li">{{ book.title }} <button class="button button--delete">X</button></li>
+						<li class="item-edit__ul__li" id="book_{{ book.id }}" data-id="{{ book.id }}">{{ book.title }} <button class="button button--delete remove_book">X</button></li>
 					{% endfor %}
 				</ul>
 			</div>
 			<div class="item-edit__buttons">
 				<button class="button button--cancel"><a href="{{ url_for('catalog_author', id = author.id) }}">Cancel</a></button>
-				<input class="button button--send" type="submit" value="Submit">
+				<input class="button button--send" type="submit" value="Submit" id="submit_edit">
 			</div>
 		</form>
 	</div>
 	<script>
+		// Function: add new li item on 'Add' button click
+		function add_button(elem) {
+			let li_item = document.querySelector(elem);
+			let new_item = li_item.cloneNode(true);
+			new_item.classList.toggle('hidden');
+			li_item.parentNode.appendChild(new_item);
+		}
+
 		let ul_book = document.querySelector("#ul_book");
 		let add_book = document.querySelector("#add_book");
 
 		add_book.addEventListener("click", function(e){
 			e.preventDefault();
-			let select_book = document.querySelector("#select_book");
-			let new_book = select_book.cloneNode(true);
-			new_book.classList.toggle('hidden');
-			ul_book.appendChild(new_book);
+			add_button("#select_book")
 		});
+
+		let book_remove_list = []
+
+		// Click event to remove current books from author.books list
+		let remove_books = document.querySelectorAll(".remove_book");
+		remove_books.forEach(function(elem){
+			elem.addEventListener("click", function(e){
+				e.preventDefault()
+
+				// get list-item of book to be removed
+				let parent_li = e.target.parentNode;
+				let book_id = this.parentNode.dataset.id;
+
+				// add book id to book_remove_list array
+				book_remove_list.push(book_id)
+				console.log("books to remove: " + book_remove_list)
+
+				// remove book li from book.authors ul
+				parent_li.parentNode.removeChild(parent_li);
+			})
+		});
+
+		// JavaScript-enable form submit
+		let submit_button = document.querySelector('#submit_edit');
+		submit_button.addEventListener("click", function(e){
+			e.preventDefault()
+
+			// AJAX POST request to remove authors from book.authors list
+			let x = 0;
+			while (x < book_remove_list.length) {
+				console.log("Removing book #" + book_remove_list[x] + " from author list");
+				$.ajax({
+					type: 'POST',
+					url: '/catalog/author/{{ author.id }}/book/' + book_remove_list[x] + '/remove',
+					processData: false,
+					data: '',
+					contentType: 'application/octet-stream; charset=utf-8',
+					success: function(result) {
+						if (result) {
+							console.log("Removed book #" + book_remove_list[x] + " from author list");
+						} else if (authResult['error']) {
+							console.log('There was an error: ' + authResult['error']);
+						} else {
+							console.log('Failed to make a server-side call. Check your configuration and console.');
+						}
+					}
+
+				});
+
+				x += 1;
+			}
+
+			document.forms['author_edit'].submit()
+		})
+
 	</script>
 {% endblock %}
