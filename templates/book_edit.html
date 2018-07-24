@@ -35,7 +35,6 @@
 						<li class="item-edit__ul__li" id="author_{{ author.id }}" data-id="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} <button class="button button--delete remove_author">X</button></li>
 					{% endfor %}
 				</ul>
-				<p class="item-edit__p" id="response_authors"></p>
 			</div>
 			<div class="item-edit__genres">
 				<h3 class="item-edit__h3">Genres</h3>
@@ -61,16 +60,21 @@
 		</form>
 	</div>
 	<script>
+		// Function: add new li item on 'Add' button click
+		function add_button(elem) {
+			let li_item = document.querySelector(elem);
+			let new_item = li_item.cloneNode(true);
+			new_item.classList.toggle('hidden');
+			li_item.parentNode.appendChild(new_item);
+		}
+
 		let ul_author = document.querySelector("#ul_author");
 		let add_author = document.querySelector("#add_author");
 
 		// Click event to add author select option
 		add_author.addEventListener("click", function(e){
 			e.preventDefault();
-			let select_author = document.querySelector("#select_author");
-			let new_author = select_author.cloneNode(true);
-			new_author.classList.toggle('hidden');
-			ul_author.appendChild(new_author);
+			add_button("#select_author")
 		});
 
 		let ul_genre = document.querySelector("#ul_genre");
@@ -79,10 +83,7 @@
 		// Click event to add genre select option
 		add_genre.addEventListener("click", function(e){
 			e.preventDefault();
-			let select_genre = document.querySelector("#select_genre");
-			let new_genre = select_genre.cloneNode(true);
-			new_genre.classList.toggle('hidden');
-			ul_genre.appendChild(new_genre);
+			add_button("#select_genre")
 		});
 
 		let author_remove_list = []
