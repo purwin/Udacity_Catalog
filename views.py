@@ -30,7 +30,7 @@ g_client_id = json.loads(open('client_secrets.json', 'r').read())['web']['client
 g_application_name = 'UD Catalog Project'
 
 
-# route: homepage
+# Route: homepage
 @app.route('/')
 @app.route('/home')
 @app.route('/index')
@@ -42,7 +42,7 @@ def index():
   return render_template('index.html', books = books, genres = genres, authors = authors)
 
 
-# route: login
+# Route: login
 @app.route('/login/')
 def login():
   state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
@@ -56,16 +56,8 @@ def login():
   return render_template('login.html', STATE = state, g_client_id = g_client_id, gh_url = gh_url)
   # gh_url = 'https://github.com/login/oauth/authorize?scope=user:email&client_id={}' + urllib.urlencode(gh_params)
 
-  # client_id = json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_id']
-  # client_secret = json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_secret']
-  # redirect_uri = json.loads(open('gh_client_secrets.json', 'r').read())['web']['redirect_uri']
-  # url = 'https://github.com/login/oauth/authorize?scope=user:email&client_id={}'.format(client_id)
-  # h = httplib2.Http()
-  # result = h.request(url, 'GET')[1]
-  # print result
 
-
-#route: gconnect
+# Route: gconnect
 # Adapted from https://github.com/udacity/ud330
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -150,7 +142,7 @@ def gconnect():
   print "done!"
   return output
 
-# route: ghconnect
+# Route: ghconnect
 @app.route('/ghconnect', methods=['GET','POST'])
 def ghconnect():
   if request.args.get('state') != login_session['state']:
@@ -170,7 +162,6 @@ def ghconnect():
                "client_id": json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_id'],
                "client_secret": json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_secret'],
                "code": code,
-               # "redirect_uri": 'http://localhost:8000/ghredirect',
                "state": state
   }
   gh_headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}
@@ -222,14 +213,14 @@ def ghconnect():
   return redirect(url_for('login'))
 
 
-@app.route('/ghredirect', methods=['GET', 'POST'])
-def ghredirect():
-  if request.args.get('state') != login_session['state']:
-    response = make_response(json.dumps('Invalid state parameter.'), 401)
-    response.headers['Content-Type'] = 'application/json'
-    return response
-  access_token = request.args.get('access_token')
-  print "ACCESS TOKEN: {}".format(access_token)
+# @app.route('/ghredirect', methods=['GET', 'POST'])
+# def ghredirect():
+#   if request.args.get('state') != login_session['state']:
+#     response = make_response(json.dumps('Invalid state parameter.'), 401)
+#     response.headers['Content-Type'] = 'application/json'
+#     return response
+#   access_token = request.args.get('access_token')
+#   print "ACCESS TOKEN: {}".format(access_token)
 
 
 # User Helper Functions
@@ -255,7 +246,7 @@ def getUserID(email):
     return None
 
 
-#route: gdisconnect
+# Route: gdisconnect
 # Adapted from https://github.com/udacity/ud330
 @app.route('/gdisconnect')
 def gdisconnect():
@@ -277,9 +268,6 @@ def gdisconnect():
     del login_session['username']
     del login_session['email']
     del login_session['picture']
-    # response = make_response(json.dumps('Successfully disconnected.'), 200)
-    # response.headers['Content-Type'] = 'application/json'
-    # return response
     flash("You are now logged out")
     return redirect(url_for('index'))
   else:
@@ -297,7 +285,7 @@ def user_account():
     return render_template('user_account.html', user = user)
 
 
-# route: add to library
+# Route: add book to library
 @app.route('/catalog/book/<int:id>/library/add/', methods=['GET', 'POST'])
 def add_library(id):
   if 'username' not in login_session:
@@ -314,7 +302,7 @@ def add_library(id):
     return render_template('library_add.html', book = book, user = user)
 
 
-# route: remove from library
+# Route: remove book from library
 @app.route('/catalog/book/<int:id>/library/delete/', methods=['GET', 'POST'])
 def delete_library(id):
   if 'username' not in login_session:
@@ -331,7 +319,7 @@ def delete_library(id):
     return render_template('library_delete.html', book = book, user = user)
 
 
-# route: add to wishlist
+# Route: add book to wishlist
 @app.route('/catalog/book/<int:id>/wishlist/add/', methods=['GET', 'POST'])
 def add_wishlist(id):
   if 'username' not in login_session:
@@ -348,7 +336,7 @@ def add_wishlist(id):
     return render_template('wishlist_add.html', book = book, user = user)
 
 
-# route: remove from wishlist
+# Route: remove book from wishlist
 @app.route('/catalog/book/<int:id>/wishlist/delete/', methods=['GET', 'POST'])
 def delete_wishlist(id):
   if 'username' not in login_session:
@@ -365,7 +353,7 @@ def delete_wishlist(id):
     return render_template('wishlist_delete.html', book = book, user = user)
 
 
-# route: category results
+# Route: category results
 @app.route('/catalog/category/<category>')
 def catalog_category(category):
   genre = session.query(Genre).filter_by(type = category).one()
@@ -377,7 +365,7 @@ def catalog_category(category):
   return render_template('category.html', genre = genre, user = user)
 
 
-# route: category (books)
+# Route: category (books)
 @app.route('/catalog/books/')
 @app.route('/catalog/book/')
 def catalog_books():
@@ -390,14 +378,14 @@ def catalog_books():
   return render_template('catalog_books.html', books = books, user = user)
 
 
-# route: books JSON
+# Route: books JSON
 @app.route('/catalog/book/JSON')
 def books_JSON():
   books = session.query(Book).all()
   return jsonify(Books=[b.serialize for b in books])
 
 
-# route: category (genres)
+# Route: category (genres)
 @app.route('/catalog/genres/')
 @app.route('/catalog/genre/')
 def catalog_genres():
@@ -405,14 +393,14 @@ def catalog_genres():
   return render_template('catalog_genres.html', genres = genres)
 
 
-# route: genres JSON
+# Route: genres JSON
 @app.route('/catalog/genre/JSON')
 def genres_JSON():
   genres = session.query(Genre).all()
   return jsonify(Genres=[g.serialize for g in genres])
 
 
-# route: category (authors)
+# Route: category (authors)
 @app.route('/catalog/authors/')
 @app.route('/catalog/author/')
 def catalog_authors():
@@ -420,14 +408,14 @@ def catalog_authors():
   return render_template('catalog_authors.html', authors = authors)
 
 
-# route: authors JSON
+# Route: authors JSON
 @app.route('/catalog/author/JSON')
 def authors_JSON():
   authors = session.query(Author).all()
   return jsonify(Authors=[a.serialize for a in authors])
 
 
-# route: item (book)
+# Route: item (book)
 @app.route('/catalog/book/<int:id>')
 def catalog_book(id):
   book = session.query(Book).filter_by(id = id).one()
@@ -439,14 +427,14 @@ def catalog_book(id):
   return render_template('book.html', book = book, user = user)
 
 
-# route: book JSON
+# Route: book JSON
 @app.route('/catalog/book/<int:id>/JSON')
 def book_JSON(id):
   book = session.query(Book).filter_by(id=id).one()
   return jsonify(Book=book.serialize)
 
 
-# route: create item (book)
+# Route: create item (book)
 @app.route('/catalog/book/create', methods=['GET', 'POST'])
 def create_book():
   if 'username' not in login_session:
@@ -473,7 +461,7 @@ def create_book():
     return render_template('book_create.html', authors = authors, genres = genres)
 
 
-# route: edit item (book)
+# Route: edit item (book)
 @app.route('/catalog/book/<int:id>/edit', methods=['GET', 'POST'])
 def edit_book(id):
   if 'username' not in login_session:
@@ -510,7 +498,7 @@ def edit_book(id):
     return render_template('book_edit.html', book = book, authors = authors, genres = genres)
 
 
-# route: delete item (book)
+# Route: delete item (book)
 @app.route('/catalog/book/<int:id>/delete', methods=['GET', 'POST'])
 def delete_book(id):
   if 'username' not in login_session:
@@ -525,21 +513,21 @@ def delete_book(id):
     return render_template('book_delete.html', book = book)
 
 
-# route: item (genre)
+# Route: item (genre)
 @app.route('/catalog/genre/<int:id>')
 def catalog_genre(id):
   genre = session.query(Genre).filter_by(id = id).one()
   return render_template('genre.html', genre = genre)
 
 
-# route: genre JSON
+# Route: genre JSON
 @app.route('/catalog/genre/<int:id>/JSON')
 def genre_JSON(id):
   genre = session.query(Genre).filter_by(id=id).one()
   return jsonify(Genre=genre.serialize)
 
 
-# route: create item (genre)
+# Route: create item (genre)
 @app.route('/catalog/genre/create', methods=['GET', 'POST'])
 def create_genre():
   if 'username' not in login_session:
@@ -561,7 +549,7 @@ def create_genre():
     return render_template('genre_create.html', books = books)
 
 
-# route: edit item (genre)
+# Route: edit item (genre)
 @app.route('/catalog/genre/<int:id>/edit', methods=['GET', 'POST'])
 def edit_genre(id):
   if 'username' not in login_session:
@@ -570,6 +558,15 @@ def edit_genre(id):
   if request.method == 'POST':
     if request.form['type']:
       genre.type = request.form['type']
+    try:
+      for book_id in request.form.getlist('book'):
+        if book_id:
+          print "Edit Book ID: {}".format(book_id)
+          append_book = session.query(Book).filter_by(id=book_id).one()
+          genre.books.append(append_book)
+    except:
+      e = sys.exc_info()[0]
+      print "error: {}".format(e)
     session.add(genre)
     session.commit()
     return redirect(url_for('catalog_genre', id = genre.id))
@@ -578,7 +575,7 @@ def edit_genre(id):
     return render_template('genre_edit.html', genre = genre, books = books)
 
 
-# route: delete item (genre)
+# Route: delete item (genre)
 @app.route('/catalog/genre/<int:id>/delete', methods=['GET', 'POST'])
 def delete_genre(id):
   if 'username' not in login_session:
@@ -592,20 +589,20 @@ def delete_genre(id):
     return render_template('genre_delete.html', genre = genre)
 
 
-# route: item (author)
+# Route: item (author)
 @app.route('/catalog/author/<int:id>')
 def catalog_author(id):
   author = session.query(Author).filter_by(id = id).one()
   return render_template('author.html', author = author)
 
-# route: author JSON
+# Route: author JSON
 @app.route('/catalog/author/<int:id>/JSON')
 def author_JSON(id):
   author = session.query(Author).filter_by(id=id).one()
   return jsonify(Author=author.serialize)
 
 
-# route: create item (author)
+# Route: create item (author)
 @app.route('/catalog/author/create', methods=['GET', 'POST'])
 def create_author():
   if 'username' not in login_session:
@@ -627,7 +624,7 @@ def create_author():
     return render_template('author_create.html', books = books)
 
 
-# route: edit item (author)
+# Route: edit item (author)
 @app.route('/catalog/author/<int:id>/edit', methods=['GET', 'POST'])
 def edit_author(id):
   if 'username' not in login_session:
@@ -640,6 +637,15 @@ def edit_author(id):
       author.last_name = request.form['last_name']
     if request.form['bio']:
       author.bio = request.form['bio']
+    try:
+      for book_id in request.form.getlist('book'):
+        if book_id:
+          print "Edit Book ID: {}".format(book_id)
+          append_book = session.query(Book).filter_by(id=book_id).one()
+          author.books.append(append_book)
+    except:
+      e = sys.exc_info()[0]
+      print "error: {}".format(e)
     session.add(author)
     session.commit()
     return redirect(url_for('catalog_author', id = author.id))
@@ -648,7 +654,7 @@ def edit_author(id):
     return render_template('author_edit.html', author = author, books = books)
 
 
-# route: delete item (author)
+# Route: delete item (author)
 @app.route('/catalog/author/<int:id>/delete', methods=['GET', 'POST'])
 def delete_author(id):
   if 'username' not in login_session:
@@ -695,6 +701,44 @@ def remove_genre(book_id, genre_id):
       session.commit()
       print 'Success!'
       return '{} removed as genre'.format(genre.type)
+    except Exception as e:
+      print 'Error! {}'.format(e)
+      return 'Error! {}'.format(e)
+
+
+# Route: Remove book from author.books via AJAX
+@app.route('/catalog/author/<int:author_id>/book/<int:book_id>/remove', methods=['POST'])
+def author_remove_book(author_id, book_id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  author = session.query(Author).filter_by(id = author_id).one()
+  book = session.query(Book).filter_by(id = book_id).one()
+  if book in author.books:
+    try:
+      print 'Removing {} from {} list!'.format(book.title, author.last_name)
+      author.books.remove(book)
+      session.commit()
+      print 'Success!'
+      return '{} removed as book'.format(book.title)
+    except Exception as e:
+      print 'Error! {}'.format(e)
+      return 'Error! {}'.format(e)
+
+
+# Route: Remove book from genre.books via AJAX
+@app.route('/catalog/genre/<int:genre_id>/book/<int:book_id>/remove', methods=['POST'])
+def genre_remove_book(genre_id, book_id):
+  if 'username' not in login_session:
+    return redirect(url_for('login'))
+  genre = session.query(Genre).filter_by(id = genre_id).one()
+  book = session.query(Book).filter_by(id = book_id).one()
+  if book in genre.books:
+    try:
+      print 'Removing {} from {}!'.format(book.title, genre.type)
+      genre.books.remove(book)
+      session.commit()
+      print 'Success!'
+      return '{} removed as book'.format(book.title)
     except Exception as e:
       print 'Error! {}'.format(e)
       return 'Error! {}'.format(e)
