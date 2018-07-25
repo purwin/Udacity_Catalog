@@ -5,17 +5,17 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 {% endblock %}
 
-{% block title %}{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} -- Edit{% endblock %}
+{% block title %}{{ author.full_name }} -- Edit{% endblock %}
 
 {% block content %}
 	<div class="item-edit item-edit--author">
 		<form action="" method="post" name="author_edit">
 			<div class="item-edit__description">
-				<h1 class="item-edit__h1">Edit <br/>{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
+				<h1 class="item-edit__h1">Edit <br/>{{ author.full_name }}</h1>
 				<ul class="item-edit__ul">
 					<li class="item-edit__ul__li"><label class="item-edit__label" for="first_name">First Name</label>: <input class="item-edit__input" type="text" name="first_name" placeholder="{{ author.first_name }}"></li>
 					<li class="item-edit__ul__li"><label class="item-edit__label" for="last_name">Last Name</label>:  <input class="item-edit__input" type="text" name="last_name" placeholder="{{ author.last_name }}"></li>
-					<li class="item-edit__ul__li"><label class="item-edit__label" for="bio">Bio</label>: <textarea class="item-edit__textarea" name="bio" placeholder="{{ author.bio }}"></textarea></li>
+					<li class="item-edit__ul__li"><label class="item-edit__label" for="bio">Bio</label>: <textarea class="item-edit__textarea" name="bio" placeholder="{{ author.bio|safe }}"></textarea></li>
 				</ul>
 			</div>
 			<div class="item-edit__books">
