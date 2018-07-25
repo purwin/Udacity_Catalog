@@ -2,6 +2,7 @@ from sqlalchemy import Column,Integer,String,Table,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
+from sqlalchemy.ext.hybrid import hybrid_property
 
 Base = declarative_base()
 
@@ -24,6 +25,8 @@ class Book(Base):
   description = Column(String)
   authors = relationship('Author', secondary='book_author', backref='books', lazy='dynamic')
   genres = relationship('Genre', secondary='book_genre', backref='books', lazy='dynamic')
+  user_id = Column(Integer, ForeignKey('user.id'))
+  # user = Relationship(User)
 
   @property
   def serialize(self):
@@ -42,13 +45,15 @@ class Author(Base):
   first_name = Column(String(80))
   # full_name = column_property(first_name + " " + last_name)
   bio = Column(String)
+  user_id = Column(Integer, ForeignKey('user.id'))
+  # user = Relationship(User)
 
-  # @hybrid_property
-  #   def full_name(self):
-  #     if self.first_name is not None:
-  #       return self.first_name + " " + self.last_name
-  #     else:
-  #       return self.last_name
+  @hybrid_property
+  def full_name(self):
+    if self.first_name is not None:
+      return self.first_name + " " + self.last_name
+    else:
+      return self.last_name
 
   @property
   def serialize(self):
@@ -64,6 +69,8 @@ class Genre(Base):
   __tablename__ = "genre"
   id = Column(Integer, primary_key=True)
   type = Column(String(80))
+  user_id = Column(Integer, ForeignKey('user.id'))
+  # user = Relationship(User)
 
   @property
   def serialize(self):
@@ -96,6 +103,6 @@ wishlist = Table('wishlist', Base.metadata,
      )
 
 
-engine = create_engine('sqlite:///books-02.db')
+engine = create_engine('sqlite:///test-it.db')
 
 Base.metadata.create_all(engine)
