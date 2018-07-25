@@ -28,7 +28,7 @@
 						<select class="create__select" name="author" id="">
 						<option class="create__option" value="">Select an author</option>
 						{% for author in authors %}
-							<option class="create__option" value="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</option>
+							<option class="create__option" value="{{ author.id }}">{{ author.full_name }}</option>
 						{% endfor %}
 						</select>
 					</li>
