@@ -14,7 +14,10 @@
   width: 100%;
 }
 
-.index__head {}
+.index__head {
+  height: 75vh;
+}
+
 .index__h1 {}
 
 .index__h1--head {
