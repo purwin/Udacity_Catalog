@@ -45,9 +45,9 @@
 			<div class="item__description">
 				<h3 class="item__h3">Description</h3>
 				{% if book.description %}
-					<p class="item__p">{{ book.description }}</p>
+					<p class="item__p">{{ book.description | replace("<br/>", "</p><p class='item__p'>")|safe }}</p>
 				{% else %}
-					<p class="item__p"><i>This book has no current description.</i></p>
+					<p class="item__p"><i>{{ book.title }} has no current description.</i></p>
 				{% endif %}
 			</div>
 			<div class="item__authors">
@@ -55,10 +55,10 @@
 				<ul class="item__ul">
 					{% if book.authors %}
 						{% for author in book.authors %}
-							<li class="item__ul__li"><a class="item__a" href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
+							<li class="item__ul__li"><a class="item__a" href="{{ url_for('catalog_author', id = author.id) }}">{{ author.full_name }}</a></li>
 						{% endfor %}
 					{% else %}
-						<li class="item__ul__li"><i>This book has no current authors.</i></li>
+						<li class="item__ul__li"><i>{{ book.title }} has no current authors.</i></li>
 					{% endif %}
 				</ul>
 			</div>
@@ -70,7 +70,7 @@
 							<li class="item__ul__li"><a class="item__a" href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
 							{% endfor %}
 						{% else %}
-							<li class="item__ul__li">This book has no current genres</li>
+							<li class="item__ul__li">{{ book.title }} has no current genres</li>
 						{% endif %}
 					</ul>
 				</div>
