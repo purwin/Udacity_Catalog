@@ -27,12 +27,12 @@
 						<select name="author" class="item-edit__select">
 						<option value="">Select an author</option>
 						{% for author in authors %}
-							<option value="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</option>
+							<option value="{{ author.id }}">{{ author.full_name }}</option>
 						{% endfor %}
 						</select>
 					</li>
 					{% for author in book.authors %}
-						<li class="item-edit__ul__li" id="author_{{ author.id }}" data-id="{{ author.id }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }} <button class="button button--delete remove_author">X</button></li>
+						<li class="item-edit__ul__li" id="author_{{ author.id }}" data-id="{{ author.id }}">{{ author.full_name }} <button class="button button--delete remove_author">X</button></li>
 					{% endfor %}
 				</ul>
 			</div>
