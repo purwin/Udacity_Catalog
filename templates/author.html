@@ -4,13 +4,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/item.css') }}">
 {% endblock %}
 
-{% block title %}Author -- {% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}{% endblock %}
+{% block title %}Author -- {{ author.full_name }}{% endblock %}
 
 {% block content %}
 	{% include "includes/flash.html" %}
 	<div class="item item--author">
 		<div class="item__head">
-			<h1 class="item__h1">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</h1>
+			<h1 class="item__h1">{{ author.full_name }}</h1>
 			<div class="item__edit">
 				<button class="button button--edit"><a href="{{ url_for('edit_author', id = author.id) }}">EDIT</a></button>
 				<button class="button button--delete"><a href="{{ url_for('delete_author', id = author.id) }}">DELETE</a></button>
@@ -19,7 +19,11 @@
 		<div class="item__profile">
 			<div class="item__description">
 				<h3 class="item__h3">Biography</h3>
-				<p class="item__p">{{ author.bio }}</p>
+				{% if author.bio %}
+					<p class="item__p">{{ author.bio | replace("<br/>", "</p><p class='item__p'>")|safe }}</p>
+				{% else %}
+					<p class="item__p"><i>{{ author.full_name }} has no bio at this time.</i></p>
+				{% endif %}
 			</div>
 			<div class="item__description">
 				<h3 class="item__h3">Books</h3>
@@ -29,7 +33,7 @@
 							<li class="item__ul__li"><a href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
 						{% endfor %}
 					{% else %}
-						<li class="item__ul__li"><i>This author has no current books in the database.</i></li>
+						<li class="item__ul__li"><i>{{ author.full_name }} has no current books in the database.</i></li>
 					{% endif %}
 				</ul>
 			</div>
