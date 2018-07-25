@@ -19,7 +19,7 @@
       <ul class="c-cat__ul">
         {% if authors %}
           {% for author in authors %}
-            <li class="c-cat__ul__li"><a href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
+            <li class="c-cat__ul__li"><a href="{{ url_for('catalog_author', id = author.id) }}">{{ author.full_name }}</a></li>
           {% endfor %}
         {% else %}
           <li class="c-cat__ul__li"><i>There are no authors in the catalog at this time.</i></li>
