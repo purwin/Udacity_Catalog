@@ -22,7 +22,7 @@
                 <li class="index__ul__li"><a href="{{ url_for('catalog_genre', id = genre.id) }}">{{ genre.type }}</a></li>
               {% endfor %}
             {% else %}
-              <li class="index__ul__li"><i>There are no current genres in this database.</i></li>
+              <li class="index__ul__li"><i>There are no genres in this database right now.</i></li>
             {% endif %}
           </ul>
         </div>
@@ -36,7 +36,7 @@
                 <li class="index__ul__li"><a class="index__a" href="{{ url_for('catalog_book', id = book.id) }}">{{ book.title }}</a></li>
               {% endfor %}
               {% else %}
-                <li class="index__ul__li"><i>There are no current books in this database.</i></li>
+                <li class="index__ul__li"><i>There are no books in this database right now.</i></li>
             {% endif %}
           </ul>
         </div>
@@ -47,10 +47,10 @@
           <ul class="index__ul">
             {% if authors %}
               {% for author in authors %}
-                <li class="index__ul__li"><a class="index__a" href="{{ url_for('catalog_author', id = author.id) }}">{% if author.first_name %}{{ author.first_name }} {% endif %}{{ author.last_name }}</a></li>
+                <li class="index__ul__li"><a class="index__a" href="{{ url_for('catalog_author', id = author.id) }}">{{ author.full_name }}</a></li>
               {% endfor %}
               {% else %}
-              <li class="index__ul__li"><i>There are no current authors in this database.</i></li>
+              <li class="index__ul__li"><i>There are no authors in this database right now.</i></li>
             {% endif %}
           </ul>
         </div>
