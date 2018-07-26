@@ -4,6 +4,11 @@
  *
  */
 
+body {
+  background-image: url(../img/bg-01.png);
+  background-position: center;
+}
+
 .index {
   display: flex;
   align-items: flex-start;
@@ -15,7 +20,7 @@
 }
 
 .index__head {
-  height: 75vh;
+  height: 80vh;
 }
 
 .index__h1 {}
@@ -23,13 +28,16 @@
 .index__h1--head {
   text-align: center;
   padding: 2em;
+  font-size: 5rem;
 }
 
 .index__h2 {}
 .index__h3 {}
 .index__a {}
 .index__ul {}
-.index__ul__li {}
+.index__ul__li {
+  padding: .5rem;
+}
 
 .index__categories {}
 .index__category {}
