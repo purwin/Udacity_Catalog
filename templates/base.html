@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif|Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     {% block head_extras %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
   {% endblock %}
+
 </head>
 <body>
   <header>
@@ -43,11 +43,11 @@
               <h4 class="session__h4">Hi, {{ session['username'] }}!</h4>
             {% endif %}
           </div>
-          <div class="session__picture">
-            {% if session['picture'] %}
+          {% if session['picture'] %}
+            <div class="session__picture">
               <img class="session__img" src="{{ session['picture'] }}" alt="" />
-            {% endif %}
-          </div>
+            </div>
+          {% endif %}
         </div>
       </div>
     </section>
