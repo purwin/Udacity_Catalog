@@ -214,16 +214,6 @@ def ghconnect():
   return redirect(url_for('login'))
 
 
-# @app.route('/ghredirect', methods=['GET', 'POST'])
-# def ghredirect():
-#   if request.args.get('state') != login_session['state']:
-#     response = make_response(json.dumps('Invalid state parameter.'), 401)
-#     response.headers['Content-Type'] = 'application/json'
-#     return response
-#   access_token = request.args.get('access_token')
-#   print "ACCESS TOKEN: {}".format(access_token)
-
-
 # User Helper Functions
 # Adapted from https://github.com/udacity/ud330
 def createUser(login_session):
@@ -276,6 +266,8 @@ def gdisconnect():
     response.headers['Content-Type'] = 'application/json'
     return response
 
+
+# Route: user account
 @app.route('/account/')
 def user_account():
   if 'username' not in login_session:
@@ -380,6 +372,7 @@ def catalog_books():
 
 
 # Route: books JSON
+@app.route('/catalog/books/JSON')
 @app.route('/catalog/book/JSON')
 def books_JSON():
   books = session.query(Book).all()
@@ -395,6 +388,7 @@ def catalog_genres():
 
 
 # Route: genres JSON
+@app.route('/catalog/genres/JSON')
 @app.route('/catalog/genre/JSON')
 def genres_JSON():
   genres = session.query(Genre).all()
@@ -410,6 +404,7 @@ def catalog_authors():
 
 
 # Route: authors JSON
+@app.route('/catalog/authors/JSON')
 @app.route('/catalog/author/JSON')
 def authors_JSON():
   authors = session.query(Author).all()
