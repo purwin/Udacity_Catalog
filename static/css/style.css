@@ -4,6 +4,11 @@
  *
  */
 
+body {
+  background-image: url(../img/bg-01.png);
+  background-position: center;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -17,6 +22,7 @@ body {
   line-height: 1.5em;
   font-family: 'Noto Serif', serif;
   color: #2c3e50;
+  margin: 0;
 }
 
 h1 {
@@ -54,6 +60,14 @@ p {
 
 }
 
+ul {
+
+}
+
+li {
+  list-style-type: square;
+}
+
 .serif {
   font-family: 'Noto Serif', serif;
 }
@@ -65,11 +79,14 @@ p {
 a {
   color: #7f8c8d;
   text-decoration: none;
+  border-bottom: 2px solid transparent;
 }
 
 a:hover {
   color: #2980b9;
-  text-decoration: underline;
+/*   text-decoration: underline;
+  text-decoration-color: #1abc9c; */
+  border-bottom: 2px solid #1abc9c;
 }
 
 a:active {
@@ -208,16 +225,20 @@ select {
 
 .button:hover {
   text-decoration: none;
+  border-bottom: none;
 }
 
 .button a {
   color: #7f8c8d;
   text-decoration: none;
+  display: block;
+  border-bottom: none;
 }
 
 .button a:hover {
   color: #2980b9;
   text-decoration: none;
+  border-bottom: none;
 }
 
 .button--cancel {
@@ -226,15 +247,20 @@ select {
   font-size: .9rem;
 }
 
-.button--cancel a {
+.button--cancel a, .button--cancel a:hover {
   color: #ecf0f1;
 }
 
-.button--cancel a:hover {
-  color: #ecf0f1;
+.button--cancel:hover {
+  background-color: #bdc3c7;
 }
 
 .button--send {
+  color: #ecf0f1;
+  background-color: #16a085;
+}
+
+.button--send:hover {
   background-color: #1abc9c;
 }
 
@@ -296,12 +322,18 @@ select {
  *
  */
 
+.nav {
+  background-color: #ecf0f1;
+}
 .nav__ul {
+  height: 8vh;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-around;
-  padding: 0;
+  align-items: center;
+  padding: 1rem;
+  margin: 0;
 }
 
 .nav__ul__li {
@@ -333,6 +365,18 @@ select {
  *
  */
 
+.flash {}
+
+.flash__ul {
+  padding: 0;
+  margin: 1rem;
+}
+
+.flash__ul__li {
+  color:  #e74c3c;
+  list-style-type: none;
+  padding: .5rem;
+}
 
 /*
  *
@@ -345,6 +389,7 @@ select {
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-around;
+  height: 12vh;
   padding: 1rem;
 }
 
@@ -382,6 +427,12 @@ select {
 
 .session__picture {
   /* width: 10%; */
+  height: 100%;
+}
+
+.session__img {
+  height: 100%;
+  width: auto;
 }
 
 
