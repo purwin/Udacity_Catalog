@@ -6,6 +6,11 @@
 
 /* CSS file for following templates: book_delete.html, author_delete.html, genre_delete.html */
 
+body {
+  background-image: url(../img/bg-03.png);
+  background-position: center;
+}
+
 .item-delete {
 	display: flex;
 	align-items: flex-start;
