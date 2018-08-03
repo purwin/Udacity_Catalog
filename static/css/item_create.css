@@ -1,5 +1,9 @@
  /* CSS file for following templates: book_create.html, author_create.html, genre_create.html */
 
+body {
+  background-image: url(../img/bg-03.png);
+  background-position: center;
+}
 
 .create {
   display: flex;
