@@ -19,33 +19,33 @@
 		<div class="item__user">
 			{% if user %}
 				{% if book in user.library %}
-					<button class="button button--delete">
-							<a href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a>
+					<button class="button button--delete" tooltip="Remove this book from your library!">
+							<a href="{{ url_for('delete_library', id = book.id) }}">LIBRARY</a>
 					</button>
 				{% else %}
-					<button class="button button--add">
-							<a href="{{ url_for('add_library', id = book.id) }}">ADD TO LIBRARY</a>
+					<button class="button button--add" tooltip="Add this book to your library!">
+							<a href="{{ url_for('add_library', id = book.id) }}">LIBRARY</a>
 					</button>
 				{% endif %}
 				{% if book in user.wishlist %}
-					<button class="button button--delete">
-							<a href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a>
+					<button class="button button--delete" tooltip="Remove this book from your wishlist!">
+							<a href="{{ url_for('delete_wishlist', id = book.id) }}">WISHLIST</a>
 					</button>
 				{% else %}
-					<button class="button button--add">
-							<a href="{{ url_for('add_wishlist', id = book.id) }}">ADD TO WISHLIST</a>
+					<button class="button button--add" tooltip="Add this book to your wishlist!">
+							<a href="{{ url_for('add_wishlist', id = book.id) }}">WISHLIST</a>
 					</button>
 				{% endif %}
 			{% endif %}
 			</div>
 		<div class="item__cover">
-			<img class="item__img" src="{% if book.cover %}{{ book.cover }}{% else %}#{% endif %}" alt="" />
+			<img class="item__img" src="{% if book.cover %}{{ book.cover }}{% else %}{{ url_for('static', filename='img/cover.png') }}{% endif %}" alt="" />
 		</div>
 		<div class="item__profile">
 			<div class="item__description">
 				<h3 class="item__h3">Description</h3>
 				{% if book.description %}
-					<p class="item__p">{{ book.description | replace("<br/>", "</p><p class='item__p'>")|safe }}</p>
+					<p class="item__p">{{ book.description | replace("<br/>", '</p><p class="item__p">')|safe }}</p>
 				{% else %}
 					<p class="item__p"><i>{{ book.title }} has no current description.</i></p>
 				{% endif %}
