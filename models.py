@@ -26,7 +26,6 @@ class Book(Base):
   authors = relationship('Author', secondary='book_author', backref='books', lazy='dynamic')
   genres = relationship('Genre', secondary='book_genre', backref='books', lazy='dynamic')
   user_id = Column(Integer, ForeignKey('user.id'))
-  # user = Relationship(User)
 
   @property
   def serialize(self):
@@ -43,10 +42,8 @@ class Author(Base):
   id = Column(Integer, primary_key=True)
   last_name = Column(String(80))
   first_name = Column(String(80))
-  # full_name = column_property(first_name + " " + last_name)
   bio = Column(String)
   user_id = Column(Integer, ForeignKey('user.id'))
-  # user = Relationship(User)
 
   @hybrid_property
   def full_name(self):
@@ -70,7 +67,6 @@ class Genre(Base):
   id = Column(Integer, primary_key=True)
   type = Column(String(80))
   user_id = Column(Integer, ForeignKey('user.id'))
-  # user = Relationship(User)
 
   @property
   def serialize(self):
@@ -92,17 +88,17 @@ Table('book_genre', Base.metadata,
      )
 
 
-library = Table('library', Base.metadata,
+Table('library', Base.metadata,
       Column('user_id', Integer, ForeignKey('user.id')),
       Column('book_id', Integer, ForeignKey('book.id'))
      )
 
-wishlist = Table('wishlist', Base.metadata,
+Table('wishlist', Base.metadata,
       Column('user_id', Integer, ForeignKey('user.id')),
       Column('book_id', Integer, ForeignKey('book.id'))
      )
 
 
-engine = create_engine('sqlite:///test-it.db')
+engine = create_engine('sqlite:///books.db')
 
 Base.metadata.create_all(engine)
