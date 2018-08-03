@@ -6,6 +6,11 @@
  *
  */
 
+body {
+  background-image: url(../img/bg-04.png);
+  background-position: center;
+}
+
 .list-add {
 	display: flex;
 	align-items: flex-start;
@@ -13,7 +18,7 @@
 	align-items: stretch;
 	flex-direction: column;
 	padding: 1rem;
-	width: 50%;
+	width: 100%;
 }
 
 .list-add__h1 {
@@ -46,7 +51,7 @@
 	align-items: stretch;
 	flex-direction: column;
 	padding: 1rem;
-	width: 50%;
+	width: 100%;
 }
 
 .list-delete__h1 {
@@ -66,7 +71,13 @@
 }
 
 @media screen and (min-width: 768px) {
+.list-add {
+	width: 50%;
+}
 
+.list-delete {
+	width: 50%;
+}
 
 
 }
