@@ -1,5 +1,5 @@
 from models import *
-from flask import Flask, jsonify, request, url_for, render_template, flash, 
+from flask import Flask, jsonify, request, url_for, render_template, flash, \
     redirect, make_response, Markup
 from flask import session as login_session
 from sqlalchemy.ext.declarative import declarative_base
@@ -23,8 +23,7 @@ import base64
 
 app = Flask(__name__)
 
-# engine = create_engine('sqlite:///books-02.db')
-engine = create_engine('sqlite:///test-it.db')
+engine = create_engine('sqlite:///books.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -57,7 +56,7 @@ def login():
     gh_params = {
         "scope": "user",
                  "client_id": json.loads(
-                  open('gh_client_secrets.json', 'r').read())
+                     open('gh_client_secrets.json', 'r').read())
                  ['web']['client_id'], "state": state
     }
     gh_url = 'https://github.com/login/oauth/authorize?{}'.format(
@@ -91,7 +90,8 @@ def gconnect():
 
     # Check that the access token is valid.
     access_token = credentials.access_token
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={}'.format(access_token))
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=\
+           {}'.format(access_token))
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
     # If there was an error in the access token info, abort.
@@ -119,8 +119,8 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response = make_response(json.dumps('Current user is already \
+                                            connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -172,8 +172,10 @@ def ghconnect():
     # Request access_token from GitHub with received code
     gh_url = 'https://github.com/login/oauth/access_token'
     gh_params = {
-        "client_id": json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_id'],
-        "client_secret": json.loads(open('gh_client_secrets.json', 'r').read())['web']['client_secret'],
+        "client_id": json.loads(open('gh_client_secrets.json',
+                                'r').read())['web']['client_id'],
+        "client_secret": json.loads(open('gh_client_secrets.json',
+                                    'r').read())['web']['client_secret'],
         "code": code,
         "state": state
     }
@@ -237,7 +239,8 @@ def ghconnect():
 # Adapted from https://github.com/udacity/ud330
 def createUser(login_session):
     new_user = User(name=login_session['username'],
-                    email=login_session['email'], picture=login_session['picture'])
+                    email=login_session['email'],
+                    picture=login_session['picture'])
     session.add(new_user)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
@@ -282,7 +285,8 @@ def disconnect():
         # Notify if response fails
         if result.get('error') is not None:
             response = make_response(
-                json.dumps('Requesting authoriztion info from Google failed'), 401)
+                json.dumps('Requesting authorization info from Google \
+                           failed'), 401)
             response.headers['Content-Type'] = 'application/json'
             return response
 
@@ -304,7 +308,8 @@ def disconnect():
         # Notify if response fails
         if r.status_code != 204:
             response = make_response(
-                json.dumps('Attempt to revoke authorization from GitHub failed'), 401)
+                json.dumps('Attempt to revoke authorization from GitHub \
+                           failed'), 401)
             response.headers['Content-Type'] = 'application/json'
             return response
 
@@ -320,10 +325,6 @@ def disconnect():
     del login_session['provider']
     flash("You are now logged out")
     return redirect(url_for('index'))
-    # else:
-    #   response = make_response(json.dumps('Failed to revoke token for given user.', 400))
-    #   response.headers['Content-Type'] = 'application/json'
-    #   return response
 
 
 # Route: user account
@@ -496,7 +497,8 @@ def create_book():
         return redirect(url_for('login'))
     if request.method == "POST":
         new_book = Book(
-            title=request.form['title'], cover=request.form['cover'], description=request.form['description'])
+            title=request.form['title'], cover=request.form['cover'],
+            description=request.form['description'])
         session.add(new_book)
         try:
             for author_id in request.form.getlist('author'):
@@ -516,7 +518,8 @@ def create_book():
     else:
         authors = session.query(Author).all()
         genres = session.query(Genre).all()
-        return render_template('book_create.html', authors=authors, genres=genres)
+        return render_template('book_create.html', authors=authors,
+                               genres=genres)
 
 
 # Route: edit item (book)
@@ -526,7 +529,9 @@ def edit_book(id):
         return redirect(url_for('login'))
     book = session.query(Book).filter_by(id=id).one()
     if book.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit books that you created. <a href='/catalog/book/create'>Create your own book</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit books that you created. \
+                     <a href='/catalog/book/create'>Create your own book</a> \
+                     if you're up for it!"))
         return redirect(url_for('catalog_book', id=id))
     if request.method == 'POST':
         if request.form['title']:
@@ -558,7 +563,8 @@ def edit_book(id):
     else:
         authors = session.query(Author).all()
         genres = session.query(Genre).all()
-        return render_template('book_edit.html', book=book, authors=authors, genres=genres)
+        return render_template('book_edit.html', book=book, authors=authors,
+                               genres=genres)
 
 
 # Route: delete item (book)
@@ -568,7 +574,9 @@ def delete_book(id):
         return redirect(url_for('login'))
     book = session.query(Book).filter_by(id=id).one()
     if book.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit books that you created. <a href='/catalog/book/create'>Create your own book</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit books that you created. <a \
+                     href='/catalog/book/create'>Create your own book</a> if \
+                     you're up for it!"))
         return redirect(url_for('catalog_book', id=id))
     if request.method == 'POST':
         session.delete(book)
@@ -622,7 +630,9 @@ def edit_genre(id):
         return redirect(url_for('login'))
     genre = session.query(Genre).filter_by(id=id).one()
     if genre.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit genres that you created. <a href='/catalog/genre/create'>Create your own genre</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit genres that you created. \
+                     <a href='/catalog/genre/create'>Create your own genre\
+                     </a> if you're up for it!"))
         return redirect(url_for('catalog_genre', id=genre.id))
     if request.method == 'POST':
         if request.form['type']:
@@ -652,7 +662,9 @@ def delete_genre(id):
         return redirect(url_for('login'))
     genre = session.query(Genre).filter_by(id=id).one()
     if genre.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit genres that you created. <a href='/catalog/genre/create'>Create your own genre</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit genres that you created. \
+                     <a href='/catalog/genre/create'>Create your own genre\
+                     </a> if you're up for it!"))
         return redirect(url_for('catalog_genre', id=genre.id))
     if request.method == 'POST':
         session.delete(genre)
@@ -683,7 +695,8 @@ def create_author():
         return redirect(url_for('login'))
     if request.method == "POST":
         new_author = Author(
-            first_name=request.form['first_name'], last_name=request.form['last_name'], bio=request.form['bio'])
+            first_name=request.form['first_name'],
+            last_name=request.form['last_name'], bio=request.form['bio'])
         session.add(new_author)
         try:
             for book_id in request.form.getlist('book'):
@@ -706,7 +719,9 @@ def edit_author(id):
         return redirect(url_for('login'))
     author = session.query(Author).filter_by(id=id).one()
     if author.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit authors that you created. <a href='/catalog/author/create'>Create your own author</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit authors that you created. \
+                     <a href='/catalog/author/create'>Create your own author\
+                     </a> if you're up for it!"))
         return redirect(url_for('catalog_author', id=author.id))
     if request.method == 'POST':
         if request.form['first_name']:
@@ -740,7 +755,9 @@ def delete_author(id):
         return redirect(url_for('login'))
     author = session.query(Author).filter_by(id=id).one()
     if author.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit authors that you created. <a href='/catalog/author/create'>Create your own author</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit authors that you created. \
+                     <a href='/catalog/author/create'>Create your own author\
+                     </a> if you're up for it!"))
         return redirect(url_for('catalog_author', id=author.id))
     if request.method == 'POST':
         session.delete(author)
@@ -751,14 +768,17 @@ def delete_author(id):
 
 
 # Route: Remove author from book.authors via AJAX
-@app.route('/catalog/book/<int:book_id>/author/<int:author_id>/remove', methods=['POST'])
+@app.route('/catalog/book/<int:book_id>/author/<int:author_id>/remove',
+           methods=['POST'])
 def remove_author(book_id, author_id):
     if 'username' not in login_session:
         return redirect(url_for('login'))
     book = session.query(Book).filter_by(id=book_id).one()
     author = session.query(Author).filter_by(id=author_id).one()
     if book.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit books that you created. <a href='/catalog/book/create'>Create your own book</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit books that you created. \
+                     <a href='/catalog/book/create'>Create your own book</a> \
+                     if you're up for it!"))
         return redirect(url_for('catalog_book', id=book_id))
     if author in book.authors:
         try:
@@ -773,14 +793,17 @@ def remove_author(book_id, author_id):
 
 
 # Route: Remove genre from book.genres via AJAX
-@app.route('/catalog/book/<int:book_id>/genre/<int:genre_id>/remove', methods=['POST'])
+@app.route('/catalog/book/<int:book_id>/genre/<int:genre_id>/remove',
+           methods=['POST'])
 def remove_genre(book_id, genre_id):
     if 'username' not in login_session:
         return redirect(url_for('login'))
     book = session.query(Book).filter_by(id=book_id).one()
     genre = session.query(Genre).filter_by(id=genre_id).one()
     if book.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit books that you created. <a href='/catalog/book/create'>Create your own book</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit books that you created. \
+                     <a href='/catalog/book/create'>Create your own book</a> \
+                     if you're up for it!"))
         return redirect(url_for('catalog_book', id=book_id))
     if genre in book.genres:
         try:
@@ -795,18 +818,22 @@ def remove_genre(book_id, genre_id):
 
 
 # Route: Remove book from author.books via AJAX
-@app.route('/catalog/author/<int:author_id>/book/<int:book_id>/remove', methods=['POST'])
+@app.route('/catalog/author/<int:author_id>/book/<int:book_id>/remove',
+           methods=['POST'])
 def author_remove_book(author_id, book_id):
     if 'username' not in login_session:
         return redirect(url_for('login'))
     author = session.query(Author).filter_by(id=author_id).one()
     book = session.query(Book).filter_by(id=book_id).one()
     if author.user_id != login_session['user_id']:
-        flash(Markup("Sorry, you can only edit authors that you created. <a href='/catalog/author/create'>Create your own author</a> if you're up for it!"))
+        flash(Markup("Sorry, you can only edit authors that you created. \
+                     <a href='/catalog/author/create'>Create your own author\
+                     </a> if you're up for it!"))
         return redirect(url_for('catalog_author', id=author_id))
     if book in author.books:
         try:
-            print 'Removing {} from {} list!'.format(book.title, author.last_name)
+            print 'Removing {} from {} list!'.format(book.title,
+                                                     author.last_name)
             author.books.remove(book)
             session.commit()
             print 'Success!'
@@ -817,16 +844,17 @@ def author_remove_book(author_id, book_id):
 
 
 # Route: Remove book from genre.books via AJAX
-@app.route('/catalog/genre/<int:genre_id>/book/<int:book_id>/remove', methods=['POST'])
+@app.route('/catalog/genre/<int:genre_id>/book/<int:book_id>/remove',
+           methods=['POST'])
 def genre_remove_book(genre_id, book_id):
     if 'username' not in login_session:
         return redirect(url_for('login'))
     genre = session.query(Genre).filter_by(id=genre_id).one()
     book = session.query(Book).filter_by(id=book_id).one()
     if genre.user_id != login_session['user_id']:
-        flash(Markup('Sorry, you can only edit genres that you created.' +
-                     '<a href='/catalog/genre/create'>Create your own genre</a>' +
-                     'if you\'re up for it!'))
+        flash(Markup("Sorry, you can only edit genres that you created. \
+                     <a href='/catalog/genre/create'>Create your own genre\
+                     </a> if you\'re up for it!"))
         return redirect(url_for('catalog_genre', id=genre_id))
     if book in genre.books:
         try:
