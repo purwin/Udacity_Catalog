@@ -9,7 +9,6 @@ body {
   background-position: center;
 }
 
-
 .c {
   display: flex;
   align-items: flex-start;
@@ -40,15 +39,15 @@ body {
 }
 
 .c-cat--name {
-  width: 50%;
+  width: 100%;
 }
 
 .c-cat--library {
-  width: 25%;
+  margin: .5rem 1rem 1rem 0;
 }
 
 .c-cat--wishlist {
-  width: 25%;
+  margin: .5rem 1rem 1rem;
 }
 
 .c-cat__ul {
@@ -59,5 +58,23 @@ padding: 0;
   list-style-type: none;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   padding-bottom: .5rem;
+}
+
+
+@media screen and (min-width: 768px) {
+  .c-cat__ul__li {
+    flex-direction: row;
+  }
+  .c-cat--name {
+    width: 50%;
+  }
+  .c-cat--library {
+    margin: 0 1rem;
+  }
+
+  .c-cat--wishlist {
+    margin: 0 1rem;
+  }
 }
