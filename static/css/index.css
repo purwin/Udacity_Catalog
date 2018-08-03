@@ -27,11 +27,11 @@ body {
 
 .index__h1--head {
   text-align: center;
-  padding: 2em;
+  padding: 2em 0;
   font-size: 5rem;
 }
 
-.index__h2 {}
+.index__h2 {padding-top: 2rem;}
 .index__h3 {}
 .index__a {}
 .index__ul {}
@@ -52,5 +52,7 @@ body {
  */
 
 @media screen and (min-width: 768px) {
-
+  .index__h1--head {
+    padding: 2rem;
+  }
 }
