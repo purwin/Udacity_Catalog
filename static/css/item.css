@@ -6,6 +6,10 @@
 
 /* CSS file for following templates: book.html, author.html, genre.html */
 
+body {
+  background-image: url(../img/bg-03.png);
+  background-position: center;
+}
 
 .item {
   display: flex;
@@ -40,23 +44,24 @@
 }
 
 .item__head {
-	width: 100%;
-	padding: 1rem;
+  width: 100%;
+  padding: 1rem;
 }
 
 .item__user {
-	width: 100%;
-	padding: 1rem;
+  width: 100%;
+  padding: 1rem;
 }
 
 .item__cover {
-	width: 50%;
-	padding: 1rem;
+  width: 100%;
+  padding: 1rem;
 }
 
 .item__profile {
-	width: 100%;
-	padding: 1rem;
+  width: 100%;
+  padding: 1rem;
+  background-color: #fff;
 }
 
 .item__edit {}
@@ -68,7 +73,9 @@
 .item__authors {}
 .item__genres {}
 
+.button--delete.button--library {
 
+}
 
 /*
  *
@@ -78,27 +85,30 @@
 
 @media screen and (min-width: 768px) {
 
-	.item {
-	  flex-direction: row;
-	}
+  .item {
+    flex-direction: row;
+  }
 
-	.item__cover { order: 1; }
+  .item__cover { 
+    order: 1;
+    width: 50%;
+  }
 
-	.item__head {
-		width: 66%;
-	}
+  .item__head {
+    width: 66%;
+  }
 
-	.item__user {
-		width: 33%;
-	}
+  .item__user {
+    width: 33%;
+  }
 
-	.item__cover {
-		width: 33%;
-		order: 1;
-	}
+  .item__cover {
+    width: 33%;
+    order: 1;
+  }
 
-	.item__profile {
-		width: 66%;
-	}
+  .item__profile {
+    width: 66%;
+  }
 
 }
