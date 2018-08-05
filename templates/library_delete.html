@@ -11,7 +11,7 @@
     <h1 class="list-delete__h1">REMOVE FROM LIBRARY</h1>
     <form action="" method="POST">
       <div class="list-delete__description">
-        <p class="list-delete__p">Are you sure you want to delete {{ book.title }} from your library, {{ user.name }}?</p>
+        <p class="list-delete__p">Are you sure you want to delete <b>{{ book.title }}</b> from your library, {{ user.name }}?</p>
       </div>
       <div class="list-delete__buttons">
         <button class="button button--cancel"><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
