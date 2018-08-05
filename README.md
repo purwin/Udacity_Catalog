@@ -1,6 +1,6 @@
 # Udacity Catalog Project
 
-This is a library CRUD web app for the udacity full-stack web developer catalog project. The app incorporates Flask, SQLAlchemy, JS, and HTML, allowing you to view a collection of books, authors, and genre categories—or register and add your own! Feel free to check it out and build your own book library/wishlist!
+This is a library CRUD web app for the Udacity Full-Stack Web Developer Catalog project. The app incorporates Flask, SQLAlchemy, JS, and HTML, allowing you to view a collection of books, authors, and genre categories—or register and add your own! Feel free to check it out and build your own book library/wishlist!
 
 ## Requirements
 
