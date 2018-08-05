@@ -7,6 +7,7 @@
 body {
   background-image: url(../img/bg-01.png);
   background-position: center;
+  background-size: 100%;
 }
 
 html {
@@ -18,7 +19,7 @@ html {
 }
 
 body {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5em;
   font-family: 'Noto Serif', serif;
   color: #2c3e50;
@@ -77,7 +78,7 @@ li {
 }
 
 a {
-  color: #7f8c8d;
+  color: #3498db;
   text-decoration: none;
   border-bottom: 2px solid transparent;
 }
@@ -301,7 +302,6 @@ select {
 .button--delete {
   background-color:  #c0392b;
   color: #ecf0f1;
-  /* font-size: .9rem; */
 }
 
 .button--delete:hover {
@@ -314,6 +314,37 @@ select {
 
 .button--delete a:hover {
   color: #ecf0f1;
+}
+
+/* Tooltip css adapted from https://medium.freecodecamp.org/a-step-by-step-guide-to-making-pure-css-tooltips-3d5a3e237346 */
+[tooltip]{
+  position:relative;
+}
+
+[tooltip]:hover::before {
+    content: "";
+    position: absolute;
+    top:-6px;
+    left:50%;
+    transform: translateX(-50%);
+    border-width: 4px 6px 0 6px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.7) transparent transparent transparent;
+    z-index: 100;
+}
+[tooltip]:hover::after {
+    content: attr(tooltip);
+    position: absolute;
+    left:50%;
+    top:-6px;
+    transform: translateX(-50%)   translateY(-100%);
+    background: rgba(0,0,0,0.7);
+    text-align: center;
+    color: #fff;
+    padding:4px 2px;
+    font-size: 12px;
+    width: 200%;
+    pointer-events: none;
 }
 
 /*
@@ -402,7 +433,8 @@ select {
 }
 
 .session__img {
-
+height: 100%;
+width: auto;
 }
 
 .session__status {
@@ -415,6 +447,7 @@ select {
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: flex-end;
+  text-align: right;
 }
 
 .session__login {
@@ -423,16 +456,13 @@ select {
 
 .session__name {
   padding-right: 1rem;
+  flex-grow: 1;
 }
 
 .session__picture {
-  /* width: 10%; */
-  height: 100%;
-}
-
-.session__img {
-  height: 100%;
-  width: auto;
+  max-width: 25%;
+  max-height: 100%;
+  flex-grow: 0;
 }
 
 
