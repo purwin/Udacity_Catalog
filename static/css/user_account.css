@@ -4,7 +4,14 @@
  *
  */
 
-.user {}
+body {
+  background-image: url(../img/bg-04.png);
+  background-position: center;
+}
+
+.user {
+  padding: 1rem;
+}
 .user__h1 {}
 .user__h3 {}
 .user__p {}
