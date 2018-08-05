@@ -1,13 +1,13 @@
-#Udacity Catalog Project
+# Udacity Catalog Project
 
 This is a library CRUD web app for the udacity full-stack web developer catalog project. The app incorporates Flask, SQLAlchemy, JS, and HTML, allowing you to view a collection of books, authors, and genre categories—or register and add your own! Feel free to check it out and build your own book library/wishlist!
 
-##Requirements
+## Requirements
 
 * You'll need [Python](https://www.python.org/) and a working computer to view or edit this project.
 * A virtual machine to run everything. This app relies on [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/).
 
-##Installation
+## Installation
 
 1. Install [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) on your computer.
 2. Download the [fullstack-nanodegree-vm](https://github.com/udacity/fullstack-nanodegree-vm).
@@ -21,7 +21,7 @@ This is a library CRUD web app for the udacity full-stack web developer catalog 
 6. Open your web browser of choice and type in the following address to view the app: `http://localhost:8000`
 7. Check out those beautiful RESTful app routes!
 
-##API
+## API
 
 This web app features RESTful routes, so feel free to peruse the app and pull data from the various JSON endpoints:
 * `/catalog/books/JSON`: View data for all books in the database
@@ -31,17 +31,17 @@ This web app features RESTful routes, so feel free to peruse the app and pull da
 * `/catalog/genre/#/JSON`: View data for an individual genre category in the database
 * `/catalog/author/#/JSON`: View data for an individual author in the database
 
-##FAQ
+## FAQ
 
-* Q: I can't edit book or author or genre data. How do I do that?
-* A: You need to be logged in to edit material, and you need to be the creator of said book/author/data to edit any information. Create your own
+* **Q**: I can't edit book or author or genre data. How do I do that?
+* **A**: You need to be logged in to edit material, and you need to be the creator of said book/author/data to edit any information. Create your own item, then feel free to edit it as you please! No one else can edit items that you've created.
 
-* Q: How do I create a book/author/genre?
-* A: If you're logged in, simply go to the relevant create routes and type away!
+* **Q**: How do I create a book/author/genre?
+* **A**: If you're logged in, simply go to the relevant create routes and type away!
 
-* Q: Can I login without a Google or GitHub account?
-* A: Not at present. Stay tuned for updates!
+* **Q**: Can I login without a Google or GitHub account?
+* **A**: Not at present. Stay tuned for updates!
 
-##Contribute!
+## Contribute!
 
 Feel free to `clone` or `fork` this project!
