@@ -11,7 +11,7 @@
     <h1 class="list-add__h1">ADD TO WISHLIST</h1>
     <form action="" method="POST">
     <div class="list-add__description">
-      <p class="list-add__p">Are you sure you want to add {{ book.title }} to your wishlist, {{ user.name }}?</p>
+      <p class="list-add__p">Are you sure you want to add <b>{{ book.title }}</b> to your wishlist, {{ user.name }}?</p>
     </div>
     <div class="list-add__buttons">
       <button class="button button--cancel"><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
