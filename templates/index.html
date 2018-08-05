@@ -15,7 +15,7 @@
     <div class="index__categories">
       <section class="section--genres">
         <div class="index__category index__category--genres">
-          <h3 class="index__h3"><a class="index__a" href="{{ url_for('catalog_genres') }}">Genres</a></h3>
+          <h2 class="index__h2"><a class="index__a" href="{{ url_for('catalog_genres') }}">Genres</a></h2>
           <ul class="index__ul">
             {% if genres %}
               {% for genre in genres %}
@@ -29,7 +29,7 @@
       </section>
       <section class="section--books">
         <div class="index__category index__category--books">
-          <h3 class="index__h3"><a href="{{ url_for('catalog_books') }}">Books</a></h3>
+          <h2 class="index__h2"><a href="{{ url_for('catalog_books') }}">Books</a></h2>
           <ul class="index__ul">
             {% if books %}
               {% for book in books %}
@@ -43,7 +43,7 @@
       </section>
       <section class="section--authors">
         <div class="section__category section__category--authors">
-          <h3 class="index__h3"><a class="index__a" href="{{ url_for('catalog_authors') }}">Authors</a></h3>
+          <h2 class="index__h2"><a class="index__a" href="{{ url_for('catalog_authors') }}">Authors</a></h2>
           <ul class="index__ul">
             {% if authors %}
               {% for author in authors %}
