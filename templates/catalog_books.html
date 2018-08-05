@@ -8,7 +8,7 @@
 
 {% block content %}
 {% include "includes/flash.html" %}
-	<div class="c">
+  <div class="c">
     <div class="c-title">
       <h1 class="c__h1">BOOKS</h1>
     </div>
@@ -24,16 +24,16 @@
             {% if user %}
               <div class="c-cat--library">
                 {% if book in user.library %}
-                  <button class="button button--delete"><a href="{{ url_for('delete_library', id = book.id) }}">REMOVE FROM LIBRARY</a></button>
+                  <button class="button button--delete"><a href="{{ url_for('delete_library', id = book.id) }}" tooltip="Remove this book from your library!">LIBRARY</a></button>
                 {% else %}
-                  <button class="button button--add"><a href="{{ url_for('add_library', id = book.id) }}">ADD TO LIBRARY</a></button>
+                  <button class="button button--add"><a href="{{ url_for('add_library', id = book.id) }}" tooltip="Add this book to your library!">LIBRARY</a></button>
                 {% endif %}
               </div>
               <div class="c-cat--wishlist">
                 {% if book in user.wishlist %}
-                  <button class="button button--delete"><a href="{{ url_for('delete_wishlist', id = book.id) }}">REMOVE FROM WISHLIST</a></button>
+                  <button class="button button--delete"><a href="{{ url_for('delete_wishlist', id = book.id) }}" tooltip="Remove this book from your wishlist!">WISHLIST</a></button>
                 {% else %}
-                  <button class="button button--add"><a href="{{ url_for('add_wishlist', id = book.id) }}">ADD TO WISHLIST</a></button>
+                  <button class="button button--add"><a href="{{ url_for('add_wishlist', id = book.id) }}" tooltip="Add this book to your wishlist!">WISHLIST</a></button>
                 {% endif %}
               </div>
             {% endif %}
