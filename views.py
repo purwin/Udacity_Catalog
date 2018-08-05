@@ -90,8 +90,8 @@ def gconnect():
 
     # Check that the access token is valid.
     access_token = credentials.access_token
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=\
-           {}'.format(access_token))
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={}'
+           .format(access_token))
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
     # If there was an error in the access token info, abort.
@@ -298,7 +298,7 @@ def disconnect():
         client_secret = json.loads(open('gh_client_secrets.json', 'r').read())[
             'web']['client_secret']
         # DELETE /applications/:client_id/tokens/:access_token
-        revoke_url = 'https://api.github.com/applications/{}/tokens/{}'.format(
+        revoke_url = 'https://api.github.com/applications/{}/grants/{}'.format(
             client_id, access_token)
 
         # Send a DELETE request to GitHub, revoking access token
