@@ -2890,6 +2890,12 @@ book_catalog.append(the_circle)
 
 
 def add_book(book):
+    """Add books to the database
+    Arguments: Takes a single book dictionary, containing the
+    following keys: title, cover img URL (optional), description, a
+    list of genre dictionaries (optional), and a list of author
+    dictionaries (optional)
+    """
     new_book = Book(title=book['title'], cover=book['cover'],
                     description=book['description'])
     session.add(new_book)
@@ -2920,15 +2926,18 @@ def add_book(book):
             print "Added {} to {}".format(author_search.last_name,
                                           new_book.title)
         except Exception as e:
-            print "{} {}: {}".format(
+            print "Could not add {} {} to {}: {}".format(
                 author['first_name'],
-                author['last_name'], e
+                author['last_name'],
+                book['title']
+                e
             )
 
 
 def add_genres(genres):
     """Add genre types to the database
-    Arguments: Takes a single string or list of multiple genre types
+    Arguments: Takes a list of genre dictionaries, with each genre
+    containing the following key: type
     """
     for genre in genres:
         new_genre = Genre(type=genre['type'])
@@ -2938,13 +2947,16 @@ def add_genres(genres):
 
 def add_authors(authors):
     """Add authors to the database
-    Arguments: Takes a list of authors
+    Arguments: Takes a list of author dictionaries, with each author
+    containing the following keys: last_name, first_name, and bio
+    (optional)
     """
     for author in authors:
         new_author = Author(
             last_name=author['last_name'],
             first_name=author['first_name'],
-            bio=author['bio'])
+            bio=author['bio']
+        )
         session.add(new_author)
         session.commit()
 
