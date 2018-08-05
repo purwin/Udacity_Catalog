@@ -4,15 +4,19 @@
  *
  */
 
+body {
+  background-image: url(../img/bg-05.png);
+  background-position: center;
+}
 
 .login {
-	display: flex;
-	align-items: flex-start;
-	flex-wrap: wrap;
-	align-items: stretch;
-	flex-direction: column;
-	padding: 1rem;
-	width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
 }
 
 .login__h1 {}
@@ -24,18 +28,41 @@
   -moz-border-radius: 50%;
 }
 
-.login__oauths {}
+.login__oauths {
+  display: flex;
+  align-items: baseline;
+  padding-top: 3rem;
+  flex-wrap: wrap;
+}
 
-.login__google {}
+.login__google {
+  width: 50%;
+  text-align: center;
+}
 
-#button_google {}
+#button_google {
+  cursor: pointer;
+}
 
-.login__github {}
+.login__github {
+  width: 50%;
+  text-align: center;
+}
 
-#button_github {}
+#button_github {
+  cursor: pointer;
+  font-size: 96px;
+  color: #2c3e50;
+}
+
+#button_github:hover {
+  color: #7f8c8d;
+}
 
 .login__result {
   text-align: center;
+  width: 100%;
+  padding-top: 3rem;
 }
 
 /*
