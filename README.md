@@ -11,14 +11,16 @@ This is a library CRUD web app for the udacity full-stack web developer catalog 
 
 1. Install [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) on your computer.
 2. Download the [fullstack-nanodegree-vm](https://github.com/udacity/fullstack-nanodegree-vm).
-  - [`Clone`](https://github.com/udacity/fullstack-nanodegree-vm.git) the Udacity-created Vagrant file.
+    * [`Clone`](https://github.com/udacity/fullstack-nanodegree-vm.git) the Udacity-created Vagrant file.
 3. [`Clone`](https://github.com/purwin/Udacity_Log_Analysis.git) this project within the Vagrant directory so you have the working files on your computer.
 4. Start up your Vagrant file. Run the following in Terminal in your Vagrant directory:
     * `vagrant up`
     * `vagrant ssh`
     * `cd /vagrant` to access project files
-5. `cd` to the cloned `Udacity_Catalog` directory, and run `python views.py`.
-6. Open your web browser of choice and type in the following address to view the app: `http://localhost:8000`
+5. `cd` to the cloned `Udacity_Catalog` directory, and run the following scripts in Terminal:
+    * Type in `python lotsofbooks.py` to populate the book database with a plethora of books, authors, and genre categories
+    * Type in `python views.py` to start the Flask app
+6. Open your web browser of choice and the following address to view the app: `http://localhost:8000`
 7. Check out those beautiful RESTful app routes!
 
 ## API
