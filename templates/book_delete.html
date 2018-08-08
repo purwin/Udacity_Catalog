@@ -11,7 +11,9 @@
   <h1 class="item-delete__h1">DELETE <br/>{{ book.title }}</h1>
   <form action="" method="POST">
     <p class="item-delete__p">Are you sure you want to delete <b>{{ book.title }}</b> from the catalog?</p>
-    <button class="button button--cancel"><a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a></button>
+    <button class="button button--cancel" type="button">
+      <a href="{{ url_for('catalog_book', id = book.id) }}">Cancel</a>
+    </button>
     <input class="button button--send" type="submit" value="Delete">
   </form>
 </div>
