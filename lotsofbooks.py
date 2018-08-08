@@ -2929,7 +2929,7 @@ def add_book(book):
             print "Could not add {} {} to {}: {}".format(
                 author['first_name'],
                 author['last_name'],
-                book['title']
+                book['title'],
                 e
             )
 
